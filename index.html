@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarah Chen - Web Developer Portfolio</title>
+    <meta name="description" content="Professional web developer specializing in modern, responsive websites and web applications.">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-text">SC</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#portfolio" class="nav-link">Portfolio</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#skills" class="nav-link">Skills</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#anomaly" class="nav-link">Dimensions</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+            <div class="gradient-orb orb-3"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">
+                    <span class="title-line">Creating Digital</span>
+                    <span class="title-line highlight">Experiences</span>
+                    <span class="title-line">That Matter</span>
+                </h1>
+                <p class="hero-subtitle">
+                    I'm Sarah Chen, a passionate web developer crafting modern, 
+                    responsive websites that combine stunning design with seamless functionality.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#portfolio" class="btn btn-primary">View My Work</a>
+                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-card card-1">
+                    <div class="card-content">
+                        <div class="code-snippet">
+                            <span class="code-line">&lt;div class="innovation"&gt;</span>
+                            <span class="code-line">&nbsp;&nbsp;&lt;creativity&gt;</span>
+                            <span class="code-line">&nbsp;&nbsp;&lt;/creativity&gt;</span>
+                            <span class="code-line">&lt;/div&gt;</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="floating-card card-2">
+                    <div class="card-content">
+                        <div class="tech-badge">React</div>
+                        <div class="tech-badge">Vue.js</div>
+                        <div class="tech-badge">Node.js</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">About Me</h2>
+                <p class="section-subtitle">Passionate about creating digital solutions</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <div class="about-card">
+                        <h3>My Story</h3>
+                        <p>
+                            With over 5 years of experience in web development, I specialize in creating 
+                            modern, responsive websites that not only look stunning but also deliver exceptional 
+                            user experiences. My journey began with a curiosity about how websites work, and 
+                            it has evolved into a passion for crafting digital solutions that make a difference.
+                        </p>
+                        <p>
+                            I believe in the power of clean code, thoughtful design, and user-centered 
+                            development. Every project I work on is an opportunity to learn, grow, and 
+                            create something meaningful.
+                        </p>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">Projects Completed</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">5+</div>
+                            <div class="stat-label">Years Experience</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">Client Satisfaction</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="image-container">
+                        <div class="placeholder-image">
+                            <div class="image-placeholder">
+                                <span>Your Photo Here</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">My Portfolio</h2>
+                <p class="section-subtitle">A showcase of my recent work</p>
+            </div>
+            <div class="portfolio-controls">
+                <button class="view-toggle active" data-view="grid">Grid View</button>
+                <button class="view-toggle" data-view="table">Table View</button>
+            </div>
+            <div class="portfolio-grid" id="portfolio-grid">
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <div class="project-placeholder">
+                            <span>E-Commerce Platform</span>
+                        </div>
+                        <div class="portfolio-overlay">
+                            <div class="overlay-content">
+                                <h3>E-Commerce Platform</h3>
+                                <p>Full-stack e-commerce solution with React and Node.js</p>
+                                <div class="project-tech">
+                                    <span class="tech-tag">React</span>
+                                    <span class="tech-tag">Node.js</span>
+                                    <span class="tech-tag">MongoDB</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="#" class="project-link">Live Demo</a>
+                                    <a href="#" class="project-link">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <div class="project-placeholder">
+                            <span>Corporate Website</span>
+                        </div>
+                        <div class="portfolio-overlay">
+                            <div class="overlay-content">
+                                <h3>Corporate Website</h3>
+                                <p>Modern corporate website with CMS integration</p>
+                                <div class="project-tech">
+                                    <span class="tech-tag">Vue.js</span>
+                                    <span class="tech-tag">PHP</span>
+                                    <span class="tech-tag">MySQL</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="#" class="project-link">Live Demo</a>
+                                    <a href="#" class="project-link">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <div class="project-placeholder">
+                            <span>Mobile App</span>
+                        </div>
+                        <div class="portfolio-overlay">
+                            <div class="overlay-content">
+                                <h3>Mobile App</h3>
+                                <p>Cross-platform mobile application</p>
+                                <div class="project-tech">
+                                    <span class="tech-tag">React Native</span>
+                                    <span class="tech-tag">Firebase</span>
+                                    <span class="tech-tag">Redux</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="#" class="project-link">Live Demo</a>
+                                    <a href="#" class="project-link">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <div class="project-placeholder">
+                            <span>Dashboard App</span>
+                        </div>
+                        <div class="portfolio-overlay">
+                            <div class="overlay-content">
+                                <h3>Analytics Dashboard</h3>
+                                <p>Real-time data visualization dashboard</p>
+                                <div class="project-tech">
+                                    <span class="tech-tag">D3.js</span>
+                                    <span class="tech-tag">Express</span>
+                                    <span class="tech-tag">PostgreSQL</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="#" class="project-link">Live Demo</a>
+                                    <a href="#" class="project-link">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="portfolio-table" id="portfolio-table" style="display: none;">
+                <div class="table-container">
+                    <table class="modern-table">
+                        <thead>
+                            <tr>
+                                <th>Project</th>
+                                <th>Type</th>
+                                <th>Technologies</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>E-Commerce Platform</td>
+                                <td>Web Application</td>
+                                <td>React, Node.js, MongoDB</td>
+                                <td><span class="status-badge final">Final</span></td>
+                                <td>
+                                    <a href="#" class="table-link">View</a>
+                                    <a href="#" class="table-link">Code</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Corporate Website</td>
+                                <td>Website</td>
+                                <td>Vue.js, PHP, MySQL</td>
+                                <td><span class="status-badge final">Final</span></td>
+                                <td>
+                                    <a href="#" class="table-link">View</a>
+                                    <a href="#" class="table-link">Code</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Mobile App</td>
+                                <td>Mobile Application</td>
+                                <td>React Native, Firebase</td>
+                                <td><span class="status-badge draft">Draft</span></td>
+                                <td>
+                                    <a href="#" class="table-link">View</a>
+                                    <a href="#" class="table-link">Code</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Analytics Dashboard</td>
+                                <td>Web Application</td>
+                                <td>D3.js, Express, PostgreSQL</td>
+                                <td><span class="status-badge final">Final</span></td>
+                                <td>
+                                    <a href="#" class="table-link">View</a>
+                                    <a href="#" class="table-link">Code</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Skills & Technologies</h2>
+                <p class="section-subtitle">Tools and technologies I work with</p>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Frontend Development</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <span class="skill-name">HTML5</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">CSS3</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">JavaScript</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="88%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">React</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Vue.js</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Backend Development</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <span class="skill-name">Node.js</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">PHP</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Python</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="75%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">MySQL</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="88%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">MongoDB</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Space Time Anomaly Section -->
+    <section id="anomaly" class="anomaly-section">
+        <div class="anomaly-container">
+            <div class="anomaly-content">
+                <div class="section-header">
+                    <h2 class="section-title">Digital Dimensions</h2>
+                    <p class="section-subtitle">Exploring the boundaries of web technology</p>
+                </div>
+                <div class="anomaly-description">
+                    <p>Experience the intersection of art and technology through interactive WebGL shaders. This cosmic visualization represents the infinite possibilities of modern web development.</p>
+                </div>
+            </div>
+            <div class="anomaly-canvas-container">
+                <canvas id="anomaly-canvas"></canvas>
+                <div class="anomaly-overlay">
+                    <div class="anomaly-controls">
+                        <button class="anomaly-btn" id="anomaly-toggle">Pause</button>
+                        <button class="anomaly-btn" id="anomaly-reset">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Get In Touch</h2>
+                <p class="section-subtitle">Let's work together on your next project</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <h3>Contact Information</h3>
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <div class="contact-details">
+                                <span class="contact-label">Email</span>
+                                <span class="contact-value">sarah@example.com</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📱</div>
+                            <div class="contact-details">
+                                <span class="contact-label">Phone</span>
+                                <span class="contact-value">+1 (555) 123-4567</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <div class="contact-details">
+                                <span class="contact-label">Location</span>
+                                <span class="contact-value">San Francisco, CA</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form-container">
+                    <form class="contact-form" id="contact-form">
+                        <input type="hidden" name="csrf_token" id="csrf_token">
+                        <div class="form-group">
+                            <input type="text" name="name" class="glass-input" placeholder="Your Name" required>
+                            <div class="error-message" id="error-name"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" class="glass-input" placeholder="Your Email" required>
+                            <div class="error-message" id="error-email"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="subject" class="glass-input" placeholder="Subject" required>
+                            <div class="error-message" id="error-subject"></div>
+                        </div>
+                        <div class="form-group">
+                            <select name="project_type" class="glass-select" required>
+                                <option value="">Select Project Type</option>
+                                <option value="website">Website Development</option>
+                                <option value="webapp">Web Application</option>
+                                <option value="mobile">Mobile App</option>
+                                <option value="consultation">Consultation</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" class="glass-textarea" placeholder="Tell me about your project..." rows="5" required></textarea>
+                            <div class="error-message" id="error-message"></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+                        <div class="form-status" id="form-status"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-text">
+                    <p>&copy; 2024 Sarah Chen. All rights reserved.</p>
+                </div>
+                <div class="social-links">
+                    <a href="#" class="social-link">GitHub</a>
+                    <a href="#" class="social-link">LinkedIn</a>
+                    <a href="#" class="social-link">Twitter</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
