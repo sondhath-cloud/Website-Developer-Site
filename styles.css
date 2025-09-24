@@ -849,6 +849,197 @@ section {
     transform: translateY(-2px);
 }
 
+/* Particle Morph Section */
+.particle-section {
+    background: var(--secondary-bg);
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.particle-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-4xl);
+    align-items: center;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+}
+
+.particle-content {
+    z-index: 2;
+}
+
+.particle-description {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-2xl);
+    margin-top: var(--spacing-xl);
+    box-shadow: var(--glass-shadow);
+}
+
+.particle-description p {
+    color: var(--text-secondary);
+    font-size: var(--font-size-lg);
+    line-height: 1.7;
+}
+
+.particle-canvas-container {
+    position: relative;
+    height: 600px;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+}
+
+#particle-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: radial-gradient(circle at center, #0a0a0a 0%, #000000 100%);
+}
+
+/* Particle Loading Screen */
+#particle-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 0.6s ease-out;
+}
+
+#particle-loading span {
+    font-size: var(--font-size-lg);
+    letter-spacing: 2px;
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+#particle-progress-container {
+    width: 60%;
+    max-width: 300px;
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+#particle-progress {
+    height: 100%;
+    width: 0%;
+    background: var(--gradient-primary);
+    transition: width 0.3s ease;
+    border-radius: 3px;
+}
+
+/* Particle UI */
+#particle-ui {
+    position: absolute;
+    top: var(--spacing-lg);
+    width: 100%;
+    text-align: center;
+    z-index: 100;
+    pointer-events: none;
+}
+
+#particle-info {
+    font-size: var(--font-size-sm);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background-color: rgba(25, 30, 50, 0.35);
+    border-radius: var(--radius-md);
+    display: inline-block;
+    text-shadow: 0 0 5px rgba(0, 128, 255, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+/* Particle Controls */
+#particle-controls {
+    position: absolute;
+    bottom: var(--spacing-lg);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    text-align: center;
+    pointer-events: auto;
+    background-color: rgba(25, 30, 50, 0.4);
+    padding: var(--spacing-lg) var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+#particle-shape-btn {
+    background: rgba(0, 80, 180, 0.7);
+    color: white;
+    border: 1px solid rgba(0, 180, 255, 0.6);
+    border-radius: var(--radius-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    margin: 0 var(--spacing-sm);
+    cursor: pointer;
+    font-family: var(--font-family);
+    font-size: var(--font-size-sm);
+    transition: all 0.25s ease;
+    font-weight: 500;
+}
+
+#particle-shape-btn:hover {
+    background: rgba(0, 110, 220, 0.9);
+    border-color: rgba(0, 210, 255, 0.9);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0, 150, 255, 0.3);
+}
+
+#particle-color-picker {
+    margin-top: var(--spacing-lg);
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-md);
+}
+
+.particle-color-option {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.4);
+}
+
+.particle-color-option:hover {
+    transform: scale(1.15);
+    border-color: rgba(255, 255, 255, 0.7);
+}
+
+.particle-color-option.active {
+    transform: scale(1.18);
+    border-color: white;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
 /* Contact Section */
 .contact {
     background: var(--secondary-bg);
@@ -1104,6 +1295,16 @@ section {
     }
     
     .anomaly-canvas-container {
+        height: 400px;
+    }
+    
+    .particle-container {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-2xl);
+        text-align: center;
+    }
+    
+    .particle-canvas-container {
         height: 400px;
     }
 }

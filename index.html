@@ -9,6 +9,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Three.js Import Map for Particle Animation -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.163.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.163.0/examples/jsm/",
+          "animejs": "https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.es.js",
+          "simplex-noise": "https://cdn.skypack.dev/simplex-noise@4.0.1"
+        }
+      }
+    </script>
 </head>
 <body>
     <!-- Navigation -->
@@ -32,6 +44,9 @@
                 </li>
                 <li class="nav-item">
                     <a href="#anomaly" class="nav-link">Dimensions</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#particles" class="nav-link">Particles</a>
                 </li>
                 <li class="nav-item">
                     <a href="#contact" class="nav-link">Contact</a>
@@ -407,6 +422,45 @@
                         <button class="anomaly-btn" id="anomaly-reset">Reset</button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Particle Morph Section -->
+    <section id="particles" class="particle-section">
+        <div class="particle-container">
+            <div class="particle-content">
+                <div class="section-header">
+                    <h2 class="section-title">Interactive Particles</h2>
+                    <p class="section-subtitle">Experience the magic of morphing 3D shapes</p>
+                </div>
+                <div class="particle-description">
+                    <p>Watch as thousands of particles seamlessly transform between different geometric shapes. Click anywhere to trigger morphing animations, or use the controls to change colors and shapes manually.</p>
+                </div>
+            </div>
+            <div class="particle-canvas-container">
+                <div id="particle-loading">
+                    <span>Initializing Particles...</span>
+                    <div id="particle-progress-container">
+                        <div id="particle-progress"></div>
+                    </div>
+                </div>
+                
+                <div id="particle-ui">
+                    <div id="particle-info">Shape: Sphere (Click to morph)</div>
+                </div>
+
+                <div id="particle-controls">
+                    <button id="particle-shape-btn">Change Shape</button>
+                    <div id="particle-color-picker">
+                        <div class="particle-color-option" data-scheme="fire" style="background: linear-gradient(to bottom right, #ff4500, #ffcc00)"></div>
+                        <div class="particle-color-option" data-scheme="neon" style="background: linear-gradient(to bottom right, #ff00ff, #00ffff)"></div>
+                        <div class="particle-color-option" data-scheme="nature" style="background: linear-gradient(to bottom right, #00ff00, #66ffcc)"></div>
+                        <div class="particle-color-option" data-scheme="rainbow" style="background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet)"></div>
+                    </div>
+                </div>
+
+                <canvas id="particle-canvas"></canvas>
             </div>
         </div>
     </section>
