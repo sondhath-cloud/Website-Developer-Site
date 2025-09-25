@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initSmoothScrolling();
     initParallaxEffects();
     initTypingEffect();
+    initInteractiveStars();
     initSpaceTimeAnomaly();
 });
 
@@ -566,6 +567,219 @@ Built with:
 
 Created with ❤️ for modern web development
 `);
+
+// Interactive Stars Background for Hero Section
+function initInteractiveStars() {
+    const canvas = document.getElementById('stars-canvas');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    let WIDTH, HEIGHT;
+    let mouseMoving = false;
+    let mouseMoveChecker;
+    let mouseX, mouseY;
+    let stars = [];
+    let dots = [];
+    const initStarsPopulation = 80;
+    const dotsMinDist = 2;
+    
+    // Star constructor
+    function Star(id, x, y) {
+        this.id = id;
+        this.x = x;
+        this.y = y;
+        this.r = Math.floor(Math.random() * 2) + 1;
+        const alpha = (Math.floor(Math.random() * 10) + 1) / 10 / 2;
+        this.color = "rgba(255,255,255," + alpha + ")";
+    }
+
+    Star.prototype.draw = function() {
+        ctx.fillStyle = this.color;
+        ctx.shadowBlur = this.r * 2;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+        ctx.closePath();
+        ctx.fill();
+    }
+
+    Star.prototype.move = function() {
+        this.y -= 0.15;
+        if (this.y <= -10) this.y = HEIGHT + 10;
+        this.draw();
+    }
+
+    // Dot constructor
+    function Dot(id, x, y, r) {
+        this.id = id;
+        this.x = x;
+        this.y = y;
+        this.r = Math.floor(Math.random() * 5) + 1;
+        this.maxLinks = 2;
+        this.speed = 0.5;
+        this.a = 0.5;
+        this.aReduction = 0.005;
+        this.color = "rgba(255,255,255," + this.a + ")";
+        this.linkColor = "rgba(255,255,255," + this.a / 4 + ")";
+        this.dir = Math.floor(Math.random() * 140) + 200;
+    }
+
+    Dot.prototype.draw = function() {
+        ctx.fillStyle = this.color;
+        ctx.shadowBlur = this.r * 2;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
+        ctx.closePath();
+        ctx.fill();
+    }
+
+    Dot.prototype.link = function() {
+        if (this.id == 0) return;
+        const previousDot1 = getPreviousDot(this.id, 1);
+        const previousDot2 = getPreviousDot(this.id, 2);
+        const previousDot3 = getPreviousDot(this.id, 3);
+        if (!previousDot1) return;
+        ctx.strokeStyle = this.linkColor;
+        ctx.moveTo(previousDot1.x, previousDot1.y);
+        ctx.beginPath();
+        ctx.lineTo(this.x, this.y);
+        if (previousDot2 != false) ctx.lineTo(previousDot2.x, previousDot2.y);
+        if (previousDot3 != false) ctx.lineTo(previousDot3.x, previousDot3.y);
+        ctx.stroke();
+        ctx.closePath();
+    }
+
+    Dot.prototype.move = function() {
+        this.a -= this.aReduction;
+        if (this.a <= 0) {
+            this.die();
+            return;
+        }
+        this.color = "rgba(255,255,255," + this.a + ")";
+        this.linkColor = "rgba(255,255,255," + this.a / 4 + ")";
+        this.x = this.x + Math.cos(degToRad(this.dir)) * this.speed;
+        this.y = this.y + Math.sin(degToRad(this.dir)) * this.speed;
+        this.draw();
+        this.link();
+    }
+
+    Dot.prototype.die = function() {
+        dots[this.id] = null;
+        delete dots[this.id];
+    }
+
+    function getPreviousDot(id, stepback) {
+        if (id == 0 || id - stepback < 0) return false;
+        if (typeof dots[id - stepback] != "undefined") return dots[id - stepback];
+        else return false;
+    }
+
+    function degToRad(deg) {
+        return deg * (Math.PI / 180);
+    }
+
+    function setCanvasSize() {
+        const heroSection = document.querySelector('.hero');
+        if (!heroSection) return;
+        
+        const rect = heroSection.getBoundingClientRect();
+        WIDTH = rect.width;
+        HEIGHT = rect.height;
+        
+        canvas.width = WIDTH;
+        canvas.height = HEIGHT;
+        canvas.style.width = WIDTH + 'px';
+        canvas.style.height = HEIGHT + 'px';
+    }
+
+    function init() {
+        ctx.strokeStyle = "white";
+        ctx.shadowColor = "white";
+        for (let i = 0; i < initStarsPopulation; i++) {
+            stars[i] = new Star(i, Math.floor(Math.random() * WIDTH), Math.floor(Math.random() * HEIGHT));
+        }
+        ctx.shadowBlur = 0;
+        animate();
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, WIDTH, HEIGHT);
+
+        for (let i in stars) {
+            stars[i].move();
+        }
+        for (let i in dots) {
+            dots[i].move();
+        }
+        drawIfMouseMoving();
+        requestAnimationFrame(animate);
+    }
+
+    function drawIfMouseMoving() {
+        if (!mouseMoving) return;
+
+        if (dots.length == 0) {
+            dots[0] = new Dot(0, mouseX, mouseY);
+            dots[0].draw();
+            return;
+        }
+
+        const previousDot = getPreviousDot(dots.length, 1);
+        const prevX = previousDot.x;
+        const prevY = previousDot.y;
+
+        const diffX = Math.abs(prevX - mouseX);
+        const diffY = Math.abs(prevY - mouseY);
+
+        if (diffX < dotsMinDist || diffY < dotsMinDist) return;
+
+        const xVariation = Math.random() > 0.5 ? -1 : 1;
+        const xVariationAmount = xVariation * Math.floor(Math.random() * 50) + 1;
+        const yVariation = Math.random() > 0.5 ? -1 : 1;
+        const yVariationAmount = yVariation * Math.floor(Math.random() * 50) + 1;
+        dots[dots.length] = new Dot(dots.length, mouseX + xVariationAmount, mouseY + yVariationAmount);
+        dots[dots.length - 1].draw();
+        dots[dots.length - 1].link();
+    }
+
+    // Mouse event handlers
+    window.addEventListener('mousemove', function(e) {
+        mouseMoving = true;
+        mouseX = e.clientX - canvas.getBoundingClientRect().left;
+        mouseY = e.clientY - canvas.getBoundingClientRect().top;
+        clearTimeout(mouseMoveChecker);
+        mouseMoveChecker = setTimeout(function() {
+            mouseMoving = false;
+        }, 100);
+    });
+
+    // Initialize
+    setCanvasSize();
+    init();
+
+    // Resize handler
+    window.addEventListener('resize', function() {
+        setCanvasSize();
+        // Reinitialize stars for new canvas size
+        stars = [];
+        dots = [];
+        init();
+    });
+
+    // Intersection Observer for performance
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) {
+                // Pause animation when not visible
+                cancelAnimationFrame(window.starsAnimationId);
+            } else {
+                // Resume animation when visible
+                animate();
+            }
+        });
+    });
+
+    observer.observe(canvas);
+}
 
 // Space Time Anomaly Animation - Exact Replication
 function initSpaceTimeAnomaly() {
