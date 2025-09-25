@@ -580,8 +580,8 @@ function initInteractiveStars() {
     let mouseX, mouseY;
     let stars = [];
     let dots = [];
-    const initStarsPopulation = 80;
-    const dotsMinDist = 2;
+    const initStarsPopulation = 50; // Reduced from 80 to 50 stars
+    const dotsMinDist = 8; // Increased from 2 to 8 for wider spread
     
     // Star constructor
     function Star(id, x, y) {
@@ -589,13 +589,13 @@ function initInteractiveStars() {
         this.x = x;
         this.y = y;
         this.r = Math.floor(Math.random() * 2) + 1;
-        const alpha = (Math.floor(Math.random() * 10) + 1) / 10 / 2;
+        const alpha = (Math.floor(Math.random() * 10) + 1) / 10 * 0.75; // Increased brightness from /2 to *0.75
         this.color = "rgba(255,255,255," + alpha + ")";
     }
 
     Star.prototype.draw = function() {
         ctx.fillStyle = this.color;
-        ctx.shadowBlur = this.r * 2;
+        ctx.shadowBlur = this.r * 4; // Increased glow from *2 to *4
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
         ctx.closePath();
@@ -603,7 +603,7 @@ function initInteractiveStars() {
     }
 
     Star.prototype.move = function() {
-        this.y -= 0.15;
+        this.y -= 0.05; // Slowed down from 0.15 to 0.05
         if (this.y <= -10) this.y = HEIGHT + 10;
         this.draw();
     }
@@ -616,16 +616,16 @@ function initInteractiveStars() {
         this.r = Math.floor(Math.random() * 5) + 1;
         this.maxLinks = 2;
         this.speed = 0.5;
-        this.a = 0.5;
+        this.a = 0.75; // Increased from 0.5 to 0.75 for brighter dots
         this.aReduction = 0.005;
         this.color = "rgba(255,255,255," + this.a + ")";
-        this.linkColor = "rgba(255,255,255," + this.a / 4 + ")";
+        this.linkColor = "rgba(255,255,255," + this.a / 3 + ")"; // Increased from /4 to /3 for brighter links
         this.dir = Math.floor(Math.random() * 140) + 200;
     }
 
     Dot.prototype.draw = function() {
         ctx.fillStyle = this.color;
-        ctx.shadowBlur = this.r * 2;
+        ctx.shadowBlur = this.r * 3; // Increased glow from *2 to *3
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI, false);
         ctx.closePath();
@@ -656,8 +656,8 @@ function initInteractiveStars() {
         }
         this.color = "rgba(255,255,255," + this.a + ")";
         this.linkColor = "rgba(255,255,255," + this.a / 4 + ")";
-        this.x = this.x + Math.cos(degToRad(this.dir)) * this.speed;
-        this.y = this.y + Math.sin(degToRad(this.dir)) * this.speed;
+        this.x = this.x + Math.cos(degToRad(this.dir)) * (this.speed * 0.5); // Slowed down dots movement
+        this.y = this.y + Math.sin(degToRad(this.dir)) * (this.speed * 0.5); // Slowed down dots movement
         this.draw();
         this.link();
     }
@@ -733,9 +733,9 @@ function initInteractiveStars() {
         if (diffX < dotsMinDist || diffY < dotsMinDist) return;
 
         const xVariation = Math.random() > 0.5 ? -1 : 1;
-        const xVariationAmount = xVariation * Math.floor(Math.random() * 50) + 1;
+        const xVariationAmount = xVariation * Math.floor(Math.random() * 120) + 20; // Increased from 50 to 120, minimum 20
         const yVariation = Math.random() > 0.5 ? -1 : 1;
-        const yVariationAmount = yVariation * Math.floor(Math.random() * 50) + 1;
+        const yVariationAmount = yVariation * Math.floor(Math.random() * 120) + 20; // Increased from 50 to 120, minimum 20
         dots[dots.length] = new Dot(dots.length, mouseX + xVariationAmount, mouseY + yVariationAmount);
         dots[dots.length - 1].draw();
         dots[dots.length - 1].link();
