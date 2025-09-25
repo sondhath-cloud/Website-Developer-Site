@@ -283,7 +283,7 @@ function initSmoothScrolling() {
     });
 }
 
-// Parallax effects for hero section
+// Parallax effects for hero section and floating cards
 function initParallaxEffects() {
     const orbs = document.querySelectorAll('.gradient-orb');
     const floatingCards = document.querySelectorAll('.floating-card');
@@ -301,7 +301,9 @@ function initParallaxEffects() {
             const speed = (index + 1) * 0.05;
             card.style.transform = `translateY(${rate * speed}px)`;
         });
+        
     });
+    
 }
 
 // Typing effect for hero title
