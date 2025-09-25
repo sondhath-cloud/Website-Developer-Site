@@ -1,0 +1,12 @@
+Card,Category,BT Log-Odds Score,Normalized Score
+"Add more parks and green spaces","Environment",0.114039,0.960694
+"Better street lighting and security","Safety",-0.398725,0.890539
+"Build better parking infrastructure","Transportation",-0.042208,0.939317
+"Build new recreation centers","Education & Recreation",-0.457640,0.882479
+"Create more bike lanes and walking paths","Transportation",-0.485303,0.878694
+"Develop downtown revitalization projects","Economic Development",-0.738483,0.844055
+"Enhance traffic flow and management","Transportation",-6.907755,0.000000
+"Ensure responsible debt management","Financial Stewardship",-0.249244,0.910991
+"Improve emergency response services","Safety",0.220827,0.975304
+"Improve public transportation system","Transportation",-0.485303,0.878694
+"Increase affordable housing options","Social Services",0.401332,1.000000

@@ -455,6 +455,15 @@ section {
     align-items: center;
 }
 
+.about-content-centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
 .about-card {
     background: var(--glass-bg);
     backdrop-filter: blur(20px);

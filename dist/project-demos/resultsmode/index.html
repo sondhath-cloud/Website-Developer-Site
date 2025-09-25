@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResultsMode App - Demo</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h2>ResultsMode</h2>
+            <p>Demo Version</p>
+        </div>
+        <ul class="nav-menu">
+            <li><a href="#dashboard" class="nav-link active">Dashboard</a></li>
+            <li><a href="#team-directory" class="nav-link">Team Directory</a></li>
+            <li><a href="#stakeholder-analysis" class="nav-link">Stakeholder Analysis</a></li>
+            <li><a href="#connection-opportunities" class="nav-link">Connection Opportunities</a></li>
+            <li><a href="#change-impacts" class="nav-link">Change Impacts</a></li>
+            <li><a href="#planning" class="nav-link">Planning</a></li>
+            <li><a href="#schedule" class="nav-link">Schedule</a></li>
+            <li><a href="#ideas-board" class="nav-link">Ideas Board</a></li>
+            <li><a href="#job-aids" class="nav-link">Job Aids</a></li>
+            <li><a href="#training" class="nav-link">Training</a></li>
+            <li><a href="#admin-dashboard" class="nav-link">Admin Dashboard</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="page-section active">
+            <div class="section-header">
+                <h1>Dashboard</h1>
+                <p>Overview and summary information</p>
+            </div>
+            
+            <div class="summary-cards">
+                <div class="summary-card">
+                    <div class="card-icon">👥</div>
+                    <div class="card-content">
+                        <h3>Total Departments</h3>
+                        <span class="card-number" id="total-departments">0</span>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-icon">👤</div>
+                    <div class="card-content">
+                        <h3>Team Members</h3>
+                        <span class="card-number" id="total-members">0</span>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-icon">📊</div>
+                    <div class="card-content">
+                        <h3>Coverage</h3>
+                        <span class="card-number" id="coverage">0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-content">
+                <div class="content-card">
+                    <h3>Recent Activity</h3>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <span class="activity-time">2 hours ago</span>
+                            <span class="activity-text">New team member added to Marketing</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-time">4 hours ago</span>
+                            <span class="activity-text">Department CSV uploaded successfully</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-time">1 day ago</span>
+                            <span class="activity-text">Stakeholder analysis updated</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Directory Section -->
+        <section id="team-directory" class="page-section">
+            <div class="section-header">
+                <h1>Team Directory</h1>
+                <p>Manage team member department/agencies and roles</p>
+                <div class="section-actions">
+                    <button class="btn btn-secondary" onclick="openModal('csvModal')">Import CSV</button>
+                    <button class="btn btn-outline" onclick="downloadTemplate('departments')">Download Department/Agency Template</button>
+                    <button class="btn btn-outline" onclick="downloadTemplate('roles')">Download Roles Template</button>
+                </div>
+            </div>
+
+            <!-- CSV Upload Status -->
+            <div id="csv-status" class="content-card" style="display: none;">
+                <h3>Setup Status</h3>
+                <div class="status-indicators">
+                    <div class="status-item">
+                        <span class="status-dot" id="departments-status"></span>
+                        <span>Departments CSV Uploaded</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-dot" id="roles-status"></span>
+                        <span>Roles CSV Uploaded</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Tiles -->
+            <div id="summary-tiles" class="summary-tiles" style="display: none;">
+                <div class="summary-tile">
+                    <div class="tile-icon">🏢</div>
+                    <div class="tile-content">
+                        <h4>Total Departments/Agencies</h4>
+                        <div class="tile-number" id="team-total-departments">0</div>
+                    </div>
+                </div>
+                <div class="summary-tile">
+                    <div class="tile-icon">👥</div>
+                    <div class="tile-content">
+                        <h4>Total Team Members</h4>
+                        <div class="tile-number" id="team-total-members">0</div>
+                    </div>
+                </div>
+                <div class="summary-tile">
+                    <div class="tile-icon">📋</div>
+                    <div class="tile-content">
+                        <h4>Empty Departments</h4>
+                        <div class="tile-number" id="team-empty-departments">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Team Management Section (Hidden until CSV uploaded) -->
+            <div id="team-management" class="content-card" style="display: none;">
+                <div class="section-header">
+                    <h3>Team Members</h3>
+                    <button class="btn btn-primary" onclick="openModal('teamMemberModal')">Add Team Member</button>
+                </div>
+                <div class="table-container">
+                    <table class="modern-table sortable-table" id="team-table">
+                        <thead>
+                            <tr>
+                                <th class="sortable" data-column="department">
+                                    Department/Agency <span class="sort-indicator">↕</span>
+                                </th>
+                                <th class="sortable" data-column="name">
+                                    Name <span class="sort-indicator">↕</span>
+                                </th>
+                                <th class="sortable" data-column="role">
+                                    Role <span class="sort-indicator">↕</span>
+                                </th>
+                                <th class="sortable" data-column="email">
+                                    Email <span class="sort-indicator">↕</span>
+                                </th>
+                                <th class="sortable" data-column="phone">
+                                    Phone <span class="sort-indicator">↕</span>
+                                </th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="team-tbody">
+                            <!-- Dynamic content -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stakeholder Analysis Section -->
+        <section id="stakeholder-analysis" class="page-section">
+            <div class="section-header">
+                <h1>Stakeholder Analysis</h1>
+                <p>Select stakeholder groups to analyze and manage relationships</p>
+            </div>
+
+            <!-- Stakeholder Groups Carousel -->
+            <div class="stakeholder-carousel-container">
+                <button class="nav-arrow left" onclick="navigateStakeholderCarousel(-1)">‹</button>
+                <div class="carousel-track">
+                    <div class="stakeholder-card" data-index="0" onclick="selectStakeholderGroup(0)">
+                        <div class="card-icon">👥</div>
+                        <h3>Executive Leadership</h3>
+                        <p>Senior management and decision makers</p>
+                    </div>
+                    <div class="stakeholder-card" data-index="1" onclick="selectStakeholderGroup(1)">
+                        <div class="card-icon">🏢</div>
+                        <h3>Department Heads</h3>
+                        <p>Department managers and team leaders</p>
+                    </div>
+                    <div class="stakeholder-card" data-index="2" onclick="selectStakeholderGroup(2)">
+                        <div class="card-icon">👤</div>
+                        <h3>End Users</h3>
+                        <p>Employees who will use the system</p>
+                    </div>
+                    <div class="stakeholder-card" data-index="3" onclick="selectStakeholderGroup(3)">
+                        <div class="card-icon">🔧</div>
+                        <h3>IT Department</h3>
+                        <p>Technical support and implementation team</p>
+                    </div>
+                    <div class="stakeholder-card" data-index="4" onclick="selectStakeholderGroup(4)">
+                        <div class="card-icon">💰</div>
+                        <h3>Finance Team</h3>
+                        <p>Budget and financial oversight</p>
+                    </div>
+                    <div class="stakeholder-card" data-index="5" onclick="selectStakeholderGroup(5)">
+                        <div class="card-icon">📋</div>
+                        <h3>External Partners</h3>
+                        <p>Vendors and external stakeholders</p>
+                    </div>
+                </div>
+                <button class="nav-arrow right" onclick="navigateStakeholderCarousel(1)">›</button>
+            </div>
+
+            <!-- Selected Stakeholder Info -->
+            <div class="stakeholder-info">
+                <h2 class="stakeholder-group-name">Executive Leadership</h2>
+                <p class="stakeholder-group-description">Senior management and decision makers</p>
+            </div>
+
+            <!-- Navigation Dots -->
+            <div class="stakeholder-dots">
+                <div class="dot active" data-index="0" onclick="selectStakeholderGroup(0)"></div>
+                <div class="dot" data-index="1" onclick="selectStakeholderGroup(1)"></div>
+                <div class="dot" data-index="2" onclick="selectStakeholderGroup(2)"></div>
+                <div class="dot" data-index="3" onclick="selectStakeholderGroup(3)"></div>
+                <div class="dot" data-index="4" onclick="selectStakeholderGroup(4)"></div>
+                <div class="dot" data-index="5" onclick="selectStakeholderGroup(5)"></div>
+            </div>
+
+            <!-- Stakeholders Table -->
+            <div class="content-card" style="margin-top: 60px;">
+                <div class="section-header">
+                    <h3>Stakeholders</h3>
+                    <button class="btn btn-primary" onclick="openModal('stakeholderModal')">Add Stakeholder</button>
+                </div>
+                <div class="table-container">
+                    <table class="modern-table" id="stakeholders-table">
+                        <thead>
+                            <tr>
+                                <th>Stakeholder</th>
+                                <th>Influence</th>
+                                <th>Interest</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stakeholders-tbody">
+                            <!-- Dynamic content -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Connection Opportunities Section -->
+        <section id="connection-opportunities" class="page-section">
+            <div class="section-header">
+                <h1>Connection Opportunities</h1>
+                <p>Track relationship opportunities and connections</p>
+                <div class="section-actions">
+                    <button class="btn btn-primary" onclick="openModal('connectionModal')">Add Connection</button>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>Connection Opportunities</h3>
+                <div class="table-container">
+                    <table class="modern-table" id="connections-table">
+                        <thead>
+                            <tr>
+                                <th class="sortable" data-column="opportunity">Opportunity</th>
+                                <th class="sortable" data-column="audience">Audience</th>
+                                <th class="sortable" data-column="frequency">Frequency</th>
+                                <th class="sortable" data-column="nextDate">Next Opportunity</th>
+                                <th class="sortable" data-column="connector">Connector</th>
+                                <th>Send Request</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="connections-tbody">
+                            <!-- Dynamic content -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Change Impacts Section -->
+        <section id="change-impacts" class="page-section">
+            <div class="section-header">
+                <h1>Change Impacts</h1>
+                <p>Assess and track change impacts</p>
+                <div class="section-actions">
+                    <button class="btn btn-primary" onclick="openModal('impactModal')">Add Impact Assessment</button>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>Change Impact Assessments</h3>
+                <div class="table-container">
+                    <table class="modern-table" id="impacts-table">
+                        <thead>
+                            <tr>
+                                <th class="sortable" data-column="id">ID</th>
+                                <th class="sortable" data-column="audience">Audience</th>
+                                <th class="sortable" data-column="currentState">Current State</th>
+                                <th class="sortable" data-column="futureState">Future State</th>
+                                <th class="sortable" data-column="score">Score</th>
+                                <th class="sortable" data-column="stage">Stage</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="impacts-tbody">
+                            <!-- Dynamic content -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Planning Section -->
+        <section id="planning" class="page-section">
+            <div class="section-header">
+                <h1>Planning</h1>
+                <p>Strategic planning and project management</p>
+            </div>
+
+            <div class="content-card">
+                <h3>Strategic Plans</h3>
+                <div class="table-container">
+                    <table class="modern-table" id="plans-table">
+                        <thead>
+                            <tr>
+                                <th class="sortable" data-column="ciNumber">CI Number</th>
+                                <th class="sortable" data-column="activityIdeas">Activity Ideas</th>
+                                <th class="sortable" data-column="targetDate">Target Date</th>
+                                <th class="sortable" data-column="effortScore">Effort Score</th>
+                                <th class="sortable" data-column="impactScore">Impact Score</th>
+                                <th class="sortable" data-column="invitee">Invitee</th>
+                                <th>Send Invitation</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="plans-tbody">
+                            <!-- Dynamic content -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Schedule Section -->
+        <section id="schedule" class="page-section">
+            <div class="section-header">
+                <h1>Schedule</h1>
+                <p>Calendar and Gantt chart views of planned activities</p>
+                <div class="section-actions">
+                    <div class="view-toggle">
+                        <button class="btn btn-primary" id="calendarViewBtn" onclick="app.switchScheduleView('calendar')">Calendar View</button>
+                        <button class="btn btn-outline" id="ganttViewBtn" onclick="app.switchScheduleView('gantt')">Gantt Chart</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendar View -->
+            <div id="calendarView" class="schedule-view">
+                <div class="content-card">
+                    <h3>Activity Calendar</h3>
+                    <div class="calendar-controls">
+                        <div class="calendar-filters">
+                            <div class="filter-controls">
+                                <label for="calendarTeamMemberFilter">Filter by team member:</label>
+                                <select id="calendarTeamMemberFilter" onchange="app.applyCalendarFilters()">
+                                    <option value="">All Team Members</option>
+                                </select>
+                            </div>
+                        <div class="filter-controls">
+                            <label for="calendarDepartmentFilter">Filter by department/agency:</label>
+                            <select id="calendarDepartmentFilter" onchange="app.applyCalendarFilters()">
+                                <option value="">All Departments/Agencies</option>
+                            </select>
+                        </div>
+                            <div class="filter-controls">
+                                <button class="btn btn-outline btn-sm" onclick="app.clearCalendarFilters()">Clear Filters</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="calendar-container">
+                        <div class="calendar-header">
+                            <button class="btn btn-outline" onclick="app.previousMonth()">← Previous</button>
+                            <h2 id="currentMonthYear"></h2>
+                            <button class="btn btn-outline" onclick="app.nextMonth()">Next →</button>
+                        </div>
+                        <div class="calendar-grid" id="calendarGrid">
+                            <!-- Calendar will be generated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gantt Chart View -->
+            <div id="ganttView" class="schedule-view" style="display: none;">
+                <div class="content-card">
+                    <h3>Gantt Chart</h3>
+                    <div class="gantt-controls">
+                        <div class="sort-controls">
+                            <label for="ganttSort">Sort by:</label>
+                            <select id="ganttSort" onchange="app.sortGanttChart()">
+                                <option value="id">CI Number</option>
+                                <option value="name">Activity Name</option>
+                                <option value="month">Month</option>
+                            </select>
+                        </div>
+                        <div class="filter-controls">
+                            <label for="monthFilter">Filter by month:</label>
+                            <select id="monthFilter" onchange="app.applyGanttFilters()">
+                                <option value="">All Months</option>
+                                <option value="2024-01">January 2024</option>
+                                <option value="2024-02">February 2024</option>
+                                <option value="2024-03">March 2024</option>
+                                <option value="2024-04">April 2024</option>
+                                <option value="2024-05">May 2024</option>
+                                <option value="2024-06">June 2024</option>
+                                <option value="2024-07">July 2024</option>
+                                <option value="2024-08">August 2024</option>
+                                <option value="2024-09">September 2024</option>
+                                <option value="2024-10">October 2024</option>
+                                <option value="2024-11">November 2024</option>
+                                <option value="2024-12">December 2024</option>
+                            </select>
+                        </div>
+                        <div class="filter-controls">
+                            <label for="teamMemberFilter">Filter by team member:</label>
+                            <select id="teamMemberFilter" onchange="app.applyGanttFilters()">
+                                <option value="">All Team Members</option>
+                            </select>
+                        </div>
+                        <div class="filter-controls">
+                            <label for="departmentFilter">Filter by department/agency:</label>
+                            <select id="departmentFilter" onchange="app.applyGanttFilters()">
+                                <option value="">All Departments/Agencies</option>
+                            </select>
+                        </div>
+                        <div class="filter-controls">
+                            <button class="btn btn-outline btn-sm" onclick="app.clearGanttFilters()">Clear Filters</button>
+                        </div>
+                    </div>
+                    <div class="gantt-container">
+                        <div class="gantt-header">
+                            <div class="gantt-row-header">Activity</div>
+                            <div class="gantt-months">
+                                <div class="month-header">Jan</div>
+                                <div class="month-header">Feb</div>
+                                <div class="month-header">Mar</div>
+                                <div class="month-header">Apr</div>
+                                <div class="month-header">May</div>
+                                <div class="month-header">Jun</div>
+                                <div class="month-header">Jul</div>
+                                <div class="month-header">Aug</div>
+                                <div class="month-header">Sep</div>
+                                <div class="month-header">Oct</div>
+                                <div class="month-header">Nov</div>
+                                <div class="month-header">Dec</div>
+                            </div>
+                        </div>
+                        <div class="gantt-body" id="ganttBody">
+                            <!-- Gantt chart rows will be generated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ideas Board Section -->
+        <section id="ideas-board" class="page-section">
+            <div class="section-header">
+                <h1>Ideas Board</h1>
+                <p>Tap cards multiple times to flip it over and reveal a new idea! Add your own ideas to earn XP!</p>
+            </div>
+
+            <!-- Interactive Cards Grid -->
+            <div class="ideas-cards-container">
+                <div class="idea-card" data-category="communicate" onclick="flipCard(this)">
+                    <div class="card-front">
+                        <div class="card-image communicate-bg"></div>
+                        <div class="card-content">
+                            <h3>Communicate</h3>
+                            <p>Share ideas and information</p>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="idea-content">
+                            <h4>Communication Ideas</h4>
+                            <div class="idea-text" data-idea-index="0">
+                                <p>Create a weekly newsletter to keep everyone informed about project updates and changes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="idea-card" data-category="inspire" onclick="flipCard(this)">
+                    <div class="card-front">
+                        <div class="card-image inspire-bg"></div>
+                        <div class="card-content">
+                            <h3>Inspire</h3>
+                            <p>Motivate and energize the team</p>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="idea-content">
+                            <h4>Inspiration Ideas</h4>
+                            <div class="idea-text" data-idea-index="0">
+                                <p>Host monthly "Innovation Showcase" sessions where teams present their creative solutions.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="idea-card" data-category="teach" onclick="flipCard(this)">
+                    <div class="card-front">
+                        <div class="card-image teach-bg"></div>
+                        <div class="card-content">
+                            <h3>Teach</h3>
+                            <p>Share knowledge and skills</p>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="idea-content">
+                            <h4>Teaching Ideas</h4>
+                            <div class="idea-text" data-idea-index="0">
+                                <p>Create peer-to-peer learning sessions where team members teach each other new skills.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="idea-card" data-category="lead" onclick="flipCard(this)">
+                    <div class="card-front">
+                        <div class="card-image lead-bg"></div>
+                        <div class="card-content">
+                            <h3>Lead</h3>
+                            <p>Guide and direct initiatives</p>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="idea-content">
+                            <h4>Leadership Ideas</h4>
+                            <div class="idea-text" data-idea-index="0">
+                                <p>Establish mentorship programs pairing experienced leaders with emerging talent.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="idea-card" data-category="brainstorm" onclick="flipCard(this)">
+                    <div class="card-front">
+                        <div class="card-image brainstorm-bg"></div>
+                        <div class="card-content">
+                            <h3>Brainstorm</h3>
+                            <p>Generate creative solutions</p>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="idea-content">
+                            <h4>Brainstorming Ideas</h4>
+                            <div class="idea-text" data-idea-index="0">
+                                <p>Use design thinking workshops to tackle complex problems with fresh perspectives.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="idea-card" data-category="meet" onclick="flipCard(this)">
+                    <div class="card-front">
+                        <div class="card-image meet-bg"></div>
+                        <div class="card-content">
+                            <h3>Meet</h3>
+                            <p>Connect and collaborate</p>
+                        </div>
+                    </div>
+                    <div class="card-back">
+                        <div class="idea-content">
+                            <h4>Meeting Ideas</h4>
+                            <div class="idea-text" data-idea-index="0">
+                                <p>Organize cross-departmental coffee chats to build relationships and share insights.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Your Own Idea Section -->
+            <div class="add-idea-section">
+                <div class="content-card">
+                    <h3>Add Your Own Idea</h3>
+                    <div class="idea-form">
+                        <div class="form-group">
+                            <label for="ideaText">Your Idea</label>
+                            <textarea id="ideaText" class="glass-input" rows="3" placeholder="Describe your idea here..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="ideaCategory">Category</label>
+                            <select id="ideaCategory" class="glass-select" onchange="toggleNewCategory()">
+                                <option value="">Select a category</option>
+                                <option value="communicate">Communicate</option>
+                                <option value="inspire">Inspire</option>
+                                <option value="teach">Teach</option>
+                                <option value="lead">Lead</option>
+                                <option value="brainstorm">Brainstorm</option>
+                                <option value="meet">Meet</option>
+                                <option value="new">Add a category</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="newCategoryGroup" style="display: none;">
+                            <label for="newCategoryName">New Category Name</label>
+                            <input type="text" id="newCategoryName" class="glass-input" placeholder="Enter new category name">
+                        </div>
+                        <div class="form-actions">
+                            <button class="btn btn-primary" onclick="addIdea()">Add Idea</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- XP Progress Bar -->
+            <div class="xp-section">
+                <div class="content-card">
+                    <h3>Your Progress</h3>
+                    <div class="xp-progress">
+                        <div class="xp-info">
+                            <span class="xp-label">XP Earned:</span>
+                            <span class="xp-value" id="xpValue">0</span>
+                        </div>
+                        <div class="xp-bar">
+                            <div class="xp-fill" id="xpFill" style="width: 0%"></div>
+                        </div>
+                        <div class="xp-milestone" id="xpMilestone">Next milestone: 100 XP</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Job Aids Section -->
+        <section id="job-aids" class="page-section">
+            <div class="section-header">
+                <h1>Job Aids</h1>
+                <p>Process and procedure support</p>
+                <div class="section-actions">
+                    <button class="btn btn-primary" onclick="openModal('jobAidModal')">Add Job Aid</button>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>Job Aids</h3>
+                <div class="table-container">
+                    <table class="modern-table" id="job-aids-table">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Category</th>
+                                <th>Type</th>
+                                <th>Department</th>
+                                <th>Last Updated</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="job-aids-tbody">
+                            <!-- Dynamic content -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Training Section -->
+        <section id="training" class="page-section">
+            <div class="section-header">
+                <h1>Training</h1>
+                <p>Learning and development resources</p>
+                <div class="section-actions">
+                    <button class="btn btn-primary" onclick="openModal('trainingModal')">Add Training</button>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h3>Training Programs</h3>
+                <div class="table-container">
+                    <table class="modern-table" id="training-table">
+                        <thead>
+                            <tr>
+                                <th>Program Name</th>
+                                <th>Type</th>
+                                <th>Duration</th>
+                                <th>Target Audience</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="training-tbody">
+                            <!-- Dynamic content -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Admin Dashboard Section -->
+        <section id="admin-dashboard" class="page-section">
+            <div class="section-header">
+                <h1>Admin Dashboard</h1>
+                <p>System administration and management</p>
+            </div>
+
+            <div class="admin-cards">
+                <div class="admin-card">
+                    <h3>System Status</h3>
+                    <div class="status-indicators">
+                        <div class="status-item">
+                            <span class="status-dot green"></span>
+                            <span>Database Connected</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-dot green"></span>
+                            <span>All Systems Operational</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-card">
+                    <h3>Quick Actions</h3>
+                    <div class="quick-actions">
+                        <button class="btn btn-outline">Export Data</button>
+                        <button class="btn btn-outline">System Backup</button>
+                        <button class="btn btn-outline">Clear Cache</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <!-- Department Modal -->
+    <div id="departmentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Department</h3>
+                <span class="close" onclick="closeModal('departmentModal')">&times;</span>
+            </div>
+            <form id="departmentForm">
+                <div class="form-group">
+                    <label for="departmentName">Department/Agency Name</label>
+                    <input type="text" id="departmentName" name="name" class="glass-input" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('departmentModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Department</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- CSV Import Modal -->
+    <div id="csvModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Import CSV</h3>
+                <span class="close" onclick="closeModal('csvModal')">&times;</span>
+            </div>
+            <form id="csvForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="csvFiles">Select CSV Files</label>
+                    <input type="file" id="csvFiles" name="csvFiles" accept=".csv" class="glass-input" multiple required>
+                    <small id="csvInstructions">Select both files: departments.csv and roles.csv (or files containing "department" and "role" in filename)</small>
+                </div>
+                <div id="filePreview" class="file-preview" style="display: none;">
+                    <h4>Files to Import:</h4>
+                    <div id="fileList"></div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('csvModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Import All Files</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Team Member Modal -->
+    <div id="teamMemberModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Team Member</h3>
+                <span class="close" onclick="closeModal('teamMemberModal')">&times;</span>
+            </div>
+            <form id="teamMemberForm">
+                <div class="form-group">
+                    <label for="memberName">Full Name</label>
+                    <input type="text" id="memberName" name="name" class="glass-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="memberEmail">Email</label>
+                    <input type="email" id="memberEmail" name="email" class="glass-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="memberPhone">Phone</label>
+                    <input type="tel" id="memberPhone" name="phone" class="glass-input">
+                </div>
+                <div class="form-group">
+                    <label for="memberDepartment">Department/Agency</label>
+                    <select id="memberDepartment" name="department" class="glass-select" required onchange="toggleNewDepartment()">
+                        <option value="">Select Department/Agency</option>
+                    </select>
+                </div>
+                <div class="form-group" id="newDepartmentGroup" style="display: none;">
+                    <label for="newDepartment">Add New Department/Agency</label>
+                    <input type="text" id="newDepartment" name="newDepartment" class="glass-input" placeholder="Enter new department/agency name" oninput="showFuzzySuggestions(this.value)">
+                    <div id="fuzzySuggestions" class="fuzzy-suggestions" style="display: none;"></div>
+                </div>
+                <div class="form-group">
+                    <label for="memberRole">Role</label>
+                    <select id="memberRole" name="role" class="glass-select" required>
+                        <option value="">Select Role</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('teamMemberModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Team Member</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Stakeholder Modal -->
+    <div id="stakeholderModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Stakeholder</h3>
+                <span class="close" onclick="closeModal('stakeholderModal')">&times;</span>
+            </div>
+            <form id="stakeholderForm">
+                <div class="form-group">
+                    <label for="stakeholderDepartment">Stakeholder</label>
+                    <select id="stakeholderDepartment" name="department" class="glass-select" required onchange="toggleOtherDepartmentField()">
+                        <option value="">Select Stakeholder</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group" id="otherDepartmentGroup" style="display: none;">
+                    <label for="otherDepartment">Enter stakeholder</label>
+                    <input type="text" id="otherDepartment" name="otherDepartment" class="glass-input" placeholder="Enter stakeholder name">
+                </div>
+                <div class="form-group">
+                    <label for="stakeholderInfluence">Influence Level</label>
+                    <select id="stakeholderInfluence" name="influence" class="glass-select" required>
+                        <option value="">Select Influence Level</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="stakeholderInterest">Interest Level</label>
+                    <select id="stakeholderInterest" name="interest" class="glass-select" required>
+                        <option value="">Select Interest Level</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('stakeholderModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Stakeholder</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Connection Modal -->
+    <div id="connectionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Connection Opportunity</h3>
+                <span class="close" onclick="closeModal('connectionModal')">&times;</span>
+            </div>
+            <form id="connectionForm">
+                <div class="form-group">
+                    <label for="connectionOpportunity">Opportunity</label>
+                    <input type="text" id="connectionOpportunity" name="opportunity" class="glass-input" required placeholder="Describe the opportunity">
+                </div>
+                <div class="form-group">
+                    <label for="connectionAudience">Audience</label>
+                    <select id="connectionAudience" name="audience" class="glass-select" required>
+                        <option value="">Select Audience</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="connectionFrequency">Frequency</label>
+                    <select id="connectionFrequency" name="frequency" class="glass-select" required>
+                        <option value="">Select Frequency</option>
+                        <option value="Daily">Daily</option>
+                        <option value="Weekly">Weekly</option>
+                        <option value="Monthly">Monthly</option>
+                        <option value="Quarterly">Quarterly</option>
+                        <option value="Annually">Annually</option>
+                        <option value="Periodic">Periodic</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="connectionNextDate">Next Known Opportunity</label>
+                    <input type="date" id="connectionNextDate" name="nextDate" class="glass-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="connectionConnector">Connector</label>
+                    <select id="connectionConnector" name="connector" class="glass-select" required>
+                        <option value="">Select Team Member</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('connectionModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Connection</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Impact Assessment Modal -->
+    <div id="impactModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Impact Assessment</h3>
+                <span class="close" onclick="closeModal('impactModal')">&times;</span>
+            </div>
+            <form id="impactForm">
+                <div class="form-group">
+                    <label for="impactAudience">Audience</label>
+                    <select id="impactAudience" name="audience" class="glass-select" required>
+                        <option value="">Select Audience</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="impactCurrentState">How things happen today (Current State)</label>
+                    <textarea id="impactCurrentState" name="currentState" class="glass-input" rows="4" required placeholder="Describe the current state of how things work..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="impactFutureState">How things will or should be different (Future State)</label>
+                    <textarea id="impactFutureState" name="futureState" class="glass-input" rows="4" required placeholder="Describe how things will change or should be different..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Effort to Adapt</label>
+                    <div class="scoring-container">
+                        <div class="score-option">
+                            <input type="radio" id="effort1" name="effort" value="1" required>
+                            <label for="effort1">
+                                <span class="score-number">1</span>
+                                <span class="score-label">No Effort</span>
+                                <span class="score-description">No new skills or behaviors. People can adapt instantly.</span>
+                            </label>
+                        </div>
+                        <div class="score-option">
+                            <input type="radio" id="effort2" name="effort" value="2" required>
+                            <label for="effort2">
+                                <span class="score-number">2</span>
+                                <span class="score-label">Minimal Effort</span>
+                                <span class="score-description">Slight adjustments, easy to pick up on the job.</span>
+                            </label>
+                        </div>
+                        <div class="score-option">
+                            <input type="radio" id="effort3" name="effort" value="3" required>
+                            <label for="effort3">
+                                <span class="score-number">3</span>
+                                <span class="score-label">Moderate Effort</span>
+                                <span class="score-description">Noticeable learning required, but achievable with job aids, brief training, or coaching.</span>
+                            </label>
+                        </div>
+                        <div class="score-option">
+                            <input type="radio" id="effort4" name="effort" value="4" required>
+                            <label for="effort4">
+                                <span class="score-number">4</span>
+                                <span class="score-label">Significant Effort</span>
+                                <span class="score-description">Requires structured training, extended practice, or mindset change.</span>
+                            </label>
+                        </div>
+                        <div class="score-option">
+                            <input type="radio" id="effort5" name="effort" value="5" required>
+                            <label for="effort5">
+                                <span class="score-number">5</span>
+                                <span class="score-label">Major Effort</span>
+                                <span class="score-description">Fundamental reskilling or behavior shift needed, with ongoing support and reinforcement.</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Level of Disruption</label>
+                    <div class="scoring-container">
+                        <div class="score-option">
+                            <input type="radio" id="disruption1" name="disruption" value="1" required>
+                            <label for="disruption1">
+                                <span class="score-number">1</span>
+                                <span class="score-label">No Disruption</span>
+                                <span class="score-description">Invisible to most people. Core routines remain intact.</span>
+                            </label>
+                        </div>
+                        <div class="score-option">
+                            <input type="radio" id="disruption2" name="disruption" value="2" required>
+                            <label for="disruption2">
+                                <span class="score-number">2</span>
+                                <span class="score-label">Minimal Disruption</span>
+                                <span class="score-description">Minor adjustments in processes, but daily roles feel the same.</span>
+                            </label>
+                        </div>
+                        <div class="score-option">
+                            <input type="radio" id="disruption3" name="disruption" value="3" required>
+                            <label for="disruption3">
+                                <span class="score-number">3</span>
+                                <span class="score-label">Noticeable Disruption</span>
+                                <span class="score-description">Changes routines or handoffs, but core responsibilities remain stable.</span>
+                            </label>
+                        </div>
+                        <div class="score-option">
+                            <input type="radio" id="disruption4" name="disruption" value="4" required>
+                            <label for="disruption4">
+                                <span class="score-number">4</span>
+                                <span class="score-label">Significant Disruption</span>
+                                <span class="score-description">Shifts responsibilities, alters how people work together, or impacts multiple functions.</span>
+                            </label>
+                        </div>
+                        <div class="score-option">
+                            <input type="radio" id="disruption5" name="disruption" value="5" required>
+                            <label for="disruption5">
+                                <span class="score-number">5</span>
+                                <span class="score-label">High Disruption</span>
+                                <span class="score-description">Redefines work, culture, and relationships across the organization.</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('impactModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Impact Assessment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Planning Modal -->
+    <div id="planModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add Planned Activity</h3>
+                <span class="close" onclick="closeModal('planModal')">&times;</span>
+            </div>
+            <form id="planForm">
+                <div class="form-group">
+                    <label for="planCINumber">CI Number</label>
+                    <select id="planCINumber" name="ciNumber" class="glass-select" required>
+                        <option value="">Select CI Number</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="planDescription">Planned Activity Description</label>
+                    <textarea id="planDescription" name="description" class="glass-input" rows="4" required placeholder="Describe the planned activity..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="planTargetDate">Target Date</label>
+                    <input type="date" id="planTargetDate" name="targetDate" class="glass-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="planInvitee">Invitee</label>
+                    <select id="planInvitee" name="invitee" class="glass-select" required>
+                        <option value="">Select Team Member</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('planModal')">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Planned Activity</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Planning Choice Modal -->
+    <div id="planningChoiceModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Planning Approach</h3>
+                <span class="close" onclick="closeModal('planningChoiceModal')">&times;</span>
+            </div>
+            <div class="planning-choice-container">
+                <p>How would you like to approach planning for this change impact?</p>
+                <div class="choice-buttons">
+                    <button class="btn btn-primary choice-btn" onclick="app.startActivityPlanning()">I have ideas</button>
+                    <button class="btn btn-outline choice-btn" onclick="app.redirectToIdeasBoard()">I need ideas</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Activity Planning Modal -->
+    <div id="activityPlanningModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Activity Planning</h3>
+                <span class="close" onclick="closeModal('activityPlanningModal')">&times;</span>
+            </div>
+            <div class="activity-planning-content">
+                <div class="impact-summary">
+                    <h4>Change Impact Summary</h4>
+                    <div class="current-state">
+                        <strong>Current State:</strong>
+                        <p id="modalCurrentState"></p>
+                    </div>
+                    <div class="future-state">
+                        <strong>Future State:</strong>
+                        <p id="modalFutureState"></p>
+                    </div>
+                </div>
+                
+                <div class="activity-input-section">
+                    <label for="activityDescription">What is one activity that could avoid negative consequences of this and minimize disruption?</label>
+                    <textarea id="activityDescription" class="glass-input" rows="4" placeholder="Describe the activity..."></textarea>
+                    <div class="activity-actions">
+                        <button class="btn btn-primary" onclick="app.addActivity()">Add Activity</button>
+                    </div>
+                </div>
+                
+                <div class="activities-list" id="activitiesList">
+                    <h4>Activities Added</h4>
+                    <div id="activitiesContainer"></div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button class="btn btn-outline" onclick="closeModal('activityPlanningModal')">Cancel</button>
+                    <button class="btn btn-primary" id="nextButton" onclick="app.proceedToEvaluation()" style="display: none;">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Activity Evaluation Modal -->
+    <div id="activityEvaluationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Evaluate Activities</h3>
+                <span class="close" onclick="closeModal('activityEvaluationModal')">&times;</span>
+            </div>
+            <div class="evaluation-content">
+                <p>Now evaluate each activity. Score each based on your opinion(s) of how much effort it will take to implement and how much positive impact the activity will have on addressing the issue. 1 means very low or not much and 5 means very high or a lot.</p>
+                
+                <div class="evaluation-legend">
+                    <div class="legend-item">
+                        <span class="legend-label">Effort Scale:</span>
+                        <span>1 = Very Low Effort → 5 = Very High Effort</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-label">Impact Scale:</span>
+                        <span>1 = Very Low Impact → 5 = Very High Impact</span>
+                    </div>
+                </div>
+                
+                <div id="evaluationActivities"></div>
+                
+                <div class="modal-actions">
+                    <button class="btn btn-outline" onclick="closeModal('activityEvaluationModal')">Cancel</button>
+                    <button class="btn btn-primary" onclick="app.submitActivityEvaluation()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
