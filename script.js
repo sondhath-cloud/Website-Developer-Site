@@ -892,7 +892,7 @@ function startParticleAnimation(THREE, OrbitControlsModule, EffectComposerModule
     let isMorphing = false;
 
     const CONFIG = {
-        particleCount: 15000,
+        particleCount: 8000, // Reduced from 15000 for faster loading
         shapeSize: 14,
         swarmDistanceFactor: 1.5,
         swirlFactor: 4.0,
@@ -902,10 +902,10 @@ function startParticleAnimation(THREE, OrbitControlsModule, EffectComposerModule
         colorScheme: 'fire',
         morphDuration: 4000,
         particleSizeRange: [0.08, 0.25],
-        starCount: 18000,
-        bloomStrength: 1.3,
-        bloomRadius: 0.5,
-        bloomThreshold: 0.05,
+        starCount: 8000, // Reduced from 18000 for faster loading
+        bloomStrength: 1.0, // Reduced for better performance
+        bloomRadius: 0.4, // Reduced for better performance
+        bloomThreshold: 0.1, // Increased for better performance
         idleFlowStrength: 0.25,
         idleFlowSpeed: 0.08,
         idleRotationSpeed: 0.02,
@@ -1104,9 +1104,9 @@ function startParticleAnimation(THREE, OrbitControlsModule, EffectComposerModule
         dirLight2.position.set(-15, -10, -15); scene.add(dirLight2);
         updateProgress(10);
 
-        setupPostProcessing(); updateProgress(10);
-        createStarfield(); updateProgress(15);
-        setupParticleSystem(); updateProgress(25);
+        setupPostProcessing(); updateProgress(15);
+        createStarfield(); updateProgress(25);
+        setupParticleSystem(); updateProgress(35);
 
         window.addEventListener('resize', onWindowResize);
         canvas.addEventListener('click', onCanvasClick);
@@ -1120,10 +1120,17 @@ function startParticleAnimation(THREE, OrbitControlsModule, EffectComposerModule
             });
         });
         document.querySelector(`.particle-color-option[data-scheme="${CONFIG.colorScheme}"]`).classList.add('active');
-        updateProgress(15);
+        updateProgress(20);
 
+        // Start animation immediately for better perceived performance
         isInitialized = true;
         animate();
+        
+        // Complete loading after a short delay to ensure smooth start
+        setTimeout(() => {
+            updateProgress(15);
+        }, 100);
+        
         console.log("Particle animation initialization complete.");
     }
 
@@ -1137,18 +1144,37 @@ function startParticleAnimation(THREE, OrbitControlsModule, EffectComposerModule
     function createStarfield() {
         const starVertices = []; const starSizes = []; const starColors = [];
         const starGeometry = new THREE.BufferGeometry();
-        for (let i = 0; i < CONFIG.starCount; i++) {
+        
+        // Pre-allocate arrays for better performance
+        const vertexCount = CONFIG.starCount;
+        starVertices.length = vertexCount * 3;
+        starSizes.length = vertexCount;
+        starColors.length = vertexCount * 3;
+        
+        for (let i = 0; i < vertexCount; i++) {
+            const i3 = i * 3;
             tempVec.set(THREE.MathUtils.randFloatSpread(400), THREE.MathUtils.randFloatSpread(400), THREE.MathUtils.randFloatSpread(400));
             if (tempVec.length() < 100) tempVec.setLength(100 + Math.random() * 300);
-            starVertices.push(tempVec.x, tempVec.y, tempVec.z);
-            starSizes.push(Math.random() * 0.15 + 0.05);
+            starVertices[i3] = tempVec.x;
+            starVertices[i3 + 1] = tempVec.y;
+            starVertices[i3 + 2] = tempVec.z;
+            starSizes[i] = Math.random() * 0.15 + 0.05;
+            
             const color = new THREE.Color();
-            if (Math.random() < 0.1) { color.setHSL(Math.random(), 0.7, 0.65); } else { color.setHSL(0.6, Math.random() * 0.1, 0.8 + Math.random() * 0.2); }
-            starColors.push(color.r, color.g, color.b);
+            if (Math.random() < 0.1) { 
+                color.setHSL(Math.random(), 0.7, 0.65); 
+            } else { 
+                color.setHSL(0.6, Math.random() * 0.1, 0.8 + Math.random() * 0.2); 
+            }
+            starColors[i3] = color.r;
+            starColors[i3 + 1] = color.g;
+            starColors[i3 + 2] = color.b;
         }
+        
         starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
         starGeometry.setAttribute('color', new THREE.Float32BufferAttribute(starColors, 3));
         starGeometry.setAttribute('size', new THREE.Float32BufferAttribute(starSizes, 1));
+        
         const starMaterial = new THREE.ShaderMaterial({
             uniforms: { pointTexture: { value: createStarTexture() } },
             vertexShader: `
