@@ -29,9 +29,6 @@
                     <a href="#portfolio" class="nav-link">Portfolio</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#skills" class="nav-link">Skills</a>
-                </li>
-                <li class="nav-item">
                     <a href="#anomaly" class="nav-link">Dimensions</a>
                 </li>
                 <li class="nav-item">
@@ -71,7 +68,7 @@
                 </p>
                 <p class="hero-attribution">
                     Many thanks to Thibaut Foussard for creating
-                     the interactive stars! (MIT License)
+                     these interactive stars! (MIT License)
                 </p>
                 <div class="hero-buttons">
                     <a href="#portfolio" class="btn btn-primary">View My Work</a>
@@ -173,253 +170,168 @@
         </div>
     </section>
 
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="portfolio">
+
+    <!-- 3D Portfolio Carousel Section -->
+    <section id="portfolio-carousel" class="portfolio-carousel">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">My Portfolio</h2>
-                <p class="section-subtitle"></p>
+                <h2 class="section-title">Interactive Portfolio Showcase</h2>
+                <p class="section-subtitle">Explore my projects in 3D</p>
             </div>
-            <div class="portfolio-grid">
-                <div class="portfolio-card">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <div class="card-icon">📊</div>
-                            <h3 class="card-title">Community Priority Survey</h3>
-                            <p class="card-description">Data collection and analysis system for community engagement with Bradley-Terry scoring</p>
-                            <div class="card-tech">
-                                <span class="tech-tag">JavaScript</span>
-                                <span class="tech-tag">PHP</span>
-                                <span class="tech-tag">Data Analysis</span>
+            <div class="carousel-wrapper">
+                <div id="wrapper">
+                    <div id="image">
+                        <div class="image i1">
+                            <div class="card-bg bg-1"></div>
+                            <div class="card-content">
+                                <div class="card-icon">📊</div>
+                                <div class="card-title">Community Priority Survey</div>
+                                <div class="card-description">Data collection and analysis system for community engagement with Bradley-Terry scoring</div>
+                                <div class="card-pills">
+                                    <span class="pill">JavaScript</span>
+                                    <span class="pill">PHP</span>
+                                    <span class="pill">Data Analysis</span>
+                                </div>
+                                <div class="card-links">
+                                    <a href="project-demos/community-survey/index.html" class="card-link" target="_blank">Live Demo</a>
+                                    <a href="#" class="card-link secondary">GitHub</a>
+                                </div>
                             </div>
                         </div>
-                        <div class="card-back">
-                            <div class="card-icon">📊</div>
-                            <h3 class="card-title">Community Priority Survey</h3>
-                            <p class="card-description">Interactive data visualization with advanced analytics</p>
-                            <div class="card-links">
-                                <a href="project-demos/community-survey/index.html" class="card-link primary" target="_blank">
-                                    Live Demo
-                                </a>
-                                <a href="#" class="card-link secondary">
-                                    GitHub
-                                </a>
+                        <div class="image i2">
+                            <div class="card-bg bg-2"></div>
+                            <div class="card-content">
+                                <div class="card-icon">📈</div>
+                                <div class="card-title">Development Impact Calculator</div>
+                                <div class="card-description">Comprehensive business impact assessment tool with progress tracking</div>
+                                <div class="card-pills">
+                                    <span class="pill">JavaScript</span>
+                                    <span class="pill">Data Visualization</span>
+                                    <span class="pill">Business Analytics</span>
+                                </div>
+                                <div class="card-links">
+                                    <a href="project-demos/impact-calculator/index.html" class="card-link" target="_blank">Live Demo</a>
+                                    <a href="#" class="card-link secondary">GitHub</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="portfolio-card">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <div class="card-icon">🎵</div>
-                            <h3 class="card-title">Professional Metronome</h3>
-                            <p class="card-description">Advanced metronome with voice commands, multiple sounds, and complex time signatures</p>
-                            <div class="card-tech">
-                                <span class="tech-tag">Web Audio API</span>
-                                <span class="tech-tag">JavaScript</span>
-                                <span class="tech-tag">Voice Recognition</span>
+                        <div class="image i3">
+                            <div class="card-bg bg-3"></div>
+                            <div class="card-content">
+                                <div class="card-icon">🎵</div>
+                                <div class="card-title">Professional Metronome</div>
+                                <div class="card-description">Advanced metronome with voice commands, multiple sounds, and complex time signatures</div>
+                                <div class="card-pills">
+                                    <span class="pill">Web Audio API</span>
+                                    <span class="pill">JavaScript</span>
+                                    <span class="pill">Voice Recognition</span>
+                                </div>
+                                <div class="card-links">
+                                    <a href="project-demos/metronome/index.html" class="card-link" target="_blank">Live Demo</a>
+                                    <a href="#" class="card-link secondary">GitHub</a>
+                                </div>
                             </div>
                         </div>
-                        <div class="card-back">
-                            <div class="card-icon">🎵</div>
-                            <h3 class="card-title">Professional Metronome</h3>
-                            <p class="card-description">Advanced audio processing with real-time visualization</p>
-                            <div class="card-links">
-                                <a href="project-demos/metronome/index.html" class="card-link primary" target="_blank">
-                                    Live Demo
-                                </a>
-                                <a href="#" class="card-link secondary">
-                                    GitHub
-                                </a>
+                        <div class="image i4">
+                            <div class="card-bg bg-4"></div>
+                            <div class="card-content">
+                                <div class="card-icon">👥</div>
+                                <div class="card-title">Stakeholder Impact Tool</div>
+                                <div class="card-description">Interactive stakeholder identification system with Supabase integration</div>
+                                <div class="card-pills">
+                                    <span class="pill">Supabase</span>
+                                    <span class="pill">JavaScript</span>
+                                    <span class="pill">Data Analysis</span>
+                                </div>
+                                <div class="card-links">
+                                    <a href="project-demos/persona-cards/index.html" class="card-link" target="_blank">Live Demo</a>
+                                    <a href="#" class="card-link secondary">GitHub</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="portfolio-card">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <div class="card-icon">🏢</div>
-                            <h3 class="card-title">ResultsMode App</h3>
-                            <p class="card-description">Comprehensive organizational management system with team directory, stakeholder analysis, and planning tools</p>
-                            <div class="card-tech">
-                                <span class="tech-tag">JavaScript</span>
-                                <span class="tech-tag">PHP</span>
-                                <span class="tech-tag">MySQL</span>
+                        <div class="image i5">
+                            <div class="card-bg bg-5"></div>
+                            <div class="card-content">
+                                <div class="card-icon">📝</div>
+                                <div class="card-title">Project Management Form</div>
+                                <div class="card-description">Comprehensive data collection system for project management and procurement experience</div>
+                                <div class="card-pills">
+                                    <span class="pill">JavaScript</span>
+                                    <span class="pill">HTML5</span>
+                                    <span class="pill">Data Export</span>
+                                </div>
+                                <div class="card-links">
+                                    <a href="project-demos/project-form/index.html" class="card-link" target="_blank">Live Demo</a>
+                                    <a href="#" class="card-link secondary">GitHub</a>
+                                </div>
                             </div>
                         </div>
-                        <div class="card-back">
-                            <div class="card-icon">🏢</div>
-                            <h3 class="card-title">ResultsMode App</h3>
-                            <p class="card-description">Enterprise management with advanced team collaboration</p>
-                            <div class="card-links">
-                                <a href="project-demos/resultsmode/index.html" class="card-link primary" target="_blank">
-                                    Live Demo
-                                </a>
-                                <a href="#" class="card-link secondary">
-                                    GitHub
-                                </a>
+                        <div class="image i6">
+                            <div class="card-bg bg-6"></div>
+                            <div class="card-content">
+                                <div class="card-icon">📄</div>
+                                <div class="card-title">CIC Proposal Generator</div>
+                                <div class="card-description">Multi-user proposal generation system with document export and theme customization</div>
+                                <div class="card-pills">
+                                    <span class="pill">Node.js</span>
+                                    <span class="pill">PDF Generation</span>
+                                    <span class="pill">Multi-User</span>
+                                </div>
+                                <div class="card-links">
+                                    <a href="project-demos/proposal-generator/index.html" class="card-link" target="_blank">Live Demo</a>
+                                    <a href="#" class="card-link secondary">GitHub</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="portfolio-card">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <div class="card-icon">📝</div>
-                            <h3 class="card-title">Project Management Form</h3>
-                            <p class="card-description">Comprehensive data collection system for project management and procurement experience</p>
-                            <div class="card-tech">
-                                <span class="tech-tag">JavaScript</span>
-                                <span class="tech-tag">HTML5</span>
-                                <span class="tech-tag">Data Export</span>
+                        <div class="image i7">
+                            <div class="card-bg bg-7"></div>
+                            <div class="card-content">
+                                <div class="card-icon">🏢</div>
+                                <div class="card-title">ResultsMode App</div>
+                                <div class="card-description">Comprehensive organizational management system with team directory, stakeholder analysis, and planning tools</div>
+                                <div class="card-pills">
+                                    <span class="pill">JavaScript</span>
+                                    <span class="pill">PHP</span>
+                                    <span class="pill">MySQL</span>
+                                </div>
+                                <div class="card-links">
+                                    <a href="project-demos/resultsmode/index.html" class="card-link" target="_blank">Live Demo</a>
+                                    <a href="#" class="card-link secondary">GitHub</a>
+                                </div>
                             </div>
                         </div>
-                        <div class="card-back">
-                            <div class="card-icon">📝</div>
-                            <h3 class="card-title">Project Management Form</h3>
-                            <p class="card-description">Advanced data collection with intelligent form processing</p>
-                            <div class="card-links">
-                                <a href="project-demos/project-form/index.html" class="card-link primary" target="_blank">
-                                    Live Demo
-                                </a>
-                                <a href="#" class="card-link secondary">
-                                    GitHub
-                                </a>
+                        <div class="image i8">
+                            <div class="card-bg bg-8"></div>
+                            <div class="card-content">
+                                <div class="card-icon">🎨</div>
+                                <div class="card-title">Arielle Pivonka Art Website</div>
+                                <div class="card-description">Professional artist portfolio with commission system and contact forms</div>
+                                <div class="card-pills">
+                                    <span class="pill">PHP</span>
+                                    <span class="pill">MySQL</span>
+                                    <span class="pill">E-commerce</span>
+                                </div>
+                                <div class="card-links">
+                                    <a href="project-demos/arielle-art/index.html" class="card-link" target="_blank">Live Demo</a>
+                                    <a href="#" class="card-link secondary">GitHub</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="portfolio-card">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <div class="card-icon">📄</div>
-                            <h3 class="card-title">CIC Proposal Generator</h3>
-                            <p class="card-description">Multi-user proposal generation system with document export and theme customization</p>
-                            <div class="card-tech">
-                                <span class="tech-tag">Node.js</span>
-                                <span class="tech-tag">PDF Generation</span>
-                                <span class="tech-tag">Multi-User</span>
-                            </div>
-                        </div>
-                        <div class="card-back">
-                            <div class="card-icon">📄</div>
-                            <h3 class="card-title">CIC Proposal Generator</h3>
-                            <p class="card-description">Dynamic document generation with real-time collaboration</p>
-                            <div class="card-links">
-                                <a href="project-demos/proposal-generator/index.html" class="card-link primary" target="_blank">
-                                    Live Demo
-                                </a>
-                                <a href="#" class="card-link secondary">
-                                    GitHub
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="portfolio-card">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <div class="card-icon">🎨</div>
-                            <h3 class="card-title">Arielle Pivonka Art Website</h3>
-                            <p class="card-description">Professional artist portfolio with commission system and contact forms</p>
-                            <div class="card-tech">
-                                <span class="tech-tag">PHP</span>
-                                <span class="tech-tag">MySQL</span>
-                                <span class="tech-tag">E-commerce</span>
-                            </div>
-                        </div>
-                        <div class="card-back">
-                            <div class="card-icon">🎨</div>
-                            <h3 class="card-title">Arielle Pivonka Art Website</h3>
-                            <p class="card-description">Creative portfolio with immersive art gallery experience</p>
-                            <div class="card-links">
-                                <a href="project-demos/arielle-art/index.html" class="card-link primary" target="_blank">
-                                    Live Demo
-                                </a>
-                                <a href="#" class="card-link secondary">
-                                    GitHub
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="portfolio-card">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <div class="card-icon">🌌</div>
-                            <h3 class="card-title">Team Orbit Animation</h3>
-                            <p class="card-description">Interactive team showcase with customizable orbit animation and member profiles</p>
-                            <div class="card-tech">
-                                <span class="tech-tag">CSS3</span>
-                                <span class="tech-tag">JavaScript</span>
-                                <span class="tech-tag">Animation</span>
-                            </div>
-                        </div>
-                        <div class="card-back">
-                            <div class="card-icon">🌌</div>
-                            <h3 class="card-title">Team Orbit Animation</h3>
-                            <p class="card-description">Interactive 3D team visualization with dynamic orbits</p>
-                            <div class="card-links">
-                                <a href="project-demos/team-orbit/team-orbit-custom.html" class="card-link primary" target="_blank">
-                                    Live Demo
-                                </a>
-                                <a href="#" class="card-link secondary">
-                                    GitHub
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="portfolio-card">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <div class="card-icon">👥</div>
-                            <h3 class="card-title">Stakeholder Impact Tool</h3>
-                            <p class="card-description">Interactive stakeholder identification system with Supabase integration</p>
-                            <div class="card-tech">
-                                <span class="tech-tag">Supabase</span>
-                                <span class="tech-tag">JavaScript</span>
-                                <span class="tech-tag">Data Analysis</span>
-                            </div>
-                        </div>
-                        <div class="card-back">
-                            <div class="card-icon">👥</div>
-                            <h3 class="card-title">Stakeholder Impact Tool</h3>
-                            <p class="card-description">Advanced stakeholder analysis with interactive persona mapping</p>
-                            <div class="card-links">
-                                <a href="project-demos/persona-cards/index.html" class="card-link primary" target="_blank">
-                                    Live Demo
-                                </a>
-                                <a href="#" class="card-link secondary">
-                                    GitHub
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="portfolio-card">
-                    <div class="card-inner">
-                        <div class="card-front">
-                            <div class="card-icon">📈</div>
-                            <h3 class="card-title">Development Impact Calculator</h3>
-                            <p class="card-description">Comprehensive business impact assessment tool with progress tracking</p>
-                            <div class="card-tech">
-                                <span class="tech-tag">JavaScript</span>
-                                <span class="tech-tag">Data Visualization</span>
-                                <span class="tech-tag">Business Analytics</span>
-                            </div>
-                        </div>
-                        <div class="card-back">
-                            <div class="card-icon">📈</div>
-                            <h3 class="card-title">Development Impact Calculator</h3>
-                            <p class="card-description">Real-time analytics dashboard with advanced data visualization</p>
-                            <div class="card-links">
-                                <a href="project-demos/impact-calculator/index.html" class="card-link primary" target="_blank">
-                                    Live Demo
-                                </a>
-                                <a href="#" class="card-link secondary">
-                                    GitHub
-                                </a>
+                        <div class="image i9">
+                            <div class="card-bg bg-9"></div>
+                            <div class="card-content">
+                                <div class="card-icon">🌌</div>
+                                <div class="card-title">Team Orbit Animation</div>
+                                <div class="card-description">Interactive team showcase with customizable orbit animation and member profiles</div>
+                                <div class="card-pills">
+                                    <span class="pill">CSS3</span>
+                                    <span class="pill">JavaScript</span>
+                                    <span class="pill">Animation</span>
+                                </div>
+                                <div class="card-links">
+                                    <a href="project-demos/team-orbit/team-orbit-custom.html" class="card-link" target="_blank">Live Demo</a>
+                                    <a href="#" class="card-link secondary">GitHub</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -428,175 +340,6 @@
         </div>
     </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="skills">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Skills and Technologies</h2>
-                <p class="section-subtitle">Tools and technologies I work with</p>
-            </div>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>Frontend and Mobile</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <span class="skill-name">HTML5</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="95%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">CSS3 and Animations</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="90%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">JavaScript (ES6+)</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="95%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">Web Audio API</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="85%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">Canvas and WebGL</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="80%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">Responsive Design</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="90%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Backend and Cloud</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <span class="skill-name">Node.js and Express</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="90%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">PHP</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="90%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">Python</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="80%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">MySQL</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="88%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">Supabase</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="85%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">JSON and CSV</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="95%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>DevOps and Tools</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <span class="skill-name">Git and GitHub</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="95%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">npm and Package Management</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="90%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">PyInstaller</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="80%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">Data Visualization</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="85%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">Agile/Scrum</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="90%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Organizational and Human-Centered</h3>
-                    <div class="skill-items">
-                        <div class="skill-item">
-                            <span class="skill-name">Organizational Development</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="95%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">Psychology and Sociology</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="90%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">Business Administration</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="88%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">Data Analysis and Statistics</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="85%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">User Experience Design</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="92%"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">Project Management</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="90%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Space Time Anomaly Section -->
     <section id="anomaly" class="anomaly-section">
