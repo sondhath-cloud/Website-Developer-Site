@@ -1,0 +1,31 @@
+Response ID,Timestamp,Card A,Card B,Chosen Card,Category A,Category B,Is Custom A,Is Custom B
+resp_6890dd8b66e567.62501584,2025-08-04 20:19:23,"Better street lighting and security","Increase affordable housing options","Increase affordable housing options","Safety","Social Services",0,0
+resp_6890dd8b66e567.62501584,2025-08-04 20:19:23,"Better street lighting and security","Improve public transportation system","Tie","Safety","Transportation",0,0
+resp_6890dd8b66e567.62501584,2025-08-04 20:19:23,"Better street lighting and security","Create more bike lanes and walking paths","Tie","Safety","Transportation",0,0
+resp_6890dd8b66e567.62501584,2025-08-04 20:19:23,"Better street lighting and security","Add more parks and green spaces","Better street lighting and security","Safety","Environment",0,0
+resp_6890dd8b66e567.62501584,2025-08-04 20:19:23,"Increase affordable housing options","Improve public transportation system","Increase affordable housing options","Social Services","Transportation",0,0
+resp_6890dd8b66e567.62501584,2025-08-04 20:19:23,"Increase affordable housing options","Create more bike lanes and walking paths","Increase affordable housing options","Social Services","Transportation",0,0
+resp_6890dd8b66e567.62501584,2025-08-04 20:19:23,"Increase affordable housing options","Add more parks and green spaces","Increase affordable housing options","Social Services","Environment",0,0
+resp_6890dd8b66e567.62501584,2025-08-04 20:19:23,"Improve public transportation system","Create more bike lanes and walking paths","Tie","Transportation","Transportation",0,0
+resp_6890dd8b66e567.62501584,2025-08-04 20:19:23,"Improve public transportation system","Add more parks and green spaces","Improve public transportation system","Transportation","Environment",0,0
+resp_6890dd8b66e567.62501584,2025-08-04 20:19:23,"Create more bike lanes and walking paths","Add more parks and green spaces","Create more bike lanes and walking paths","Transportation","Environment",0,0
+resp_6890e071874ad4.23063156,2025-08-04 20:31:45,"Better street lighting and security","Add more parks and green spaces","Better street lighting and security","Safety","Environment",0,0
+resp_6890e071874ad4.23063156,2025-08-04 20:31:45,"Better street lighting and security","Ensure responsible debt management","Better street lighting and security","Safety","Financial Stewardship",0,0
+resp_6890e071874ad4.23063156,2025-08-04 20:31:45,"Better street lighting and security","Develop downtown revitalization projects","Better street lighting and security","Safety","Economic Development",0,0
+resp_6890e071874ad4.23063156,2025-08-04 20:31:45,"Better street lighting and security","Enhance traffic flow and management","Better street lighting and security","Safety","Transportation",0,0
+resp_6890e071874ad4.23063156,2025-08-04 20:31:45,"Add more parks and green spaces","Ensure responsible debt management","Add more parks and green spaces","Environment","Financial Stewardship",0,0
+resp_6890e071874ad4.23063156,2025-08-04 20:31:45,"Add more parks and green spaces","Develop downtown revitalization projects","Add more parks and green spaces","Environment","Economic Development",0,0
+resp_6890e071874ad4.23063156,2025-08-04 20:31:45,"Add more parks and green spaces","Enhance traffic flow and management","Add more parks and green spaces","Environment","Transportation",0,0
+resp_6890e071874ad4.23063156,2025-08-04 20:31:45,"Ensure responsible debt management","Develop downtown revitalization projects","Ensure responsible debt management","Financial Stewardship","Economic Development",0,0
+resp_6890e071874ad4.23063156,2025-08-04 20:31:45,"Ensure responsible debt management","Enhance traffic flow and management","Ensure responsible debt management","Financial Stewardship","Transportation",0,0
+resp_6890e071874ad4.23063156,2025-08-04 20:31:45,"Develop downtown revitalization projects","Enhance traffic flow and management","Develop downtown revitalization projects","Economic Development","Transportation",0,0
+resp_6890fa6f188482.19560834,2025-08-04 22:22:39,"Add more parks and green spaces","Improve emergency response services","Add more parks and green spaces","Environment","Safety",0,0
+resp_6890fa6f188482.19560834,2025-08-04 22:22:39,"Add more parks and green spaces","Build better parking infrastructure","Add more parks and green spaces","Environment","Transportation",0,0
+resp_6890fa6f188482.19560834,2025-08-04 22:22:39,"Add more parks and green spaces","Build new recreation centers","Add more parks and green spaces","Environment","Education & Recreation",0,0
+resp_6890fa6f188482.19560834,2025-08-04 22:22:39,"Add more parks and green spaces","Better street lighting and security","Add more parks and green spaces","Environment","Safety",0,0
+resp_6890fa6f188482.19560834,2025-08-04 22:22:39,"Improve emergency response services","Build better parking infrastructure","Improve emergency response services","Safety","Transportation",0,0
+resp_6890fa6f188482.19560834,2025-08-04 22:22:39,"Improve emergency response services","Build new recreation centers","Improve emergency response services","Safety","Education & Recreation",0,0
+resp_6890fa6f188482.19560834,2025-08-04 22:22:39,"Improve emergency response services","Better street lighting and security","Improve emergency response services","Safety","Safety",0,0
+resp_6890fa6f188482.19560834,2025-08-04 22:22:39,"Build better parking infrastructure","Build new recreation centers","Build better parking infrastructure","Transportation","Education & Recreation",0,0
+resp_6890fa6f188482.19560834,2025-08-04 22:22:39,"Build better parking infrastructure","Better street lighting and security","Build better parking infrastructure","Transportation","Safety",0,0
+resp_6890fa6f188482.19560834,2025-08-04 22:22:39,"Build new recreation centers","Better street lighting and security","Build new recreation centers","Education & Recreation","Safety",0,0

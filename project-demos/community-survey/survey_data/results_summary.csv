@@ -1,0 +1,12 @@
+Card,Category,Total Wins,Total Losses,Net Wins,Preference Score
+"Better street lighting and security","Safety",5,9,-4,0.3571
+"Increase affordable housing options","Social Services",4,0,4,1.0000
+"Improve public transportation system","Transportation",1,1,0,0.5000
+"Create more bike lanes and walking paths","Transportation",1,1,0,0.5000
+"Add more parks and green spaces","Environment",11,5,6,0.6875
+"Ensure responsible debt management","Financial Stewardship",2,2,0,0.5000
+"Develop downtown revitalization projects","Economic Development",1,3,-2,0.2500
+"Enhance traffic flow and management","Transportation",0,4,-4,0.0000
+"Improve emergency response services","Safety",6,2,4,0.7500
+"Build better parking infrastructure","Transportation",4,4,0,0.5000
+"Build new recreation centers","Education & Recreation",2,6,-4,0.2500

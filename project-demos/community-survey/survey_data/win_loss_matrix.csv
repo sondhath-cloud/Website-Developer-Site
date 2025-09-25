@@ -1,0 +1,12 @@
+Card,"Add more parks and green spaces","Better street lighting and security","Build better parking infrastructure","Build new recreation centers","Create more bike lanes and walking paths","Develop downtown revitalization projects","Enhance traffic flow and management","Ensure responsible debt management","Improve emergency response services","Improve public transportation system","Increase affordable housing options"
+"Add more parks and green spaces",0,2,2,2,0,1,1,1,2,0,0
+"Better street lighting and security",2,0,0,0,0,1,1,1,0,0,0
+"Build better parking infrastructure",0,2,0,2,0,0,0,0,0,0,0
+"Build new recreation centers",0,2,0,0,0,0,0,0,0,0,0
+"Create more bike lanes and walking paths",1,0,0,0,0,0,0,0,0,0,0
+"Develop downtown revitalization projects",0,0,0,0,0,0,1,0,0,0,0
+"Enhance traffic flow and management",0,0,0,0,0,0,0,0,0,0,0
+"Ensure responsible debt management",0,0,0,0,0,1,1,0,0,0,0
+"Improve emergency response services",0,2,2,2,0,0,0,0,0,0,0
+"Improve public transportation system",1,0,0,0,0,0,0,0,0,0,0
+"Increase affordable housing options",1,1,0,0,1,0,0,0,0,1,0

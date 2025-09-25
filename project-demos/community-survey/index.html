@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Priority Assessment</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Logo placeholder - uncomment and customize as needed -->
+        <!-- 
+        <div class="logo-section" style="text-align: center; margin-bottom: 20px;">
+            <img src="path/to/your-logo.png" alt="Organization Logo" style="max-height: 80px; max-width: 300px;">
+        </div>
+        -->
+
+        <div class="header">
+            <h1>Sample<br>
+            Community Priority Exercise</h1>
+            <p>Help us understand what matters most to you in our community.
+                <br>This process will identify your
+                top priorities through comparison and analysis.
+            </p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill" style="width: 25%"></div>
+        </div>
+
+        <!-- Stage 1: Initial Selection (No Categories Shown) -->
+        <div id="stage1" class="stage-section">
+            <div class="stage-header">
+                <h2>Stage 1: What is important to you?</h2>
+                <p>Below are sample community priorities. Select all that matter, but you must select at least 5.<br>
+                    If you don't see one, don't worry. You will have the chance to add it in the next Step.</p>
+            </div>
+
+            <div class="priorities-grid" id="priorities-grid"></div>
+
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="proceedToStage2()" id="stage1-btn" disabled>
+                    Continue to Comparisons (<span id="selected-count">0</span> selected)
+                </button>
+            </div>
+        </div>
+
+        <!-- Stage 2: Complete Pairwise Comparisons -->
+        <div id="stage2" class="stage-section hidden">
+            <div class="stage-header">
+                <h2>Stage 2: Head-to-Head Comparisons</h2>
+                <p>Now click the card that is more important to you.</p>
+            </div>
+
+            <div class="comparison-counter">
+                Comparison <span id="current-comparison">1</span> of <span id="total-comparisons">0</span>
+            </div>
+
+            <div class="comparison-container">
+                <div class="option-card" id="option1" onclick="selectComparison(0)">
+                    <div class="option-category" id="option1-category"></div>
+                    <div class="option-text" id="option1-text"></div>
+                </div>
+                <div class="vs-divider">or</div>
+                <div class="option-card" id="option2" onclick="selectComparison(1)">
+                    <div class="option-category" id="option2-category"></div>
+                    <div class="option-text" id="option2-text"></div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="skipComparison()">Skip This Comparison</button>
+            </div>
+        </div>
+
+        <!-- Stage 2.5: Add Custom Priorities -->
+        <div id="stage2-5" class="stage-section hidden">
+            <div class="stage-header">
+                <h2>Stage 2.5: Add Your Own Priorities</h2>
+                <p>Is there something important to you that wasn't included? Add your own priorities below.<br>
+                    They will be included in additional comparisons with your other selections.</p>
+            </div>
+
+            <div class="custom-priority-form">
+                <div class="form-group">
+                    <label for="custom-priority-text">Priority Description:</label>
+                    <input type="text" id="custom-priority-text" placeholder="e.g., Improve senior transportation services" maxlength="100">
+                </div>
+
+                <div class="form-group">
+                    <label for="custom-priority-category">Category:</label>
+                    <select id="custom-priority-category">
+                        <option value="">Select a category...</option>
+                        <option value="Economic Development">Economic Development</option>
+                        <option value="Safety">Safety</option>
+                        <option value="Infrastructure">Infrastructure</option>
+                        <option value="Transportation">Transportation</option>
+                        <option value="Environment">Environment</option>
+                        <option value="Social Services">Social Services</option>
+                        <option value="Education and Recreation">Education and Recreation</option>
+                        <option value="Financial Stewardship">Financial Stewardship</option>
+                    </select>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-success" onclick="addCustomPriority()">Add Priority</button>
+                </div>
+            </div>
+
+            <div class="custom-priorities-list" id="custom-priorities-list"></div>
+
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="proceedToFinalComparisons()" id="continue-to-final">
+                    Continue to Final Rankings
+                </button>
+                <button class="btn btn-secondary" onclick="skipCustomPriorities()">
+                    Skip - Go to Results
+                </button>
+            </div>
+        </div>
+
+        <!-- Stage 3: Final Comparisons with Custom Priorities -->
+        <div id="stage3" class="stage-section hidden">
+            <div class="stage-header">
+                <h2>Stage 3: Final Comparisons</h2>
+                <p>Now let's compare your custom priorities with your other selections.</p>
+            </div>
+
+            <div class="comparison-counter">
+                Comparison <span id="final-current-comparison">1</span> of <span id="final-total-comparisons">0</span>
+            </div>
+
+            <div class="comparison-container">
+                <div class="option-card" id="final-option1" onclick="selectFinalComparison(0)">
+                    <div class="option-category" id="final-option1-category"></div>
+                    <div class="option-text" id="final-option1-text"></div>
+                </div>
+                <div class="vs-divider">or</div>
+                <div class="option-card" id="final-option2" onclick="selectFinalComparison(1)">
+                    <div class="option-category" id="final-option2-category"></div>
+                    <div class="option-text" id="final-option2-text"></div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="skipFinalComparison()">Skip This Comparison</button>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div id="results" class="results-section hidden">
+            <h2>🎯 Your Community Priority Results</h2>
+            <p>Based on your comparisons, here are your top community priority areas:</p>
+
+            <div class="results-list" id="results-list"></div>
+
+            <div class="data-export" style="display: none;">
+                <h3>📊 Response Data (for compilation)</h3>
+                <textarea id="response-data" readonly placeholder="Your response data will appear here..."></textarea>
+                <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
+                    This data can be copied and pasted into a spreadsheet for compilation with other responses.
+                </p>
+                <div class="action-buttons">
+                    <button class="btn btn-white" onclick="copyResponseData()">Copy Data</button>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-white" onclick="submitToSpreadsheet()">Submit Response</button>
+                <button class="btn btn-white" onclick="startOver()">Start Over</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

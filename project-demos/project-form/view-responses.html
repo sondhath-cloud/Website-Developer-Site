@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Form Responses - Project Management & Procurement Experience</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="view-styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card-container">
+            <header class="form-header">
+                <h1>Form Responses Dashboard</h1>
+                <p>View and manage all submitted project management and procurement experience forms.</p>
+                <div class="dashboard-controls">
+                    <button id="toggleView" class="view-toggle-btn">Switch to Card View</button>
+                    <button id="exportData" class="export-btn">Export to CSV</button>
+                    <button id="clearData" class="clear-btn">Clear All Data</button>
+                </div>
+            </header>
+
+            <div class="responses-container">
+                <div id="responsesList" class="responses-list">
+                    <!-- Responses will be loaded here -->
+                </div>
+                
+                <div id="noResponses" class="no-responses" style="display: none;">
+                    <h3>No responses yet</h3>
+                    <p>Form submissions will appear here once people start filling out the form.</p>
+                    <a href="index.html" class="back-to-form-btn">Go to Form</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="view-script.js"></script>
+</body>
+</html>
