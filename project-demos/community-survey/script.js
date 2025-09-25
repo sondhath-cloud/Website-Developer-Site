@@ -135,11 +135,12 @@ function updateSelectedCount() {
     }
     
     if (stage1BtnEl) {
-        stage1BtnEl.disabled = count < 5;
+        // Always enable the button so users can click it and get the notification
+        stage1BtnEl.disabled = false;
         if (count >= 5) {
-            console.log('Button should now be enabled');
+            console.log('Button enabled, user can proceed');
         } else {
-            console.log('Button still disabled, need', (5 - count), 'more selections');
+            console.log('Button enabled, will show notification if clicked');
         }
     } else {
         console.error('stage1-btn element not found');
@@ -152,7 +153,9 @@ function proceedToStage2() {
     
     if (selectedPriorities.length < 5) {
         console.log('Not enough priorities selected, need at least 5');
-        alert('Please select at least 5 priorities before continuing.');
+        const remaining = 5 - selectedPriorities.length;
+        const cardText = remaining === 1 ? 'card' : 'cards';
+        alert(`Please choose ${remaining} more ${cardText} before continuing.`);
         return;
     }
 
