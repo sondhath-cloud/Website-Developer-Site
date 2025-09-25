@@ -4,30 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sondra Hathaway - Software Developer Portfolio</title>
-    <meta name="description" content="Professional software developer specializing in modern, responsive websites and web applications.">
+    <meta name="description" content="Professional software developer specializing in full-stack web applications, modern frameworks, and innovative digital solutions.">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- Three.js Import Map for Particle Animation -->
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "https://cdn.jsdelivr.net/npm/three@0.163.0/build/three.module.js",
-          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.163.0/examples/jsm/",
-          "animejs": "https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.es.js",
-          "simplex-noise": "https://cdn.skypack.dev/simplex-noise@4.0.1"
-        }
-      }
-    </script>
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <span class="logo-text">SC</span>
+                <span class="logo-text">SH</span>
             </div>
             <ul class="nav-menu">
                 <li class="nav-item">
@@ -44,9 +33,6 @@
                 </li>
                 <li class="nav-item">
                     <a href="#anomaly" class="nav-link">Dimensions</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#particles" class="nav-link">Particles</a>
                 </li>
                 <li class="nav-item">
                     <a href="#contact" class="nav-link">Contact</a>
@@ -73,8 +59,14 @@
                     <span class="title-line">That Matter</span>
                 </h1>
                 <p class="hero-subtitle">
-                    I'm Sarah Chen, a passionate web developer crafting modern, 
-                    responsive websites that combine stunning design with seamless functionality.
+                    I'm Sondra Hathaway, a passionate software developer crafting innovative 
+                    digital solutions that combine cutting-edge technology with exceptional user experiences.
+                </p>
+                <p class="hero-description">
+                    I unite expertise in organizational development with formal training in psychology, 
+                    sociology, and business administration. My passion for continuous improvement drives me 
+                    to design digital tools, including AI, apps, websites, and learning resources, that 
+                    enhance organizational performance.
                 </p>
                 <div class="hero-buttons">
                     <a href="#portfolio" class="btn btn-primary">View My Work</a>
@@ -118,15 +110,17 @@
                     <div class="about-card">
                         <h3>My Story</h3>
                         <p>
-                            With over 5 years of experience in web development, I specialize in creating 
-                            modern, responsive websites that not only look stunning but also deliver exceptional 
-                            user experiences. My journey began with a curiosity about how websites work, and 
-                            it has evolved into a passion for crafting digital solutions that make a difference.
+                            With a unique blend of organizational development expertise and formal training in 
+                            psychology, sociology, and business administration, I bring a human-centered approach 
+                            to software development. My journey combines technical skills with deep understanding 
+                            of how people and organizations work, enabling me to create digital solutions that 
+                            truly enhance performance and drive meaningful change.
                         </p>
                         <p>
-                            I believe in the power of clean code, thoughtful design, and user-centered 
-                            development. Every project I work on is an opportunity to learn, grow, and 
-                            create something meaningful.
+                            I specialize in designing AI-powered tools, learning resources, and organizational 
+                            applications that bridge the gap between technology and human potential. Every project 
+                            I work on is an opportunity to apply psychological principles, organizational theory, 
+                            and cutting-edge technology to solve real-world challenges.
                         </p>
                     </div>
                     <div class="stats-grid">
@@ -172,16 +166,38 @@
                 <div class="portfolio-item">
                     <div class="portfolio-image">
                         <div class="project-placeholder">
-                            <span>E-Commerce Platform</span>
+                            <span>AI Learning Platform</span>
                         </div>
                         <div class="portfolio-overlay">
                             <div class="overlay-content">
-                                <h3>E-Commerce Platform</h3>
-                                <p>Full-stack e-commerce solution with React and Node.js</p>
+                                <h3>AI Learning Platform</h3>
+                                <p>Organizational learning platform with AI-powered personalization</p>
                                 <div class="project-tech">
+                                    <span class="tech-tag">Python</span>
+                                    <span class="tech-tag">AI/ML</span>
                                     <span class="tech-tag">React</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="#" class="project-link">Live Demo</a>
+                                    <a href="#" class="project-link">GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <div class="project-placeholder">
+                            <span>Microservices API</span>
+                        </div>
+                        <div class="portfolio-overlay">
+                            <div class="overlay-content">
+                                <h3>Microservices API</h3>
+                                <p>High-performance REST API with microservices architecture</p>
+                                <div class="project-tech">
                                     <span class="tech-tag">Node.js</span>
-                                    <span class="tech-tag">MongoDB</span>
+                                    <span class="tech-tag">Express</span>
+                                    <span class="tech-tag">PostgreSQL</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="#" class="project-link">Live Demo</a>
@@ -194,38 +210,16 @@
                 <div class="portfolio-item">
                     <div class="portfolio-image">
                         <div class="project-placeholder">
-                            <span>Corporate Website</span>
+                            <span>DevOps Pipeline</span>
                         </div>
                         <div class="portfolio-overlay">
                             <div class="overlay-content">
-                                <h3>Corporate Website</h3>
-                                <p>Modern corporate website with CMS integration</p>
+                                <h3>DevOps Pipeline</h3>
+                                <p>Automated CI/CD pipeline with containerization</p>
                                 <div class="project-tech">
-                                    <span class="tech-tag">Vue.js</span>
-                                    <span class="tech-tag">PHP</span>
-                                    <span class="tech-tag">MySQL</span>
-                                </div>
-                                <div class="project-links">
-                                    <a href="#" class="project-link">Live Demo</a>
-                                    <a href="#" class="project-link">GitHub</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="portfolio-item">
-                    <div class="portfolio-image">
-                        <div class="project-placeholder">
-                            <span>Mobile App</span>
-                        </div>
-                        <div class="portfolio-overlay">
-                            <div class="overlay-content">
-                                <h3>Mobile App</h3>
-                                <p>Cross-platform mobile application</p>
-                                <div class="project-tech">
-                                    <span class="tech-tag">React Native</span>
-                                    <span class="tech-tag">Firebase</span>
-                                    <span class="tech-tag">Redux</span>
+                                    <span class="tech-tag">Docker</span>
+                                    <span class="tech-tag">Jenkins</span>
+                                    <span class="tech-tag">Kubernetes</span>
                                 </div>
                                 <div class="project-links">
                                     <a href="#" class="project-link">Live Demo</a>
@@ -327,7 +321,7 @@
             </div>
             <div class="skills-grid">
                 <div class="skill-category">
-                    <h3>Frontend Development</h3>
+                    <h3>Frontend & Mobile</h3>
                     <div class="skill-items">
                         <div class="skill-item">
                             <span class="skill-name">HTML5</span>
@@ -362,7 +356,7 @@
                     </div>
                 </div>
                 <div class="skill-category">
-                    <h3>Backend Development</h3>
+                    <h3>Backend & Cloud</h3>
                     <div class="skill-items">
                         <div class="skill-item">
                             <span class="skill-name">Node.js</span>
@@ -396,6 +390,76 @@
                         </div>
                     </div>
                 </div>
+                <div class="skill-category">
+                    <h3>DevOps & Tools</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <span class="skill-name">Git & GitHub</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Docker</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">AWS</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="80%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">CI/CD</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="88%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Agile/Scrum</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="90%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Organizational & Human-Centered</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <span class="skill-name">Organizational Development</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Psychology & Sociology</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Business Administration</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="88%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">AI & Machine Learning</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span class="skill-name">Learning Design</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="92%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -424,51 +488,13 @@
         </div>
     </section>
 
-    <!-- Particle Morph Section -->
-    <section id="particles" class="particle-section">
-        <div class="particle-container">
-            <div class="particle-content">
-                <div class="section-header">
-                    <h2 class="section-title">Interactive Particles</h2>
-                    <p class="section-subtitle">Experience the magic of morphing 3D shapes</p>
-                </div>
-                <div class="particle-description">
-                    <p>Watch as thousands of particles seamlessly transform between different geometric shapes. Click anywhere to trigger morphing animations, or use the controls to change colors and shapes manually.</p>
-                </div>
-            </div>
-            <div class="particle-canvas-container">
-                <div id="particle-loading">
-                    <span>Initializing Particles...</span>
-                    <div id="particle-progress-container">
-                        <div id="particle-progress"></div>
-                    </div>
-                </div>
-                
-                <div id="particle-ui">
-                    <div id="particle-info">Shape: Sphere (Click to morph)</div>
-                </div>
-
-                <div id="particle-controls">
-                    <button id="particle-shape-btn">Change Shape</button>
-                    <div id="particle-color-picker">
-                        <div class="particle-color-option" data-scheme="fire" style="background: linear-gradient(to bottom right, #ff4500, #ffcc00)"></div>
-                        <div class="particle-color-option" data-scheme="neon" style="background: linear-gradient(to bottom right, #ff00ff, #00ffff)"></div>
-                        <div class="particle-color-option" data-scheme="nature" style="background: linear-gradient(to bottom right, #00ff00, #66ffcc)"></div>
-                        <div class="particle-color-option" data-scheme="rainbow" style="background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet)"></div>
-                    </div>
-                </div>
-
-                <canvas id="particle-canvas"></canvas>
-            </div>
-        </div>
-    </section>
 
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Get In Touch</h2>
-                <p class="section-subtitle">Let's work together on your next project</p>
+                <p class="section-subtitle">Ready to build something amazing together?</p>
             </div>
             <div class="contact-content">
                 <div class="contact-info">
@@ -478,7 +504,7 @@
                             <div class="contact-icon">📧</div>
                             <div class="contact-details">
                                 <span class="contact-label">Email</span>
-                                <span class="contact-value">sarah@example.com</span>
+                                <span class="contact-value">sondra@example.com</span>
                             </div>
                         </div>
                         <div class="contact-item">
