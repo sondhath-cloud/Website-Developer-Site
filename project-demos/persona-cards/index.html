@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stakeholder Impact Identification Tool</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Jost:wght@400;500;600;700&family=Luckiest+Guy&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <h1>Stakeholder Impact Identification</h1>
+        <p>Click on the avatars below to identify groups that will be impacted by your project changes</p>
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <span class="progress-text" id="progressText">0 of 12 stakeholders identified</span>
+            <div class="header-actions">
+                <button class="btn btn-primary" id="showTableBtn" style="display: none;">View All Data Table</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Section -->
+    <section class="main-content">
+        <!-- Floating Personas Section -->
+        <div class="personas-section">
+            <h2>Select Stakeholder Groups</h2>
+            <div class="avatars-wrapper">
+                <div class="avatars-grid" id="personasContainer">
+            <div class="img-wrap" data-role="CISO" data-selected="false">
+                <img src='https://avataaars.io/?avatarStyle=Transparent&topType=NoHair&accessoriesType=Blank&facialHairType=BeardMajestic&facialHairColor=Red&clotheType=CollarSweater&clotheColor=Gray02&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Serious&skinColor=Pale' />
+            </div>
+            <div class="img-wrap" data-role="Engineer" data-selected="false">
+                <img src='https://avataaars.io/?avatarStyle=Transparent&topType=LongHairNotTooLong&accessoriesType=Blank&hairColor=SilverGray&facialHairType=Blank&clotheType=Hoodie&clotheColor=Heather&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Serious&skinColor=DarkBrown' />
+            </div>
+            <div class="img-wrap" data-role="Hunter" data-selected="false">
+                <img src='https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortFlat&accessoriesType=Round&hairColor=Blonde&facialHairType=BeardLight&facialHairColor=Auburn&clotheType=ShirtVNeck&clotheColor=Black&eyeType=Squint&eyebrowType=Default&mouthType=Smile&skinColor=Light' />
+            </div>
+            <div class="img-wrap" data-role="Investigator" data-selected="false">
+                <img src='https://avataaars.io/?avatarStyle=Transparent&topType=Hijab&accessoriesType=Round&hatColor=Blue03&clotheType=ShirtVNeck&clotheColor=Gray02&eyeType=Squint&eyebrowType=Default&mouthType=Twinkle&skinColor=Brown' />
+            </div>
+            <div class="img-wrap" data-role="Manager" data-selected="false">
+                <img src='https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairDreads01&accessoriesType=Blank&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=Gray02&eyeType=Side&eyebrowType=Default&mouthType=Twinkle&skinColor=Black' />
+            </div>
+            <div class="img-wrap" data-role="Analyst" data-selected="false">
+                <img src='https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairTheCaesarSidePart&accessoriesType=Blank&hairColor=Red&facialHairType=BeardMedium&facialHairColor=Black&clotheType=BlazerSweater&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Twinkle&skinColor=Tanned' />
+            </div>
+            <div class="img-wrap" data-role="Developer" data-selected="false">
+                <img src='https://avataaars.io/?avatarStyle=Transparent&topType=LongHairMiaWallace&accessoriesType=Blank&hairColor=Platinum&facialHairType=Blank&clotheType=ShirtScoopNeck&clotheColor=Gray02&eyeType=Default&eyebrowType=Default&mouthType=Serious&skinColor=Light' />
+            </div>
+            <div class="img-wrap" data-role="Admin" data-selected="false">
+                <img src='https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortFlat&accessoriesType=Blank&hairColor=BrownDark&facialHairType=BeardMedium&facialHairColor=BrownDark&clotheType=ShirtCrewNeck&clotheColor=Black&eyeType=Side&eyebrowType=Default&mouthType=Eating&skinColor=DarkBrown' />
+            </div>
+            <div class="img-wrap" data-role="Architect" data-selected="false">
+                <img src='https://avataaars.io/?avatarStyle=Transparent&topType=LongHairShavedSides&accessoriesType=Blank&facialHairType=BeardMedium&facialHairColor=BlondeGolden&clotheType=ShirtScoopNeck&clotheColor=Gray02&eyeType=Default&eyebrowType=UpDown&mouthType=Serious&skinColor=Pale' />
+            </div>
+            <div class="img-wrap" data-role="Forensics" data-selected="false">
+                <img src='https://avataaars.io/?avatarStyle=Transparent&topType=LongHairFroBand&accessoriesType=Blank&hairColor=Black&facialHairType=Blank&clotheType=ShirtScoopNeck&clotheColor=Gray02&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Twinkle&skinColor=Black' />
+            </div>
+            <div class="img-wrap" data-role="IR" data-selected="false">
+                <img src='https://avataaars.io/?avatarStyle=Transparent&topType=LongHairDreads&accessoriesType=Blank&hairColor=Brown&facialHairType=Blank&facialHairColor=Brown&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Smile&skinColor=Brown' />
+            </div>
+            <div class="img-wrap" data-role="Support" data-selected="false">
+                <img src='https://avataaars.io/?avatarStyle=Transparent&topType=LongHairBun&accessoriesType=Prescription02&hairColor=PastelPink&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light' />
+            </div>
+                </div>
+            </div>
+            
+            <!-- Add Custom Group Button -->
+            <div class="add-custom-group-section">
+                <button class="btn btn-primary add-custom-group-btn" id="addCustomGroupBtn">
+                    <span class="btn-icon">+</span>
+                    Add Custom Group
+                </button>
+                <p class="add-custom-group-text">Don't see the right role? Add a custom stakeholder group</p>
+            </div>
+        </div>
+        
+        <!-- Completed Stakeholders Grid -->
+        <div class="completed-stakeholders">
+            <h2>Completed Stakeholders</h2>
+            
+            <!-- Search and Filter Controls -->
+            <div class="search-filter-controls">
+                <div class="search-box">
+                    <input type="text" id="stakeholderSearch" placeholder="Search stakeholders by role or group name..." class="search-input">
+                    <button type="button" id="clearSearch" class="clear-search-btn" title="Clear search">×</button>
+                </div>
+                
+                <div class="filter-controls">
+                    <select id="completionFilter" class="filter-select">
+                        <option value="all">All Stakeholders</option>
+                        <option value="completed">Fully Completed</option>
+                        <option value="partial">Partially Completed</option>
+                        <option value="incomplete">Incomplete</option>
+                    </select>
+                    
+                    <select id="roleFilter" class="filter-select">
+                        <option value="all">All Roles</option>
+                        <option value="CISO">CISO</option>
+                        <option value="Engineer">Engineer</option>
+                        <option value="Hunter">Hunter</option>
+                        <option value="Investigator">Investigator</option>
+                        <option value="Manager">Manager</option>
+                        <option value="Analyst">Analyst</option>
+                        <option value="Developer">Developer</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Architect">Architect</option>
+                        <option value="Forensics">Forensics</option>
+                        <option value="IR">IR</option>
+                        <option value="Support">Support</option>
+                    </select>
+                    
+                    <button type="button" id="resetFilters" class="reset-filters-btn">Reset Filters</button>
+                </div>
+            </div>
+            
+            <div class="completed-grid" id="completedGrid">
+                <!-- Completed stakeholder cards will appear here -->
+            </div>
+            
+            <div class="no-results" id="noResults" style="display: none;">
+                <p>No stakeholders match your search criteria.</p>
+                <button type="button" id="clearAllFilters" class="btn btn-secondary">Clear All Filters</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Data Table Section -->
+    <section class="data-table-section" id="dataTableSection" style="display: none;">
+        <h2>All Stakeholder Data</h2>
+        <div class="table-container">
+            <table class="stakeholder-table" id="stakeholderTable">
+                <thead id="stakeholderTableHead">
+                    <tr>
+                        <th>Questions</th>
+                        <!-- Stakeholder roles will be dynamically added here -->
+                    </tr>
+                </thead>
+                <tbody id="stakeholderTableBody">
+                    <!-- Table rows will be populated here -->
+                </tbody>
+            </table>
+        </div>
+        <div class="table-actions">
+            <button class="btn btn-secondary" id="hideTableBtn">Hide Table</button>
+            <button class="btn btn-primary" id="exportDataBtn">Export Data</button>
+        </div>
+    </section>
+
+    <!-- Card Modal Overlay -->
+    <div class="modal-overlay" id="cardModal">
+        <div class="modal-content">
+            <div class="card-container">
+                <div class="card" id="stakeholderCard">
+                    <!-- Card Back (Avatar Side) -->
+                    <div class="card-back">
+                        <div class="card-border"></div>
+                        <div class="card-image">
+                            <div class="card-image-bg">
+                                <div class="avatar-container" id="selectedAvatar">
+                                    <!-- Selected avatar will be inserted here -->
+                                </div>
+                                <div class="aqueous-bg"></div>
+                                <div class="windy-blurs">
+                                    <p>S</p>
+                                    <p>@</p>
+                                    <p>S</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-text text-top" data-text="Stakeholder">
+                            <svg viewBox="0 0 400 250">
+                                <path id="text-path-convex" fill="none" stroke="none" d="M 0,130 S 200,30 400,130 "/>
+                                <text width="400">
+                                    <textPath href="#text-path-convex" fill="black" stroke="black" stroke-width="2px" startOffset="45px">
+                                        Stakeholder
+                                    </textPath>
+                                </text>
+                                <text width="400">
+                                    <textPath href="#text-path-convex" fill="yellow" stroke="rgb(73,104,139)" stroke-width="1px" startOffset="45px">
+                                        Stakeholder
+                                    </textPath>
+                                </text>
+                            </svg>
+                        </div>
+                        <div class="card-text text-bottom" data-text="Impact Analysis" id="cardBottomText">
+                            <svg viewBox="0 0 400 190">
+                                <path id="text-path-concave" fill="none" stroke="none" d="M 0,100 S 200,200 400,100 "/>
+                                <text width="400">
+                                    <textPath href="#text-path-concave" fill="black" stroke="black" stroke-width="0.5px" startOffset="30px" id="cardBottomTextBlack">
+                                        Impact Analysis
+                                    </textPath>
+                                </text>
+                                <text width="400">
+                                    <textPath href="#text-path-concave" fill="yellow" stroke="rgb(73,104,139)" stroke-width="0.3px" startOffset="30px" id="cardBottomTextYellow">
+                                        Impact Analysis
+                                    </textPath>
+                                </text>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Card Front (Form Side) -->
+                    <div class="card-front">
+                        <div class="card-border"></div>
+                        <div class="card-body">
+                            <div class="card-body-bg"></div>
+                            <div class="card-header">
+                                <div class="stakeholder-avatar-display" id="stakeholderAvatarDisplay">
+                                    <!-- Avatar and label will be inserted here -->
+                                </div>
+                                <div class="stakeholder-name">Stakeholder Details</div>
+                            </div>
+
+                            <div class="form-container">
+                                <div class="form-progress" id="formProgress" style="display: none;">
+                                    <div class="form-progress-bar">
+                                        <div class="form-progress-fill" id="formProgressFill"></div>
+                                    </div>
+                                    <div class="form-progress-text" id="formProgressText">0% Complete</div>
+                                </div>
+                                <form id="stakeholderForm">
+                                    <div class="form-group">
+                                        <label for="groupName">Group Name:</label>
+                                        <input type="text" id="groupName" name="groupName" placeholder="TBD - Enter group name" value="TBD">
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="fearsConcerns">What fears, concerns, or uncertainties might they have?</label>
+                                        <textarea id="fearsConcerns" name="fearsConcerns" placeholder="TBD - What are their main fears and concerns?" rows="3">TBD</textarea>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="controlAutonomy">What degree of control or autonomy will they lose or gain?</label>
+                                        <textarea id="controlAutonomy" name="controlAutonomy" placeholder="TBD - How will their control or autonomy change?" rows="3">TBD</textarea>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="competingPriorities">What competing priorities might limit their capacity for change?</label>
+                                        <textarea id="competingPriorities" name="competingPriorities" placeholder="TBD - What other priorities might conflict?" rows="3">TBD</textarea>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="communicationMethod">What's the best way to communicate with them about progress and decisions?</label>
+                                        <textarea id="communicationMethod" name="communicationMethod" placeholder="TBD - How should we communicate with them?" rows="3">TBD</textarea>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="risksMissedOpportunities">If nothing changes, what risks or missed opportunities will they face?</label>
+                                        <textarea id="risksMissedOpportunities" name="risksMissedOpportunities" placeholder="TBD - What happens if we don't change?" rows="3">TBD</textarea>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="workingWellToday">What's working well today that they wouldn't want disrupted?</label>
+                                        <textarea id="workingWellToday" name="workingWellToday" placeholder="TBD - What should we preserve?" rows="3">TBD</textarea>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="metricsExpectations">What metrics or performance expectations will change?</label>
+                                        <textarea id="metricsExpectations" name="metricsExpectations" placeholder="TBD - How will their performance be measured?" rows="3">TBD</textarea>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="identityStatusBelonging">How might the change affect their sense of identity, status, or belonging?</label>
+                                        <textarea id="identityStatusBelonging" name="identityStatusBelonging" placeholder="TBD - How will this affect their sense of self?" rows="3">TBD</textarea>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="trainingToolsCoaching">What training, tools, or coaching would help them adapt more smoothly?</label>
+                                        <textarea id="trainingToolsCoaching" name="trainingToolsCoaching" placeholder="TBD - What support do they need?" rows="3">TBD</textarea>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="recognitionIncentives">What recognition or incentives will matter most to them during the transition?</label>
+                                        <textarea id="recognitionIncentives" name="recognitionIncentives" placeholder="TBD - What will motivate them?" rows="3">TBD</textarea>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="personalProfessionalImpact">How will success or failure reflect on them personally and professionally?</label>
+                                        <textarea id="personalProfessionalImpact" name="personalProfessionalImpact" placeholder="TBD - What's at stake for them?" rows="3">TBD</textarea>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="newSkillsBehaviors">Will new skills, behaviors, or mindsets be required?</label>
+                                        <textarea id="newSkillsBehaviors" name="newSkillsBehaviors" placeholder="TBD - What new capabilities do they need?" rows="3">TBD</textarea>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="trustInLeadership">How much trust do they place in leadership to guide the change?</label>
+                                        <textarea id="trustInLeadership" name="trustInLeadership" placeholder="TBD - Do they trust leadership?" rows="3">TBD</textarea>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="whatTheyLose">What does this group stand to lose during this transition?</label>
+                                        <textarea id="whatTheyLose" name="whatTheyLose" placeholder="TBD - What will they lose?" rows="3">TBD</textarea>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="currentVsFuture">How does this group operate today that will be expected to change tomorrow?</label>
+                                        <textarea id="currentVsFuture" name="currentVsFuture" placeholder="TBD - What will change about how they work?" rows="3">TBD</textarea>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="transitionObstacles">What obstacles stand in the way of a smooth transition?</label>
+                                        <textarea id="transitionObstacles" name="transitionObstacles" placeholder="TBD - What might get in the way?" rows="3">TBD</textarea>
+                                    </div>
+                                    
+                                    <div class="form-actions">
+                                        <button type="button" class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                                        <button type="submit" class="btn btn-primary">Save Stakeholder</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Group Creation Modal -->
+    <div class="modal-overlay" id="customGroupModal">
+        <div class="modal-content custom-group-modal">
+            <div class="custom-group-container">
+                <div class="custom-group-header">
+                    <h3>Create Custom Stakeholder Group</h3>
+                    <button type="button" class="close-modal-btn" id="closeCustomGroupModal">×</button>
+                </div>
+                
+                <div class="custom-group-form">
+                    <div class="form-group">
+                        <label for="customGroupName">Group Name:</label>
+                        <input type="text" id="customGroupName" placeholder="Enter group name (e.g., 'Marketing Team', 'External Partners')" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Avatar Style:</label>
+                        <div class="avatar-style-options">
+                            <div class="avatar-option" data-style="professional">
+                                <div class="avatar-preview professional"></div>
+                                <span>Professional</span>
+                            </div>
+                            <div class="avatar-option" data-style="casual">
+                                <div class="avatar-preview casual"></div>
+                                <span>Casual</span>
+                            </div>
+                            <div class="avatar-option" data-style="technical">
+                                <div class="avatar-preview technical"></div>
+                                <span>Technical</span>
+                            </div>
+                            <div class="avatar-option" data-style="executive">
+                                <div class="avatar-preview executive"></div>
+                                <span>Executive</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelCustomGroup">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="createCustomGroup">Create Group</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

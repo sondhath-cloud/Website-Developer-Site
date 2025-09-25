@@ -1,0 +1,3923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Development Services Impact Calculator - Discover Your Team's Value</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Progress Indicator */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 0 2px 2px 0;
+        }
+
+        /* Encouraging Messages */
+        .encouragement-message {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #4CAF50;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .encouragement-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .encouragement-message h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .encouragement-message p {
+            color: #34495e;
+            font-size: 1rem;
+        }
+
+        /* Section Navigation */
+        .section-navigation {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .section-nav-item {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #2c3e50;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-nav-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-nav-item.active {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .section-nav-item.completed {
+            background: #8BC34A;
+            color: white;
+        }
+
+        .section-nav-item.completed::after {
+            content: "✓";
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+        }
+
+        /* Tooltip System */
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+            margin-left: 8px;
+        }
+
+        .tooltip-icon {
+            background: #3498db;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tooltip-icon:hover {
+            background: #2980b9;
+            transform: scale(1.1);
+        }
+
+        .tooltip-content {
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2c3e50;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            max-width: 300px;
+            white-space: normal;
+        }
+
+        .tooltip-content::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: #2c3e50;
+        }
+
+        .tooltip-container:hover .tooltip-content {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Enhanced Input Fields */
+        .input-field {
+            position: relative;
+        }
+
+        .input-field input:focus,
+        .input-field select:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .field-completion-indicator {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #4CAF50;
+            font-size: 16px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .input-field.completed .field-completion-indicator {
+            opacity: 1;
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 16px 24px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast h4 {
+            margin: 0 0 8px 0;
+            font-size: 16px;
+        }
+
+        .toast p {
+            margin: 0;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Final Results Styling */
+        .impact-summary {
+            margin: 30px 0;
+        }
+
+        .impact-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-card h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .metric-card .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+
+        .metric-card p {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .celebration-message {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 30px;
+            box-shadow: 0 4px 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .celebration-message h4 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .celebration-message p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        /* Enhanced Calculator Section Styling */
+        .calculator-section {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Enhanced Input Field Styling */
+        .savings-input-group {
+            position: relative;
+        }
+
+        .savings-input-group.completed {
+            border-left: 4px solid #4CAF50;
+            padding-left: 15px;
+        }
+
+        .savings-input-group.completed label {
+            color: #4CAF50;
+            font-weight: 600;
+        }
+
+        /* Enhanced Button Styling */
+        .btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        /* Welcome Experience Styling */
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .welcome-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .welcome-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 50px;
+            max-width: 800px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4CAF50, #8BC34A, #4CAF50);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .welcome-step {
+            display: none;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .welcome-step.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome-animation {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .impact-icon {
+            font-size: 3rem;
+            animation: bounce 2s infinite;
+            animation-delay: calc(var(--i) * 0.2s);
+        }
+
+        .impact-icon:nth-child(1) { --i: 0; }
+        .impact-icon:nth-child(2) { --i: 1; }
+        .impact-icon:nth-child(3) { --i: 2; }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .welcome-title {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .welcome-btn {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(76, 175, 80, 0.3);
+        }
+
+        .welcome-btn.secondary {
+            background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+        }
+
+        .welcome-btn.secondary:hover {
+            box-shadow: 0 10px 25px rgba(149, 165, 166, 0.3);
+        }
+
+        /* Impact Selection Styling */
+        .impact-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .impact-option {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 30px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .impact-option:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border-color: #4CAF50;
+        }
+
+        .impact-option.selected {
+            border-color: #4CAF50;
+            background: rgba(76, 175, 80, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .impact-icon-large {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .impact-option h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .impact-option p {
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .impact-preview {
+            background: linear-gradient(135deg, #4CAF50, #8BC34A);
+            color: white;
+            padding: 15px;
+            border-radius: 15px;
+            margin-top: 15px;
+        }
+
+        .preview-number {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .preview-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        /* Quick Input Styling */
+        .quick-input-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .quick-input-group {
+            text-align: left;
+        }
+
+        .quick-input-group label {
+            display: block;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .quick-input-group input,
+        .quick-input-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .quick-input-group input:focus,
+        .quick-input-group select:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        /* Impact Visualization */
+        .impact-visualization {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .visualization-content {
+            text-align: center;
+            z-index: 2;
+        }
+
+        .visualization-number {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #4CAF50;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .visualization-label {
+            font-size: 1.2rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .visualization-description {
+            font-size: 1rem;
+            color: #7f8c8d;
+            margin-top: 10px;
+        }
+
+        /* Animated Background Elements */
+        .impact-visualization::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(76, 175, 80, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .welcome-nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+            padding-top: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .header .subtitle {
+            font-size: 1rem;
+            opacity: 0.8;
+            font-style: italic;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .card h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .metric-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .metric-item:last-child {
+            border-bottom: none;
+        }
+
+        .metric-label {
+            font-weight: 500;
+            color: #34495e;
+        }
+
+        .metric-value {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #27ae60;
+        }
+
+        .impact-chain {
+            grid-column: 1 / -1;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .chain-flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .chain-node {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            min-width: 200px;
+            flex: 1;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .chain-node h3 {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .chain-node p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .arrow {
+            font-size: 2rem;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .impact-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .impact-card {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .impact-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .impact-card h4 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .impact-card .number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .impact-card .description {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .calculation-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .calculation-section {
+            margin-bottom: 30px;
+        }
+
+        .calculation-section h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .formula-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+            margin: 15px 0;
+        }
+
+        .formula {
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            color: #2c3e50;
+            margin: 10px 0;
+        }
+
+        .data-source {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #27ae60;
+        }
+
+        .data-source h4 {
+            color: #27ae60;
+            margin-bottom: 8px;
+        }
+
+        .example-calculation {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #ffc107;
+        }
+
+        .example-calculation h4 {
+            color: #856404;
+            margin-bottom: 8px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #27ae60, #229954);
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, #17a2b8, #138496);
+        }
+
+        /* Guided Tour Styles */
+        .tour-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 9998 !important;
+            display: none;
+        }
+
+        .tour-step {
+            position: absolute;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 9999 !important;
+            /* Ensure the tour step is always visible and clickable */
+            min-width: 300px;
+            max-height: 80vh;
+            overflow-y: auto;
+            pointer-events: auto !important;
+            position: fixed !important;
+        }
+
+        .tour-step h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .tour-step p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .tour-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tour-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .tour-btn:hover {
+            background: #2980b9;
+        }
+
+        .tour-btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+        }
+
+        .tour-progress {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        /* Custom Scenario Input */
+        .scenario-input {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: none;
+        }
+
+        .scenario-input h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .input-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .input-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-field label {
+            font-weight: 600;
+            color: #34495e;
+            margin-bottom: 5px;
+        }
+
+        .input-field input {
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .input-field input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .scenario-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+
+        /* Highlight effect for tour */
+        .tour-highlight {
+            position: relative;
+            z-index: 2002;
+            box-shadow: 0 0 0 4px #3498db;
+            border-radius: 10px;
+        }
+
+
+        /* Developer Savings Calculator Styles */
+        .savings-calculator {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .savings-calculator h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.4rem;
+        }
+
+        .savings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .savings-input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .savings-input-group label {
+            font-weight: 600;
+            color: #34495e;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .savings-input {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            transition: border-color 0.2s;
+        }
+
+        .savings-input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .help-text {
+            display: block;
+            margin-top: 5px;
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            font-style: italic;
+            line-height: 1.3;
+        }
+
+        .savings-result {
+            background: linear-gradient(135deg, #27ae60, #229954);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        .savings-result h4 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .savings-amount {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .savings-breakdown {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .savings-formula {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            margin-top: 15px;
+        }
+
+        /* Detailed Jobs Calculator Styles */
+        .jobs-breakdown-result {
+            background: linear-gradient(135deg, #27ae60, #229954);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 25px;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        .jobs-breakdown-result h4 {
+            margin-bottom: 25px;
+            font-size: 1.4rem;
+            color: white;
+        }
+
+        .jobs-breakdown-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .job-type-card {
+            background: rgba(255, 255, 255, 0.95);
+            color: #2c3e50;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: left;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .job-type-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .job-type-card.direct-jobs {
+            border-left: 4px solid #3498db;
+        }
+
+        .job-type-card.indirect-jobs {
+            border-left: 4px solid #f39c12;
+        }
+
+        .job-type-card.induced-jobs {
+            border-left: 4px solid #9b59b6;
+        }
+
+        .job-type-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .job-type-header h5 {
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .job-count {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .job-type-card.indirect-jobs .job-count {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+
+        .job-type-card.induced-jobs .job-count {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+        }
+
+        .job-description {
+            margin-bottom: 15px;
+        }
+
+        .job-description p {
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #34495e;
+        }
+
+        .job-description ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .job-description li {
+            padding: 3px 0;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .job-description li:before {
+            content: "• ";
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .job-type-card.indirect-jobs .job-description li:before {
+            color: #f39c12;
+        }
+
+        .job-type-card.induced-jobs .job-description li:before {
+            color: #9b59b6;
+        }
+
+        .job-details {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .job-details p {
+            margin: 5px 0;
+            color: #2c3e50;
+        }
+
+        .total-jobs-summary {
+            margin-top: 25px;
+        }
+
+        .total-jobs-card {
+            background: rgba(255, 255, 255, 0.95);
+            color: #2c3e50;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .total-jobs-card h4 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            color: #2c3e50;
+        }
+
+        .total-jobs-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+
+        .total-jobs-card p {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: #34495e;
+        }
+
+        .total-labor-income {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            background: #e8f5e8;
+            padding: 10px;
+            border-radius: 8px;
+            border-left: 4px solid #27ae60;
+        }
+
+        /* Economic Benefits Section Styles */
+        .economic-benefits-section {
+            background: linear-gradient(135deg, #27ae60, #229954);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 25px;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        .economic-benefits-section h4 {
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+            color: white;
+            text-align: center;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .benefit-category {
+            background: rgba(255, 255, 255, 0.95);
+            color: #2c3e50;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .benefit-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .benefit-header h5 {
+            margin: 0 0 10px 0;
+            font-size: 1.2rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .spending-amount {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #27ae60;
+        }
+
+        .spending-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .spending-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #27ae60;
+        }
+
+        .spending-category {
+            font-weight: 500;
+            color: #2c3e50;
+            flex: 1;
+        }
+
+        .spending-percentage {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin: 0 15px;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .spending-amount {
+            font-weight: 600;
+            color: #27ae60;
+            font-size: 0.95rem;
+            min-width: 70px;
+            text-align: right;
+        }
+
+        .economic-flow-diagram {
+            background: rgba(255, 255, 255, 0.95);
+            color: #2c3e50;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .economic-flow-diagram h5 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+
+        .flow-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .flow-item {
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .flow-label {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .flow-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #27ae60;
+            background: #e8f5e8;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border-left: 4px solid #27ae60;
+        }
+
+        .flow-arrow {
+            font-size: 1.5rem;
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        /* Delay Impact Section Styles */
+        .delay-impact-section {
+            background: rgba(255, 255, 255, 0.95);
+            color: #2c3e50;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 25px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .delay-impact-section h5 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            color: #e74c3c;
+            font-weight: 600;
+        }
+
+        .delay-impact-section p {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1rem;
+            color: #2c3e50;
+        }
+
+        .delay-breakdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .delay-item {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #e74c3c;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .delay-label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .delay-amount {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #e74c3c;
+            margin-bottom: 8px;
+        }
+
+        .delay-description {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            font-style: italic;
+        }
+
+        .delay-timeline {
+            margin-top: 25px;
+        }
+
+        .delay-timeline h6 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .timeline-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .timeline-example {
+            text-align: center;
+            padding: 15px;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .timeline-example:hover {
+            transform: translateY(-3px);
+        }
+
+        .example-days {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .example-cost {
+            font-size: 1.1rem;
+            font-weight: 700;
+            opacity: 0.9;
+        }
+
+        /* Housing Impact Calculator Styles */
+        .housing-impact-results {
+            background: linear-gradient(135deg, #8e44ad, #9b59b6);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 25px;
+            box-shadow: 0 4px 15px rgba(142, 68, 173, 0.3);
+        }
+
+        .housing-impact-results h4 {
+            margin-bottom: 25px;
+            font-size: 1.4rem;
+            color: white;
+        }
+
+        .timeline-section {
+            margin-bottom: 30px;
+        }
+
+        .timeline-section h5 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .timeline-visualization {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #2c3e50;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .timeline-item {
+            text-align: center;
+            min-width: 150px;
+            flex: 1;
+        }
+
+        .timeline-phase {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        .timeline-duration {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #8e44ad;
+            margin-bottom: 5px;
+        }
+
+        .timeline-delay {
+            font-size: 0.8rem;
+            color: #e74c3c;
+            font-style: italic;
+        }
+
+        .timeline-arrow {
+            font-size: 1.5rem;
+            color: #8e44ad;
+            font-weight: bold;
+        }
+
+        .revenue-impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .revenue-card {
+            background: rgba(255, 255, 255, 0.95);
+            color: #2c3e50;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .revenue-card h5 {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            color: #2c3e50;
+        }
+
+        .revenue-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+
+        .revenue-amount.negative {
+            color: #e74c3c;
+        }
+
+        .revenue-description {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-bottom: 15px;
+        }
+
+        .revenue-breakdown {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            color: #2c3e50;
+        }
+
+        .occupancy-impact {
+            margin: 25px 0;
+        }
+
+        .occupancy-impact h5 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .occupancy-chart {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .occupancy-phase {
+            background: rgba(255, 255, 255, 0.95);
+            color: #2c3e50;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .phase-label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            color: #2c3e50;
+        }
+
+        .phase-date {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #8e44ad;
+        }
+
+        .housing-formula {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            margin-top: 25px;
+            text-align: left;
+        }
+
+        .housing-formula h5 {
+            color: white;
+            margin-bottom: 15px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .housing-formula p {
+            margin: 8px 0;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chain-flow {
+                flex-direction: column;
+            }
+            
+            .arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome Experience Overlay -->
+    <div id="welcome-overlay" class="welcome-overlay">
+        <div class="welcome-container">
+            <!-- Step 1: Welcome -->
+            <div class="welcome-step active" id="welcome-step-1">
+                <div class="welcome-animation">
+                    <div class="impact-icon">💼</div>
+                    <div class="impact-icon">🏠</div>
+                    <div class="impact-icon">💰</div>
+                </div>
+                <h1 class="welcome-title">Welcome to Development Services Impact</h1>
+                <p class="welcome-subtitle">Discover the incredible value your Development Services team brings to the community</p>
+                <button class="welcome-btn primary" onclick="nextWelcomeStep()">Discover Our Impact</button>
+            </div>
+
+            <!-- Step 2: Impact Selection -->
+            <div class="welcome-step" id="welcome-step-2">
+                <h2 class="welcome-title">What Development Services impact would you like to explore?</h2>
+                <p class="welcome-subtitle">Choose the area that best showcases your team's value</p>
+                
+                <div class="impact-selection">
+                    <div class="impact-option" data-impact="jobs" onclick="selectImpact('jobs')">
+                        <div class="impact-icon-large">💼</div>
+                        <h3>Job Creation</h3>
+                        <p>See how Development Services creates employment opportunities</p>
+                        <div class="impact-preview" id="jobs-preview">
+                            <span class="preview-number">0</span>
+                            <span class="preview-label">Jobs Created</span>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-option" data-impact="housing" onclick="selectImpact('housing')">
+                        <div class="impact-icon-large">🏠</div>
+                        <h3>Housing Impact</h3>
+                        <p>Discover how Development Services helps families find homes</p>
+                        <div class="impact-preview" id="housing-preview">
+                            <span class="preview-number">0</span>
+                            <span class="preview-label">Homes Created</span>
+                        </div>
+                    </div>
+                    
+                    <div class="impact-option" data-impact="economy" onclick="selectImpact('economy')">
+                        <div class="impact-icon-large">💰</div>
+                        <h3>Local Economy</h3>
+                        <p>Explore Development Services' financial impact on the community</p>
+                        <div class="impact-preview" id="economy-preview">
+                            <span class="preview-number">$0</span>
+                            <span class="preview-label">Economic Value</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="welcome-btn secondary" onclick="prevWelcomeStep()">Back</button>
+            </div>
+
+            <!-- Step 3: Quick Input -->
+            <div class="welcome-step" id="welcome-step-3">
+                <h2 class="welcome-title">Let's personalize Development Services impact</h2>
+                <p class="welcome-subtitle">Just a few quick questions to create your team's impact visualization</p>
+                
+                <div class="quick-input-container">
+                    <div class="quick-input-group">
+                        <label>What's your Development Services focus?</label>
+                        <select id="quick-role" onchange="updateQuickPreview()">
+                            <option value="planner">Planning & Zoning</option>
+                            <option value="inspector">Building Inspection</option>
+                            <option value="permit">Permit Processing</option>
+                            <option value="manager">Development Management</option>
+                            <option value="other">Other Services</option>
+                        </select>
+                    </div>
+                    
+                    <div class="quick-input-group">
+                        <label>How many projects does your team process monthly?</label>
+                        <input type="number" id="quick-projects" value="5" min="1" max="50" onchange="updateQuickPreview()">
+                    </div>
+                    
+                    <div class="quick-input-group">
+                        <label>What's your typical Development Services project size?</label>
+                        <select id="quick-size" onchange="updateQuickPreview()">
+                            <option value="small">Small ($1M - $5M)</option>
+                            <option value="medium">Medium ($5M - $25M)</option>
+                            <option value="large">Large ($25M+)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="impact-visualization" id="impact-visualization">
+                    <!-- Dynamic visualization will be generated here -->
+                </div>
+                
+                <div class="welcome-nav">
+                    <button class="welcome-btn secondary" onclick="prevWelcomeStep()">Back</button>
+                    <button class="welcome-btn primary" onclick="startFullCalculator()">See Full Impact</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Indicator -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1>Development Services Impact Calculator</h1>
+            <p>Discover the incredible value your Development Services team brings to the community</p>
+            <p class="subtitle">Let's quantify your team's amazing contributions together</p>
+        </div>
+
+        <!-- Encouragement Message -->
+        <div class="encouragement-message" id="encouragement-message">
+            <h3>Welcome! You're about to discover something amazing.</h3>
+            <p>Development Services creates incredible value for the community in ways that might not be immediately obvious. This calculator will help you see the full scope of your team's impact.</p>
+        </div>
+
+        <!-- Section Navigation -->
+        <div class="section-navigation" id="section-navigation">
+            <button class="section-nav-item active" data-section="jobs-impact" onclick="showSection('jobs-impact')">
+                Job Creation Impact
+            </button>
+            <button class="section-nav-item" data-section="housing-impact" onclick="showSection('housing-impact')">
+                Housing Impact
+            </button>
+            <button class="section-nav-item" data-section="developer-savings" onclick="showSection('developer-savings')">
+                Economic Value
+            </button>
+        </div>
+
+
+        <!-- Section 1: Jobs Impact -->
+        <div class="calculator-section" id="jobs-impact">
+            <div class="savings-calculator">
+                <h3>Development Services Job Creation Impact</h3>
+                <p style="text-align: center; color: #7f8c8d; margin-bottom: 25px;">
+                    Let's quantify the jobs and economic value Development Services helps create through efficient processing
+                </p>
+                <p style="text-align: center; color: #7f8c8d; margin-bottom: 25px;">
+                    Calculate the complete job creation impact including Direct, Indirect, and Induced employment
+                </p>
+                
+                <div class="savings-grid">
+                    <div class="savings-input-group">
+                        <label for="project-name">Development Services Project Name</label>
+                        <input type="text" id="project-name" class="savings-input" value="Sample Development Project" placeholder="Enter project name">
+                </div>
+                    
+                    <div class="savings-input-group">
+                        <label for="project-type">Type of Development Services Project</label>
+                        <select id="project-type" class="savings-input" onchange="updateJobMultipliers()">
+                            <option value="residential">Residential Development</option>
+                            <option value="commercial">Commercial Development</option>
+                            <option value="mixed-use">Mixed-Use Development</option>
+                            <option value="industrial">Industrial Development</option>
+                            <option value="infrastructure">Infrastructure Project</option>
+                        </select>
+                </div>
+                    
+                    <div class="savings-input-group">
+                        <label for="direct-jobs-planned">Jobs Development Services Helps Create</label>
+                        <input type="number" id="direct-jobs-planned" class="savings-input" value="50" step="1" min="1" max="1000" onchange="calculateDetailedJobs()">
+                </div>
+                    
+                    <div class="savings-input-group">
+                        <label for="project-spending">Total Project Investment ($M)</label>
+                        <input type="number" id="project-spending" class="savings-input" value="25" step="0.1" min="0.1" max="1000" onchange="updateSupplierSpendingFromProject()">
+                </div>
+                    
+                    <div class="savings-input-group">
+                        <label for="supplier-spending">Local Business Spending ($M)</label>
+                        <input type="number" id="supplier-spending" class="savings-input" value="15" step="0.1" min="0.1" max="1000" onchange="calculateDetailedJobs()">
+                        <small class="help-text" id="supplier-help-text">
+                            Auto-calculated as 60% of project spending for residential projects. 
+                            This represents spending on materials, subcontractors, and services.
+                        </small>
+            </div>
+
+                    <div class="savings-input-group">
+                        <label for="avg-salary">Average Local Salary ($)</label>
+                        <input type="number" id="avg-salary" class="savings-input" value="65000" step="1000" min="20000" max="200000" onchange="calculateDetailedJobs()">
+                </div>
+                </div>
+
+                <div class="jobs-breakdown-result">
+                    <h4>Complete Jobs Impact Analysis</h4>
+                    <div class="jobs-breakdown-grid">
+                        <div class="job-type-card direct-jobs">
+                            <div class="job-type-header">
+                                <h5>Direct Jobs</h5>
+                                <span class="job-count" id="direct-jobs-count">50</span>
+                </div>
+                            <div class="job-description">
+                                <p>Positions created by the developer:</p>
+                                <ul>
+                                    <li>Construction workers</li>
+                                    <li>Architects & engineers</li>
+                                    <li>Office staff</li>
+                                    <li>Project managers</li>
+                                </ul>
+                </div>
+                            <div class="job-details">
+                                <p><strong>Total Labor Income:</strong> <span id="direct-labor-income">$3.25M</span></p>
+            </div>
+        </div>
+
+                        <div class="job-type-card indirect-jobs">
+                            <div class="job-type-header">
+                                <h5>Indirect Jobs</h5>
+                                <span class="job-count" id="indirect-jobs-count">23</span>
+                </div>
+                            <div class="job-description">
+                                <p>Jobs at suppliers and vendors:</p>
+                                <ul>
+                                    <li>Material providers</li>
+                                    <li>Equipment suppliers</li>
+                                    <li>Subcontractors</li>
+                                    <li>Service providers</li>
+                                </ul>
+                </div>
+                            <div class="job-details">
+                                <p><strong>Multiplier:</strong> <span id="indirect-multiplier">1.53</span> jobs per $1M</p>
+                                <p><strong>Total Labor Income:</strong> <span id="indirect-labor-income">$1.50M</span></p>
+                </div>
+                        </div>
+                        
+                        <div class="job-type-card induced-jobs">
+                            <div class="job-type-header">
+                                <h5>Induced Jobs</h5>
+                                <span class="job-count" id="induced-jobs-count">18</span>
+                            </div>
+                            <div class="job-description">
+                                <p>Jobs from employee spending:</p>
+                                <ul>
+                                    <li>Restaurant workers</li>
+                                    <li>Retail employees</li>
+                                    <li>Service workers</li>
+                                    <li>Healthcare workers</li>
+                                </ul>
+                            </div>
+                            <div class="job-details">
+                                <p><strong>Multiplier:</strong> <span id="induced-multiplier">0.55</span> jobs per $1M</p>
+                                <p><strong>Total Labor Income:</strong> <span id="induced-labor-income">$1.17M</span></p>
+                            </div>
+                </div>
+            </div>
+
+                    <div class="total-jobs-summary">
+                        <div class="total-jobs-card">
+                            <h4>Total Project Impact</h4>
+                            <div class="total-jobs-number" id="total-jobs-created">91</div>
+                            <p>Jobs Created</p>
+                            <div class="total-labor-income">Total Labor Income: <span id="total-labor-income">$5.92M</span></div>
+                </div>
+                </div>
+                    
+                    <div class="economic-benefits-section">
+                        <h4>Local Economic Benefits</h4>
+                        <p style="color: white; margin-bottom: 25px; font-size: 1.1rem;">
+                            How <span id="benefits-labor-income">$5.92M</span> in annual wages flows through the local economy
+                        </p>
+                        
+                        <div class="benefits-grid">
+                            <div class="benefit-category">
+                                <div class="benefit-header">
+                                    <h5>Worker Spending</h5>
+                                    <div class="spending-amount" id="worker-spending">$5.92M</div>
+                </div>
+                                <div class="spending-breakdown">
+                                    <div class="spending-item">
+                                        <span class="spending-category">Housing & Rent</span>
+                                        <span class="spending-percentage">30%</span>
+                                        <span class="spending-amount">$1.78M</span>
+                                    </div>
+                                    <div class="spending-item">
+                                        <span class="spending-category">Food & Dining</span>
+                                        <span class="spending-percentage">20%</span>
+                                        <span class="spending-amount">$1.18M</span>
+                                    </div>
+                                    <div class="spending-item">
+                                        <span class="spending-category">Retail Purchases</span>
+                                        <span class="spending-percentage">15%</span>
+                                        <span class="spending-amount">$888K</span>
+                                    </div>
+                                    <div class="spending-item">
+                                        <span class="spending-category">Services</span>
+                                        <span class="spending-percentage">25%</span>
+                                        <span class="spending-amount">$1.48M</span>
+                                    </div>
+                                    <div class="spending-item">
+                                        <span class="spending-category">Transportation</span>
+                                        <span class="spending-percentage">10%</span>
+                                        <span class="spending-amount">$592K</span>
+                                    </div>
+                </div>
+            </div>
+
+                            <div class="benefit-category">
+                                <div class="benefit-header">
+                                    <h5>Tax Revenue Generated</h5>
+                                    <div class="spending-amount" id="tax-revenue">$296K</div>
+                                </div>
+                                <div class="spending-breakdown">
+                                    <div class="spending-item">
+                                        <span class="spending-category">Income Taxes</span>
+                                        <span class="spending-percentage">3.5%</span>
+                                        <span class="spending-amount">$207K</span>
+                                    </div>
+                                    <div class="spending-item">
+                                        <span class="spending-category">Sales Taxes</span>
+                                        <span class="spending-percentage">1.5%</span>
+                                        <span class="spending-amount">$89K</span>
+                                    </div>
+                                </div>
+            </div>
+
+                            <div class="benefit-category">
+                                <div class="benefit-header">
+                                    <h5>Business Growth Impact</h5>
+                                    <div class="spending-amount" id="business-impact">$2.96M</div>
+                                </div>
+                                <div class="spending-breakdown">
+                                    <div class="spending-item">
+                                        <span class="spending-category">Local Business Revenue</span>
+                                        <span class="spending-percentage">50%</span>
+                                        <span class="spending-amount">$2.96M</span>
+                                    </div>
+                                    <div class="spending-item">
+                                        <span class="spending-category">Additional Jobs Created</span>
+                                        <span class="spending-percentage">—</span>
+                                        <span class="spending-amount">12-18 jobs</span>
+                                    </div>
+                                </div>
+                            </div>
+                </div>
+
+                        <div class="economic-flow-diagram">
+                            <h5>Economic Flow Visualization</h5>
+                            <div class="flow-container">
+                                <div class="flow-item">
+                                    <div class="flow-label">Project Creates</div>
+                                    <div class="flow-value" id="flow-jobs">91 Jobs</div>
+                                </div>
+                                <div class="flow-arrow">→</div>
+                                <div class="flow-item">
+                                    <div class="flow-label">Workers Earn</div>
+                                    <div class="flow-value" id="flow-income">$5.92M</div>
+                                </div>
+                                <div class="flow-arrow">→</div>
+                                <div class="flow-item">
+                                    <div class="flow-label">Local Spending</div>
+                                    <div class="flow-value" id="flow-spending">$5.92M</div>
+                                </div>
+                                <div class="flow-arrow">→</div>
+                                <div class="flow-item">
+                                    <div class="flow-label">City Gets</div>
+                                    <div class="flow-value" id="flow-taxes">$296K</div>
+                                </div>
+                            </div>
+                </div>
+
+                        <div class="delay-impact-section">
+                            <h5>Daily Delay Cost Impact</h5>
+                            <p style="color: white; margin-bottom: 20px; font-size: 1rem;">
+                                Every day of delay costs the local economy <span id="daily-delay-cost">$16.2K</span> in lost wages and spending
+                            </p>
+                            
+                            <div class="delay-breakdown">
+                                <div class="delay-item">
+                                    <div class="delay-label">Lost Daily Wages</div>
+                                    <div class="delay-amount" id="daily-wages-lost">$16.2K</div>
+                                    <div class="delay-description">Wages not earned by workers</div>
+                    </div>
+                                <div class="delay-item">
+                                    <div class="delay-label">Lost Daily Spending</div>
+                                    <div class="delay-amount" id="daily-spending-lost">$16.2K</div>
+                                    <div class="delay-description">Money not spent locally</div>
+                    </div>
+                                <div class="delay-item">
+                                    <div class="delay-label">Lost Daily Tax Revenue</div>
+                                    <div class="delay-amount" id="daily-taxes-lost">$811</div>
+                                    <div class="delay-description">City revenue not collected</div>
+                    </div>
+                    </div>
+                            
+                            <div class="delay-timeline">
+                                <h6>Delay Impact Timeline</h6>
+                                <div class="timeline-examples">
+                                    <div class="timeline-example">
+                                        <div class="example-days">1 Day Delay</div>
+                                        <div class="example-cost">$16.2K Lost</div>
+                </div>
+                                    <div class="timeline-example">
+                                        <div class="example-days">1 Week Delay</div>
+                                        <div class="example-cost">$113.4K Lost</div>
+                                    </div>
+                                    <div class="timeline-example">
+                                        <div class="example-days">1 Month Delay</div>
+                                        <div class="example-cost">$486K Lost</div>
+                                    </div>
+                                    <div class="timeline-example">
+                                        <div class="example-days">1 Year Delay</div>
+                                        <div class="example-cost">$5.92M Lost</div>
+                                    </div>
+                                </div>
+                            </div>
+                </div>
+            </div>
+
+                    <div id="jobs-formula" class="savings-formula">
+                        <h5>Calculation Formulas:</h5>
+                        <p><strong>Direct Jobs:</strong> Input by user (planned hires)</p>
+                        <p><strong>Indirect Jobs:</strong> Supplier Spending ($M) × Indirect Multiplier</p>
+                        <p><strong>Induced Jobs:</strong> Total Labor Income ($M) × Induced Multiplier</p>
+                        <p><strong>Total Jobs:</strong> Direct + Indirect + Induced</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Section 2: Housing Impact -->
+        <div class="calculator-section" id="housing-impact" style="display: none;">
+            <div class="savings-calculator">
+                <h3>Development Services Housing Impact</h3>
+                <p style="text-align: center; color: #7f8c8d; margin-bottom: 25px;">
+                    Discover how Development Services helps create homes and community value
+                </p>
+                <p style="text-align: center; color: #7f8c8d; margin-bottom: 25px;">
+                    See how Development Services processing times affect when homes become available and start generating city revenue
+                </p>
+                
+                <div class="savings-grid">
+                    <div class="savings-input-group">
+                        <label for="housing-project-name">Your Housing Project Name</label>
+                        <input type="text" id="housing-project-name" class="savings-input" value="Riverside Apartments" placeholder="Enter project name">
+                    </div>
+                    
+                    <div class="savings-input-group">
+                        <label for="housing-units-count">Homes You're Helping Create</label>
+                        <input type="number" id="housing-units-count" class="savings-input" value="150" step="1" min="1" max="1000" onchange="calculateHousingImpact()">
+                    </div>
+                    
+                    <div class="savings-input-group">
+                        <label for="avg-unit-value">Average Home Value ($)</label>
+                        <input type="number" id="avg-unit-value" class="savings-input" value="350000" step="1000" min="100000" max="2000000" onchange="calculateHousingImpact()">
+                    </div>
+                    
+                    <div class="savings-input-group">
+                        <label for="permit-processing-days">Your Processing Efficiency (Days)</label>
+                        <input type="number" id="permit-processing-days" class="savings-input" value="30" step="1" min="1" max="100" onchange="calculateHousingImpact()">
+                        <small class="help-text">
+                            Current average processing time from application to permit approval
+                        </small>
+                    </div>
+                    
+                    <div class="savings-input-group">
+                        <label for="inspection-delays">Inspection Delays (Days)</label>
+                        <input type="number" id="inspection-delays" class="savings-input" value="5" step="1" min="0" max="50" onchange="calculateHousingImpact()">
+                        <small class="help-text">
+                            Average delay due to failed inspections and re-inspections
+                        </small>
+                </div>
+                    
+                    <div class="savings-input-group">
+                        <label for="construction-duration">Construction Duration (Months)</label>
+                        <input type="number" id="construction-duration" class="savings-input" value="18" step="1" min="6" max="48" onchange="calculateHousingImpact()">
+                        <small class="help-text">
+                            Time from permit approval to first occupancy
+                        </small>
+                </div>
+            </div>
+
+                <div class="housing-impact-results">
+                    <h4>Housing Impact Analysis</h4>
+                    
+                    <div class="timeline-section">
+                        <h5>Development Timeline Impact</h5>
+                        <div class="timeline-visualization">
+                            <div class="timeline-item">
+                                <div class="timeline-phase">Permit Processing</div>
+                                <div class="timeline-duration" id="permit-phase-days">30 days</div>
+                                <div class="timeline-delay" id="permit-delay-impact">No delay</div>
+                            </div>
+                            <div class="timeline-arrow">→</div>
+                            <div class="timeline-item">
+                                <div class="timeline-phase">Construction Start</div>
+                                <div class="timeline-duration">Immediate</div>
+                                <div class="timeline-delay">After permit approval</div>
+                            </div>
+                            <div class="timeline-arrow">→</div>
+                            <div class="timeline-item">
+                                <div class="timeline-phase">Inspection Phase</div>
+                                <div class="timeline-duration" id="inspection-phase-days">5 days delay</div>
+                                <div class="timeline-delay" id="inspection-delay-impact">Re-inspection delays</div>
+                            </div>
+                            <div class="timeline-arrow">→</div>
+                            <div class="timeline-item">
+                                <div class="timeline-phase">First Occupancy</div>
+                                <div class="timeline-duration" id="total-timeline">18 months</div>
+                                <div class="timeline-delay" id="total-delay-impact">Total project delay</div>
+                            </div>
+                        </div>
+                </div>
+
+                    <div class="revenue-impact-grid">
+                        <div class="revenue-card">
+                            <h5>Tax Revenue Impact</h5>
+                            <div class="revenue-amount" id="annual-property-tax">$525K</div>
+                            <div class="revenue-description">Annual Property Tax Revenue</div>
+                            <div class="revenue-breakdown">
+                                <p>150 units × $350K × 1.0% = $525K/year</p>
+                            </div>
+                </div>
+
+                        <div class="revenue-card">
+                            <h5>Delay Cost to City</h5>
+                            <div class="revenue-amount negative" id="delay-cost">$87.5K</div>
+                            <div class="revenue-description">Lost Revenue from Delays</div>
+                            <div class="revenue-breakdown">
+                                <p>35-day delay × $525K ÷ 365 = $87.5K lost</p>
+                            </div>
+                </div>
+
+                        <div class="revenue-card">
+                            <h5>Economic Impact</h5>
+                            <div class="revenue-amount" id="economic-impact">$52.5M</div>
+                            <div class="revenue-description">Total Project Value</div>
+                            <div class="revenue-breakdown">
+                                <p>150 units × $350K = $52.5M investment</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="occupancy-impact">
+                        <h5>Occupancy Timeline</h5>
+                        <div class="occupancy-chart">
+                            <div class="occupancy-phase">
+                                <div class="phase-label">Permit Approved</div>
+                                <div class="phase-date" id="permit-approval-date">Today</div>
+                            </div>
+                            <div class="occupancy-phase">
+                                <div class="phase-label">Construction Complete</div>
+                                <div class="phase-date" id="construction-complete-date">18 months</div>
+                            </div>
+                            <div class="occupancy-phase">
+                                <div class="phase-label">First Residents Move In</div>
+                                <div class="phase-date" id="first-occupancy-date">18 months</div>
+                            </div>
+                            <div class="occupancy-phase">
+                                <div class="phase-label">Full Occupancy (95%)</div>
+                                <div class="phase-date" id="full-occupancy-date">21 months</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="housing-formula">
+                        <h5>Calculation Formulas:</h5>
+                        <p><strong>Property Tax Revenue:</strong> Units × Unit Value × Tax Rate (1.0%)</p>
+                        <p><strong>Delay Cost:</strong> Total Delay Days × Annual Tax Revenue ÷ 365</p>
+                        <p><strong>Economic Impact:</strong> Units × Average Unit Value</p>
+                        <p><strong>Occupancy Timeline:</strong> Construction Duration + Inspection Delays + Marketing Period</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Section 3: Developer Savings -->
+        <div class="calculator-section" id="developer-savings" style="display: none;">
+            <div class="savings-calculator">
+                <h3>Development Services Economic Value</h3>
+                <p style="text-align: center; color: #7f8c8d; margin-bottom: 25px;">
+                    See how Development Services efficiency improvements create real financial value
+                </p>
+                <p style="text-align: center; color: #7f8c8d; margin-bottom: 25px;">
+                    Calculate the exact savings a developer receives from faster permit processing
+                </p>
+                
+                <div class="savings-grid">
+                    <div class="savings-input-group">
+                        <label for="project-value">Your Project Value ($)</label>
+                        <input type="number" id="project-value" class="savings-input" value="500000" step="10000" min="10000" max="10000000" onchange="calculateDeveloperSavings()">
+                    </div>
+                    
+                    <div class="savings-input-group">
+                        <label for="interest-rate">Interest Rate (%)</label>
+                        <input type="number" id="interest-rate" class="savings-input" value="8" step="0.1" min="1" max="20" onchange="calculateDeveloperSavings()">
+                        <small class="help-text" id="interest-rate-help">
+                            Current market rate: <span id="current-rate-display">8.0%</span> 
+                            (Updated: <span id="rate-update-date">Q4 2024</span>)
+                            <button type="button" onclick="updateInterestRate()" style="margin-left: 10px; padding: 2px 8px; font-size: 0.7rem; background: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer;">Update Rate</button>
+                        </small>
+                    </div>
+                    
+                    <div class="savings-input-group">
+                        <label for="processing-days">Your Target Processing Time (Days)</label>
+                        <input type="number" id="processing-days" class="savings-input" value="30" step="0.1" min="1" max="100" onchange="calculateDeveloperSavings()">
+                    </div>
+                    
+                    <div class="savings-input-group">
+                        <label for="baseline-days">Current Processing Time (Days)</label>
+                        <input type="number" id="baseline-days" class="savings-input" value="30" step="0.1" min="1" max="100" onchange="calculateDeveloperSavings()">
+                    </div>
+                </div>
+
+                <div class="savings-result">
+                    <h4>Developer Savings</h4>
+                    <div id="savings-amount" class="savings-amount">$0</div>
+                    <div id="savings-breakdown" class="savings-breakdown">No savings - processing time equals baseline</div>
+                    <div id="savings-formula" class="savings-formula">
+                        Daily Cost = $0 ÷ 365 = $0/day<br>
+                        Days Saved = 0 days<br>
+                        Total Savings = $0/day × 0 days = $0
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Results Section -->
+        <div class="calculator-section" id="final-results" style="display: none;">
+            <div class="savings-calculator">
+                <h3>Development Services Impact Summary</h3>
+                <p style="text-align: center; color: #7f8c8d; margin-bottom: 25px;">
+                    Congratulations! Here's the incredible value Development Services brings to the community
+                </p>
+                
+                <div class="impact-summary" id="impact-summary">
+                    <!-- Dynamic content will be populated here -->
+                </div>
+                
+                <div class="celebration-message">
+                    <h4>Development Services is making a real difference!</h4>
+                    <p>Every number here represents real value your team has created for the community. Keep up the amazing work!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calculation Modal -->
+    <div id="calculation-modal" class="calculation-modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeCalculation()">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Guided Tour Overlay -->
+    <div id="tour-overlay" class="tour-overlay">
+        <div id="tour-step" class="tour-step">
+            <h3 id="tour-title">Welcome to the Impact Dashboard!</h3>
+            <p id="tour-content">This dashboard shows how your daily Development Services work creates real community impact. Let's take a quick tour to see how it works.</p>
+            <div class="tour-nav">
+                <button id="tour-prev" class="tour-btn" onclick="prevTourStep()" disabled>Previous</button>
+                <span id="tour-progress" class="tour-progress">Step 1 of 6</span>
+                <button id="tour-next" class="tour-btn" onclick="nextTourStep()">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Welcome Experience Variables
+        let currentWelcomeStep = 1;
+        let selectedImpact = null;
+        let quickData = {
+            role: 'planner',
+            projects: 5,
+            size: 'medium'
+        };
+
+        // Progressive Disclosure and Encouraging Features
+        let currentSection = 'jobs-impact';
+        let completedSections = new Set();
+        let fieldCompletionCount = 0;
+        let totalFields = 0;
+
+        // Welcome Experience Functions
+        function nextWelcomeStep() {
+            if (currentWelcomeStep < 3) {
+                currentWelcomeStep++;
+                showWelcomeStep(currentWelcomeStep);
+            }
+        }
+
+        function prevWelcomeStep() {
+            if (currentWelcomeStep > 1) {
+                currentWelcomeStep--;
+                showWelcomeStep(currentWelcomeStep);
+            }
+        }
+
+        function showWelcomeStep(step) {
+            // Hide all steps
+            document.querySelectorAll('.welcome-step').forEach(stepEl => {
+                stepEl.classList.remove('active');
+            });
+            
+            // Show current step
+            document.getElementById(`welcome-step-${step}`).classList.add('active');
+            
+            // Update previews if on step 2
+            if (step === 2) {
+                updateImpactPreviews();
+            }
+            
+            // Update visualization if on step 3
+            if (step === 3) {
+                updateQuickPreview();
+            }
+        }
+
+        function selectImpact(impactType) {
+            selectedImpact = impactType;
+            
+            // Update visual selection
+            document.querySelectorAll('.impact-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            document.querySelector(`[data-impact="${impactType}"]`).classList.add('selected');
+            
+            // Auto-advance to next step after selection
+            setTimeout(() => {
+                nextWelcomeStep();
+            }, 500);
+        }
+
+        function updateImpactPreviews() {
+            // Animate preview numbers based on role and project data
+            const roleMultipliers = {
+                'planner': { jobs: 15, housing: 8, economy: 2.5 },
+                'inspector': { jobs: 12, housing: 6, economy: 2.0 },
+                'permit': { jobs: 10, housing: 5, economy: 1.8 },
+                'manager': { jobs: 20, housing: 12, economy: 3.5 },
+                'other': { jobs: 8, housing: 4, economy: 1.5 }
+            };
+            
+            const sizeMultipliers = {
+                'small': 1,
+                'medium': 2,
+                'large': 4
+            };
+            
+            const role = document.getElementById('quick-role').value;
+            const projects = parseInt(document.getElementById('quick-projects').value);
+            const size = document.getElementById('quick-size').value;
+            
+            const multipliers = roleMultipliers[role];
+            const sizeMultiplier = sizeMultipliers[size];
+            
+            // Calculate preview values
+            const jobsValue = Math.round(multipliers.jobs * projects * sizeMultiplier);
+            const housingValue = Math.round(multipliers.housing * projects * sizeMultiplier);
+            const economyValue = Math.round(multipliers.economy * projects * sizeMultiplier * 1000000);
+            
+            // Animate the numbers
+            animateNumber('jobs-preview .preview-number', jobsValue);
+            animateNumber('housing-preview .preview-number', housingValue);
+            animateNumber('economy-preview .preview-number', economyValue, '$');
+        }
+
+        function updateQuickPreview() {
+            const role = document.getElementById('quick-role').value;
+            const projects = parseInt(document.getElementById('quick-projects').value);
+            const size = document.getElementById('quick-size').value;
+            
+            // Store data for later use
+            quickData = { role, projects, size };
+            
+            // Generate visualization based on selected impact
+            generateImpactVisualization();
+        }
+
+        function generateImpactVisualization() {
+            const visualization = document.getElementById('impact-visualization');
+            
+            if (!selectedImpact) return;
+            
+            const roleMultipliers = {
+                'planner': { jobs: 15, housing: 8, economy: 2.5 },
+                'inspector': { jobs: 12, housing: 6, economy: 2.0 },
+                'permit': { jobs: 10, housing: 5, economy: 1.8 },
+                'manager': { jobs: 20, housing: 12, economy: 3.5 },
+                'other': { jobs: 8, housing: 4, economy: 1.5 }
+            };
+            
+            const sizeMultipliers = {
+                'small': 1,
+                'medium': 2,
+                'large': 4
+            };
+            
+            const multipliers = roleMultipliers[quickData.role];
+            const sizeMultiplier = sizeMultipliers[quickData.size];
+            
+            let value, label, description, icon;
+            
+            switch(selectedImpact) {
+                case 'jobs':
+                    value = Math.round(multipliers.jobs * quickData.projects * sizeMultiplier);
+                    label = 'Jobs Created';
+                    description = `Through Development Services processing ${quickData.projects} monthly projects, your team helps create ${value} employment opportunities in the community!`;
+                    icon = '💼';
+                    break;
+                case 'housing':
+                    value = Math.round(multipliers.housing * quickData.projects * sizeMultiplier);
+                    label = 'Homes Created';
+                    description = `Development Services helps ${value} families find homes and build communities through efficient processing!`;
+                    icon = '🏠';
+                    break;
+                case 'economy':
+                    value = Math.round(multipliers.economy * quickData.projects * sizeMultiplier * 1000000);
+                    label = 'Economic Impact';
+                    description = `Development Services generates $${value.toLocaleString()} in economic value for the community!`;
+                    icon = '💰';
+                    break;
+            }
+            
+            visualization.innerHTML = `
+                <div class="visualization-content">
+                    <div style="font-size: 3rem; margin-bottom: 20px;">${icon}</div>
+                    <div class="visualization-number" id="visualization-number">0</div>
+                    <div class="visualization-label">${label}</div>
+                    <div class="visualization-description">${description}</div>
+                </div>
+            `;
+            
+            // Animate the number
+            animateNumber('#visualization-number', value, selectedImpact === 'economy' ? '$' : '');
+        }
+
+        function animateNumber(selector, targetValue, prefix = '') {
+            const element = document.querySelector(selector);
+            if (!element) return;
+            
+            const startValue = 0;
+            const duration = 2000;
+            const startTime = performance.now();
+            
+            function updateNumber(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                // Easing function for smooth animation
+                const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                const currentValue = Math.round(startValue + (targetValue - startValue) * easeOutQuart);
+                
+                element.textContent = prefix + currentValue.toLocaleString();
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateNumber);
+                }
+            }
+            
+            requestAnimationFrame(updateNumber);
+        }
+
+        function startFullCalculator() {
+            // Hide welcome overlay
+            document.getElementById('welcome-overlay').classList.add('hidden');
+            
+            // Pre-populate calculator based on quick data
+            prePopulateCalculator();
+            
+            // Initialize the encouraging experience
+            initializeEncouragingExperience();
+            
+            // Show the main calculator
+            setTimeout(() => {
+                document.getElementById('encouragement-message').classList.add('show');
+            }, 500);
+        }
+
+        function prePopulateCalculator() {
+            // Pre-populate based on quick data
+            const roleMapping = {
+                'planner': 'Planning & Zoning',
+                'inspector': 'Building Inspection', 
+                'permit': 'Permit Processing',
+                'manager': 'Development Management',
+                'other': 'Other Services'
+            };
+            
+            // Update project name
+            document.getElementById('project-name').value = `Development Services ${roleMapping[quickData.role]} Project`;
+            
+            // Update project spending based on size
+            const spendingMapping = {
+                'small': 3,
+                'medium': 15,
+                'large': 50
+            };
+            
+            document.getElementById('project-spending').value = spendingMapping[quickData.size];
+            
+            // Update direct jobs based on role and projects
+            const jobsMapping = {
+                'planner': 8,
+                'inspector': 6,
+                'permit': 5,
+                'manager': 12,
+                'other': 4
+            };
+            
+            const estimatedJobs = jobsMapping[quickData.role] * quickData.projects;
+            document.getElementById('direct-jobs-planned').value = Math.min(estimatedJobs, 100);
+            
+            // Trigger calculations
+            updateSupplierSpendingFromProject();
+            calculateDetailedJobs();
+        }
+
+        // Initialize the encouraging experience
+        function initializeEncouragingExperience() {
+            // Count total fields for progress tracking
+            totalFields = document.querySelectorAll('input[type="number"], input[type="text"], select').length;
+            updateProgress();
+
+            // Add field completion listeners
+            addFieldCompletionListeners();
+
+            // Initialize tooltips
+            initializeTooltips();
+        }
+
+        // Show specific section
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.calculator-section').forEach(section => {
+                section.style.display = 'none';
+            });
+
+            // Show selected section
+            document.getElementById(sectionId).style.display = 'block';
+            currentSection = sectionId;
+
+            // Update navigation
+            document.querySelectorAll('.section-nav-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.dataset.section === sectionId) {
+                    item.classList.add('active');
+                }
+            });
+
+            // Show encouraging message for section
+            showSectionEncouragement(sectionId);
+        }
+
+        // Show encouraging messages for each section
+        function showSectionEncouragement(sectionId) {
+            const messages = {
+                'jobs-impact': {
+                    title: "Great start! Let's quantify your direct contributions",
+                    text: "Every job you help create has a ripple effect throughout the community. You're about to see just how significant your impact is!"
+                },
+                'housing-impact': {
+                    title: "Amazing! Now let's explore your housing impact",
+                    text: "Housing is the foundation of community growth. Your work helps families find homes and communities thrive."
+                },
+                'developer-savings': {
+                    title: "Fantastic! Let's see your problem-solving value",
+                    text: "Efficiency improvements create real financial value. You're about to see how your work saves money and creates opportunities."
+                },
+                'final-results': {
+                    title: "Congratulations! Here's your complete impact",
+                    text: "You've quantified something incredible - the real value you bring to your organization every day."
+                }
+            };
+
+            const message = messages[sectionId];
+            if (message) {
+                showToast(message.title, message.text);
+            }
+        }
+
+        // Add field completion listeners
+        function addFieldCompletionListeners() {
+            document.querySelectorAll('input, select').forEach(field => {
+                field.addEventListener('input', function() {
+                    if (this.value && this.value.trim() !== '') {
+                        if (!this.parentElement.classList.contains('completed')) {
+                            this.parentElement.classList.add('completed');
+                            fieldCompletionCount++;
+                            updateProgress();
+                            
+                            // Show completion indicator
+                            if (!this.parentElement.querySelector('.field-completion-indicator')) {
+                                const indicator = document.createElement('span');
+                                indicator.className = 'field-completion-indicator';
+                                indicator.textContent = '✓';
+                                this.parentElement.appendChild(indicator);
+                            }
+
+                            // Show encouraging feedback
+                            showFieldCompletionFeedback(this);
+                        }
+                    } else {
+                        if (this.parentElement.classList.contains('completed')) {
+                            this.parentElement.classList.remove('completed');
+                            fieldCompletionCount--;
+                            updateProgress();
+                            
+                            const indicator = this.parentElement.querySelector('.field-completion-indicator');
+                            if (indicator) {
+                                indicator.remove();
+                            }
+                        }
+                    }
+                });
+            });
+        }
+
+        // Show field completion feedback
+        function showFieldCompletionFeedback(field) {
+            const encouragingMessages = [
+                "Nice work!",
+                "Every detail matters!",
+                "Great input!",
+                "You're doing amazing!",
+                "Perfect!",
+                "Excellent work!"
+            ];
+            
+            const randomMessage = encouragingMessages[Math.floor(Math.random() * encouragingMessages.length)];
+            showToast(randomMessage, "Keep up the great work!");
+        }
+
+        // Update progress bar
+        function updateProgress() {
+            const progress = totalFields > 0 ? (fieldCompletionCount / totalFields) * 100 : 0;
+            document.getElementById('progress-bar').style.width = progress + '%';
+        }
+
+        // Show toast notification
+        function showToast(title, message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `
+                <h4>${title}</h4>
+                <p>${message}</p>
+            `;
+            
+            document.getElementById('toast-container').appendChild(toast);
+            
+            // Show toast
+            setTimeout(() => toast.classList.add('show'), 100);
+            
+            // Hide toast after 3 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Initialize tooltips
+        function initializeTooltips() {
+            const tooltipData = {
+                'project-name': 'Give your project a memorable name that reflects its impact',
+                'project-type': 'Choose the type that best matches your project - this affects job creation multipliers',
+                'direct-jobs-planned': 'Include all direct hires: construction workers, managers, supervisors, and support staff',
+                'project-spending': 'Total project cost including land, construction, permits, and all associated expenses',
+                'supplier-spending': 'Money spent on materials, subcontractors, and services - typically 60% of total project cost',
+                'avg-salary': 'Average annual salary for jobs created - includes benefits and reflects local market rates',
+                'housing-units-count': 'Total number of housing units in your project - apartments, condos, or single-family homes',
+                'avg-unit-value': 'Average market value of each housing unit - includes land and construction costs',
+                'permit-processing-days': 'Current average time from application submission to permit approval',
+                'inspection-delays': 'Additional time lost due to failed inspections and re-inspections',
+                'construction-duration': 'Time from permit approval to first occupancy - includes all construction phases',
+                'project-value': 'Total value of your development project - includes land, construction, and all costs',
+                'interest-rate': 'Current market interest rate for construction loans - affects financing costs',
+                'processing-days': 'Target processing time you want to achieve - your efficiency goal',
+                'baseline-days': 'Current average processing time - the baseline you\'re improving from'
+            };
+
+            Object.keys(tooltipData).forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (field) {
+                    const label = field.previousElementSibling;
+                    if (label && label.tagName === 'LABEL') {
+                        const tooltipContainer = document.createElement('div');
+                        tooltipContainer.className = 'tooltip-container';
+                        tooltipContainer.innerHTML = `
+                            <span class="tooltip-icon">?</span>
+                            <div class="tooltip-content">${tooltipData[fieldId]}</div>
+                        `;
+                        label.appendChild(tooltipContainer);
+                    }
+                }
+            });
+        }
+
+        // Check section completion
+        function checkSectionCompletion(sectionId) {
+            const section = document.getElementById(sectionId);
+            const fields = section.querySelectorAll('input, select');
+            const completedFields = section.querySelectorAll('input.completed, select.completed');
+            
+            if (fields.length > 0 && completedFields.length === fields.length) {
+                completedSections.add(sectionId);
+                
+                // Update navigation
+                const navItem = document.querySelector(`[data-section="${sectionId}"]`);
+                if (navItem) {
+                    navItem.classList.add('completed');
+                }
+                
+                // Show completion celebration
+                showToast("Section Complete!", "You've finished this section - great work!");
+                
+                // Auto-advance to next section if not the last one
+                const sections = ['jobs-impact', 'housing-impact', 'developer-savings', 'final-results'];
+                const currentIndex = sections.indexOf(sectionId);
+                if (currentIndex < sections.length - 1) {
+                    setTimeout(() => {
+                        showSection(sections[currentIndex + 1]);
+                    }, 2000);
+                } else {
+                    // Show final results
+                    generateFinalResults();
+                    showSection('final-results');
+                }
+            }
+        }
+
+        // Generate final results summary
+        function generateFinalResults() {
+            const summary = document.getElementById('impact-summary');
+            
+            // Get values from all sections
+            const jobsData = {
+                direct: parseInt(document.getElementById('direct-jobs-planned').value) || 0,
+                indirect: parseInt(document.getElementById('indirect-jobs').textContent) || 0,
+                induced: parseInt(document.getElementById('induced-jobs').textContent) || 0
+            };
+            
+            const housingData = {
+                units: parseInt(document.getElementById('housing-units-count').value) || 0,
+                value: parseFloat(document.getElementById('avg-unit-value').value) || 0
+            };
+            
+            const savingsData = {
+                amount: parseFloat(document.getElementById('savings-amount').textContent.replace('$', '').replace(',', '')) || 0
+            };
+            
+            const totalJobs = jobsData.direct + jobsData.indirect + jobsData.induced;
+            const totalHousingValue = housingData.units * housingData.value;
+            
+            summary.innerHTML = `
+                <div class="impact-metrics">
+                    <div class="metric-card">
+                        <h4>Jobs Created</h4>
+                        <div class="metric-value">${totalJobs.toLocaleString()}</div>
+                        <p>Direct: ${jobsData.direct} | Indirect: ${jobsData.indirect} | Induced: ${jobsData.induced}</p>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Housing Value</h4>
+                        <div class="metric-value">$${totalHousingValue.toLocaleString()}</div>
+                        <p>${housingData.units} units × $${housingData.value.toLocaleString()} average</p>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Developer Savings</h4>
+                        <div class="metric-value">$${savingsData.amount.toLocaleString()}</div>
+                        <p>From improved processing efficiency</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Sample data for different scenarios
+        const scenarios = {
+            current: {
+                processingTime: "30.0 days",
+                approvalRate: "87%",
+                permitsCount: "342",
+                satisfaction: "4.6/5",
+                jobsCreated: "156",
+                housingUnits: "89",
+                businesses: "23",
+                economicImpact: "$2.3M"
+            },
+            improved: {
+                processingTime: "15.0 days",
+                approvalRate: "92%",
+                permitsCount: "398",
+                satisfaction: "4.8/5",
+                jobsCreated: "201",
+                housingUnits: "124",
+                businesses: "31",
+                economicImpact: "$3.1M"
+            }
+        };
+
+        function updateMetrics() {
+            // Simulate real-time updates
+            const elements = {
+                'processing-time': scenarios.current.processingTime,
+                'approval-rate': scenarios.current.approvalRate,
+                'permits-count': scenarios.current.permitsCount,
+                'satisfaction': scenarios.current.satisfaction,
+                'jobs-created': scenarios.current.jobsCreated,
+                'housing-units': scenarios.current.housingUnits,
+                'businesses': scenarios.current.businesses,
+                'economic-impact': scenarios.current.economicImpact
+            };
+
+            Object.keys(elements).forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.style.transform = 'scale(1.1)';
+                    setTimeout(() => {
+                        element.style.transform = 'scale(1)';
+                    }, 200);
+                }
+            });
+        }
+
+        function showScenario(scenario) {
+            const data = scenarios[scenario];
+            if (!data) return;
+
+            document.getElementById('processing-time').textContent = data.processingTime;
+            document.getElementById('approval-rate').textContent = data.approvalRate;
+            document.getElementById('permits-count').textContent = data.permitsCount;
+            document.getElementById('satisfaction').textContent = data.satisfaction;
+            document.getElementById('jobs-created').textContent = data.jobsCreated;
+            document.getElementById('housing-units').textContent = data.housingUnits;
+            document.getElementById('businesses').textContent = data.businesses;
+            document.getElementById('economic-impact').textContent = data.economicImpact;
+
+            // Update impact cards
+            const impactCards = document.querySelectorAll('.impact-card .number');
+            if (scenario === 'improved') {
+                impactCards[0].textContent = '$240K';
+                impactCards[1].textContent = '22%';
+                impactCards[2].textContent = '201';
+                impactCards[3].textContent = '124';
+            } else {
+                impactCards[0].textContent = '$180K';
+                impactCards[1].textContent = '15%';
+                impactCards[2].textContent = '156';
+                impactCards[3].textContent = '89';
+            }
+        }
+
+        // Calculation data and formulas
+        const calculations = {
+            'developer-savings': {
+                title: 'Developer Savings Calculation',
+                content: `
+                    <div class="calculation-section">
+                        <h3>How Faster Processing Creates Developer Savings</h3>
+                        <p>When Development Services processes permits faster, developers save money in several ways:</p>
+                        
+                        <div class="formula-box">
+                            <h4>Primary Cost Savings Formula:</h4>
+                            <div class="formula">Daily Cost = (Project Value × Interest Rate) ÷ 365</div>
+                            <div class="formula">Total Savings = Daily Cost × Days Saved × Number of Projects</div>
+                        </div>
+
+                        <div class="example-calculation">
+                            <h4>Real Example Calculation:</h4>
+                            <p><strong>Average Project Value:</strong> $500,000</p>
+                            <p><strong>Developer Interest Rate:</strong> 8% annually</p>
+                            <p><strong>Daily Interest Cost:</strong> $500,000 × 0.08 ÷ 365 = $109.59/day</p>
+                            <p><strong>Days Saved (30.0 → 15.0 days):</strong> 15.0 days</p>
+                            <p><strong>Savings per Project:</strong> $109.59 × 15.0 = $1,643.85</p>
+                            <p><strong>Annual Projects:</strong> 342 permits</p>
+                            <p><strong>Total Annual Savings:</strong> $1,643.85 × 342 = $562,197</p>
+                        </div>
+
+                        <div class="data-source">
+                            <h4>Data Sources:</h4>
+                            <ul>
+                                <li>Permit management system processing times</li>
+                                <li>Local developer interest rate surveys</li>
+                                <li>Average project values from permit applications</li>
+                                <li>Annual permit volume from department records</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="calculation-section">
+                        <h3>Additional Cost Factors</h3>
+                        <p>Beyond interest costs, faster processing reduces:</p>
+                        <ul>
+                            <li><strong>Construction Delays:</strong> $200-500/day per project</li>
+                            <li><strong>Labor Costs:</strong> Reduced idle time for construction crews</li>
+                            <li><strong>Material Storage:</strong> Less time holding materials on-site</li>
+                            <li><strong>Opportunity Costs:</strong> Faster project completion = earlier revenue</li>
+                        </ul>
+                    </div>
+                `
+            },
+            'more-projects': {
+                title: 'Project Volume Increase Calculation',
+                content: `
+                    <div class="calculation-section">
+                        <h3>How Developer Savings Lead to More Projects</h3>
+                        <p>When developers save money through faster processing, they can afford to take on more projects:</p>
+                        
+                        <div class="formula-box">
+                            <h4>Project Attraction Formula:</h4>
+                            <div class="formula">Cost Reduction % = (Savings per Project ÷ Total Project Cost) × 100</div>
+                            <div class="formula">Project Increase = Base Projects × (1 + Cost Reduction % × Attraction Factor)</div>
+                        </div>
+
+                        <div class="example-calculation">
+                            <h4>Real Example Calculation:</h4>
+                            <p><strong>Savings per Project:</strong> $153.43</p>
+                            <p><strong>Total Project Cost:</strong> $500,000</p>
+                            <p><strong>Cost Reduction:</strong> $153.43 ÷ $500,000 = 0.031%</p>
+                            <p><strong>Attraction Factor:</strong> 5.0 (industry multiplier for cost reductions)</p>
+                            <p><strong>Project Increase:</strong> 342 × (1 + 0.00031 × 5.0) = 342 × 1.00155 = 342.5</p>
+                            <p><strong>Additional Projects:</strong> 0.5 projects per month = 6 projects annually</p>
+                        </div>
+
+                        <div class="data-source">
+                            <h4>Data Sources:</h4>
+                            <ul>
+                                <li>Economic development studies on permit processing impact</li>
+                                <li>Developer surveys on location decision factors</li>
+                                <li>Comparative analysis with neighboring jurisdictions</li>
+                                <li>Industry reports on development cost sensitivity</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            },
+            'new-jobs': {
+                title: 'Job Creation Calculation',
+                content: `
+                    <div class="calculation-section">
+                        <h3>How More Projects Create Jobs</h3>
+                        <p>Each development project creates both direct construction jobs and indirect economic jobs:</p>
+                        
+                        <div class="formula-box">
+                            <h4>Job Creation Formula:</h4>
+                            <div class="formula">Direct Jobs = Project Value ÷ Average Job Value</div>
+                            <div class="formula">Indirect Jobs = Direct Jobs × Economic Multiplier</div>
+                            <div class="formula">Total Jobs = (Direct Jobs + Indirect Jobs) × Number of Projects</div>
+                        </div>
+
+                        <div class="example-calculation">
+                            <h4>Real Example Calculation:</h4>
+                            <p><strong>Average Project Value:</strong> $500,000</p>
+                            <p><strong>Average Job Value (construction):</strong> $75,000</p>
+                            <p><strong>Direct Jobs per Project:</strong> $500,000 ÷ $75,000 = 6.67 jobs</p>
+                            <p><strong>Economic Multiplier (construction):</strong> 1.5</p>
+                            <p><strong>Indirect Jobs per Project:</strong> 6.67 × 1.5 = 10 jobs</p>
+                            <p><strong>Total Jobs per Project:</strong> 6.67 + 10 = 16.67 jobs</p>
+                            <p><strong>Additional Projects:</strong> 6 projects annually</p>
+                            <p><strong>New Jobs Created:</strong> 16.67 × 6 = 100 jobs</p>
+                        </div>
+
+                        <div class="data-source">
+                            <h4>Data Sources:</h4>
+                            <ul>
+                                <li>Bureau of Labor Statistics construction employment data</li>
+                                <li>Regional economic impact studies</li>
+                                <li>Construction industry job value reports</li>
+                                <li>Local economic development agency multipliers</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            },
+            'housing-units': {
+                title: 'Housing Units Calculation',
+                content: `
+                    <div class="calculation-section">
+                        <h3>How More Projects Create Housing Units</h3>
+                        <p>Additional development projects directly translate to new housing units:</p>
+                        
+                        <div class="formula-box">
+                            <h4>Housing Creation Formula:</h4>
+                            <div class="formula">Housing Units = Residential Projects × Average Units per Project</div>
+                            <div class="formula">Residential % = Residential Projects ÷ Total Projects</div>
+                        </div>
+
+                        <div class="example-calculation">
+                            <h4>Real Example Calculation:</h4>
+                            <p><strong>Additional Projects:</strong> 6 projects annually</p>
+                            <p><strong>Residential Project Percentage:</strong> 70%</p>
+                            <p><strong>Residential Projects:</strong> 6 × 0.70 = 4.2 projects</p>
+                            <p><strong>Average Units per Residential Project:</strong> 21 units</p>
+                            <p><strong>New Housing Units:</strong> 4.2 × 21 = 88.2 units</p>
+                        </div>
+
+                        <div class="data-source">
+                            <h4>Data Sources:</h4>
+                            <ul>
+                                <li>Permit applications categorized by project type</li>
+                                <li>Historical data on units per residential project</li>
+                                <li>Planning department project classifications</li>
+                                <li>Building department construction records</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="calculation-section">
+                        <h3>Housing Impact Multipliers</h3>
+                        <p>New housing units create additional community benefits:</p>
+                        <ul>
+                            <li><strong>Property Tax Revenue:</strong> $2,000-4,000 per unit annually</li>
+                            <li><strong>Local Spending:</strong> $15,000-25,000 per household annually</li>
+                            <li><strong>School Enrollment:</strong> 0.3-0.5 children per unit</li>
+                            <li><strong>Infrastructure Demand:</strong> Roads, utilities, services</li>
+                        </ul>
+                    </div>
+                `
+            }
+        };
+
+        function showCalculation(type) {
+            const modal = document.getElementById('calculation-modal');
+            const modalBody = document.getElementById('modal-body');
+            const calc = calculations[type];
+            
+            if (calc) {
+                modalBody.innerHTML = `
+                    <h2 style="color: #2c3e50; margin-bottom: 20px;">${calc.title}</h2>
+                    ${calc.content}
+                `;
+                modal.style.display = 'flex';
+            }
+        }
+
+        function closeCalculation() {
+            document.getElementById('calculation-modal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('calculation-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCalculation();
+            }
+        });
+
+        // Guided Tour Data
+        const tourSteps = [
+            {
+                title: "Welcome to the Impact Dashboard!",
+                content: "This dashboard shows how your daily Development Services work creates real community impact. Let's take a quick tour to see how it works.",
+                target: null,
+                position: { top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }
+            },
+            {
+                title: "Daily Task Performance",
+                content: "These metrics show your current performance: processing time, approval rates, permit volume, and customer satisfaction. These are the foundation of community impact.",
+                target: '.card:first-child',
+                position: { top: '15%', right: '10%' }
+            },
+            {
+                title: "Community Impact Metrics",
+                content: "Here's the magic - these numbers show the real community outcomes: jobs created, housing built, businesses opened, and economic impact. This is what your work accomplishes!",
+                target: '.card:nth-child(2)',
+                position: { top: '15%', left: '10%' }
+            },
+            {
+                title: "Impact Chain Visualization",
+                content: "This shows the direct connection: faster processing → developer savings → more projects → community growth. Click on any impact card to see the detailed calculations!",
+                target: '.impact-chain',
+                position: { top: '60%', left: '50%', transform: 'translateX(-50%)' }
+            },
+            {
+                title: "Employee Impact",
+                content: "This is your personal impact! Every permit you process efficiently creates 2.3 jobs, $1,500 in economic impact, and 0.26 housing units. You're making a real difference!",
+                target: '.employee-impact',
+                position: { top: '25%', left: '50%', transform: 'translateX(-50%)' }
+            },
+            {
+                title: "Custom Scenarios",
+                content: "Try the 'Custom Scenario' button to input your own numbers and see how different performance levels would impact your community. The possibilities are endless!",
+                target: '.controls',
+                position: { top: '45%', left: '50%', transform: 'translateX(-50%)' }
+            }
+        ];
+
+        let currentTourStep = 0;
+
+        function startTour() {
+            currentTourStep = 0;
+            document.getElementById('tour-overlay').style.display = 'block';
+            showTourStep();
+        }
+
+        function showTourStep() {
+            const step = tourSteps[currentTourStep];
+            if (!step) {
+                console.error('No step found for index:', currentTourStep);
+                return;
+            }
+            
+            const tourStep = document.getElementById('tour-step');
+            const tourTitle = document.getElementById('tour-title');
+            const tourContent = document.getElementById('tour-content');
+            const tourProgress = document.getElementById('tour-progress');
+            const tourPrev = document.getElementById('tour-prev');
+            const tourNext = document.getElementById('tour-next');
+
+            // Remove previous highlights
+            document.querySelectorAll('.tour-highlight').forEach(el => {
+                el.classList.remove('tour-highlight');
+            });
+
+            // Add highlight to current target
+            if (step.target) {
+                const target = document.querySelector(step.target);
+                if (target) {
+                    target.classList.add('tour-highlight');
+                }
+            }
+
+            // Position tour step based on current step - simplified positioning
+            let position = {};
+            
+            if (currentTourStep === 0) { // Welcome
+                position = { 
+                    top: '50%', 
+                    left: '50%', 
+                    transform: 'translate(-50%, -50%)'
+                };
+            } else if (currentTourStep === 1) { // Daily Task Performance
+                position = { 
+                    top: '20%', 
+                    right: '20px',
+                    left: 'auto'
+                };
+            } else if (currentTourStep === 2) { // Community Impact Metrics
+                position = { 
+                    top: '20%', 
+                    left: '20px',
+                    right: 'auto'
+                };
+            } else if (currentTourStep === 3) { // Impact Chain
+                position = { 
+                    top: '50%', 
+                    left: '50%', 
+                    transform: 'translate(-50%, -50%)'
+                };
+            } else if (currentTourStep === 4) { // Employee Impact
+                position = { 
+                    top: '30%', 
+                    left: '50%', 
+                    transform: 'translate(-50%, -50%)'
+                };
+            } else if (currentTourStep === 5) { // Custom Scenarios
+                position = { 
+                    top: '40%', 
+                    left: '50%', 
+                    transform: 'translate(-50%, -50%)'
+                };
+            }
+            
+            // Apply positioning
+            tourStep.style.top = position.top;
+            tourStep.style.left = position.left;
+            tourStep.style.right = position.right || 'auto';
+            tourStep.style.transform = position.transform || 'none';
+
+            // Update content
+            tourTitle.textContent = step.title;
+            tourContent.textContent = step.content;
+
+            // Update progress
+            tourProgress.textContent = `Step ${currentTourStep + 1} of ${tourSteps.length}`;
+
+            // Update navigation
+            tourPrev.disabled = currentTourStep === 0;
+            tourNext.textContent = currentTourStep === tourSteps.length - 1 ? 'Finish' : 'Next';
+        }
+
+        function nextTourStep() {
+            if (currentTourStep < tourSteps.length - 1) {
+                currentTourStep++;
+                showTourStep();
+            } else {
+                endTour();
+            }
+        }
+
+        function prevTourStep() {
+            if (currentTourStep > 0) {
+                currentTourStep--;
+                showTourStep();
+            }
+        }
+
+        function endTour() {
+            document.getElementById('tour-overlay').style.display = 'none';
+            document.querySelectorAll('.tour-highlight').forEach(el => {
+                el.classList.remove('tour-highlight');
+            });
+        }
+
+        // Custom Scenario Functions
+        function toggleCustomScenario() {
+            const scenarioInput = document.getElementById('scenario-input');
+            if (scenarioInput.style.display === 'none' || scenarioInput.style.display === '') {
+                scenarioInput.style.display = 'block';
+            } else {
+                scenarioInput.style.display = 'none';
+            }
+        }
+
+        function applyCustomScenario() {
+            const processingTime = parseFloat(document.getElementById('custom-processing-time').value);
+            const approvalRate = parseInt(document.getElementById('custom-approval-rate').value);
+            const permitsCount = parseInt(document.getElementById('custom-permits-count').value);
+            const satisfaction = parseFloat(document.getElementById('custom-satisfaction').value);
+
+            // Calculate impact based on custom inputs
+            const daysSaved = Math.max(0, 30.0 - processingTime);
+            const dailyCost = 500000 * 0.08 / 365; // $500k project at 8% interest
+            const savingsPerProject = dailyCost * daysSaved;
+            const totalSavings = savingsPerProject * permitsCount;
+
+            // Calculate additional projects (simplified formula)
+            const costReduction = savingsPerProject / 500000;
+            const additionalProjects = Math.round(permitsCount * costReduction * 5);
+            const newJobs = Math.round(additionalProjects * 16.67);
+            const newHousing = Math.round(additionalProjects * 0.7 * 21);
+
+            // Update the dashboard
+            document.getElementById('processing-time').textContent = processingTime.toFixed(1) + ' days';
+            document.getElementById('approval-rate').textContent = approvalRate + '%';
+            document.getElementById('permits-count').textContent = permitsCount;
+            document.getElementById('satisfaction').textContent = satisfaction.toFixed(1) + '/5';
+
+            document.getElementById('jobs-created').textContent = newJobs;
+            document.getElementById('housing-units').textContent = newHousing;
+            document.getElementById('businesses').textContent = Math.round(additionalProjects * 0.3);
+            document.getElementById('economic-impact').textContent = '$' + (totalSavings * 0.001).toFixed(1) + 'M';
+
+            // Update impact cards
+            const impactCards = document.querySelectorAll('.impact-card .number');
+            impactCards[0].textContent = '$' + Math.round(totalSavings * 0.001) + 'K';
+            impactCards[1].textContent = Math.round(costReduction * 100 * 5) + '%';
+            impactCards[2].textContent = newJobs;
+            impactCards[3].textContent = newHousing;
+
+            // Hide the input form
+            toggleCustomScenario();
+
+            // Show success message
+            alert('Custom scenario applied! Your performance changes would create ' + newJobs + ' jobs and ' + newHousing + ' housing units.');
+        }
+
+        // Close tour when clicking outside
+        document.getElementById('tour-overlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                endTour();
+            }
+        });
+
+
+        // Job Multipliers by Project Type
+        const jobMultipliers = {
+            residential: {
+                indirect: 1.53, // jobs per $1M in supplier spending
+                induced: 0.55,  // jobs per $1M in labor income
+                supplierPercentage: 0.60 // 60% of project spending goes to suppliers
+            },
+            commercial: {
+                indirect: 1.72,
+                induced: 0.62,
+                supplierPercentage: 0.55 // 55% of project spending goes to suppliers
+            },
+            'mixed-use': {
+                indirect: 1.63,
+                induced: 0.58,
+                supplierPercentage: 0.63 // 63% of project spending goes to suppliers
+            },
+            industrial: {
+                indirect: 1.85,
+                induced: 0.48,
+                supplierPercentage: 0.70 // 70% of project spending goes to suppliers
+            },
+            infrastructure: {
+                indirect: 1.41,
+                induced: 0.52,
+                supplierPercentage: 0.75 // 75% of project spending goes to suppliers
+            }
+        };
+
+        // Update supplier spending when project spending changes
+        function updateSupplierSpendingFromProject() {
+            const projectType = document.getElementById('project-type').value;
+            const projectSpending = parseFloat(document.getElementById('project-spending').value);
+            const multipliers = jobMultipliers[projectType];
+            
+            // Auto-calculate supplier spending based on project type
+            const calculatedSupplierSpending = projectSpending * multipliers.supplierPercentage;
+            document.getElementById('supplier-spending').value = calculatedSupplierSpending.toFixed(1);
+            
+            calculateDetailedJobs();
+        }
+
+        // Update job multipliers when project type changes
+        function updateJobMultipliers() {
+            const projectType = document.getElementById('project-type').value;
+            const projectSpending = parseFloat(document.getElementById('project-spending').value);
+            const multipliers = jobMultipliers[projectType];
+            
+            // Auto-calculate supplier spending based on project type
+            const calculatedSupplierSpending = projectSpending * multipliers.supplierPercentage;
+            document.getElementById('supplier-spending').value = calculatedSupplierSpending.toFixed(1);
+            
+            // Update help text with specific percentage
+            const helpText = document.getElementById('supplier-help-text');
+            const percentage = Math.round(multipliers.supplierPercentage * 100);
+            helpText.innerHTML = `Auto-calculated as ${percentage}% of project spending for ${projectType.replace('-', ' ')} projects. 
+                                 This represents spending on materials, subcontractors, and services.`;
+            
+            // Update interest rate based on project type
+            updateInterestRateForProjectType(projectType);
+            
+            calculateDetailedJobs();
+        }
+
+        // Update interest rate based on project type
+        function updateInterestRateForProjectType(projectType) {
+            // Map project types to interest rate categories
+            const projectTypeMapping = {
+                'residential': 'residential',
+                'commercial': 'commercial', 
+                'mixed-use': 'commercial', // Mixed-use typically uses commercial rates
+                'industrial': 'industrial',
+                'infrastructure': 'infrastructure'
+            };
+            
+            const rateCategory = projectTypeMapping[projectType];
+            const suggestedRate = interestRateData.industryRates[rateCategory];
+            
+            // Update the interest rate in the developer savings calculator
+            document.getElementById('interest-rate').value = suggestedRate;
+            calculateDeveloperSavings();
+        }
+
+        // Detailed Jobs Calculation Function
+        function calculateDetailedJobs() {
+            const directJobs = parseInt(document.getElementById('direct-jobs-planned').value);
+            const supplierSpending = parseFloat(document.getElementById('supplier-spending').value);
+            const avgSalary = parseFloat(document.getElementById('avg-salary').value);
+            const projectType = document.getElementById('project-type').value;
+            
+            // Get multipliers for the selected project type
+            const multipliers = jobMultipliers[projectType];
+            
+            // Calculate Direct Jobs (user input)
+            const directLaborIncome = (directJobs * avgSalary) / 1000000; // Convert to millions
+            
+            // Calculate Indirect Jobs
+            const indirectJobs = Math.round(supplierSpending * multipliers.indirect);
+            const indirectLaborIncome = (indirectJobs * avgSalary * 0.8) / 1000000; // 80% of direct salary for indirect
+            
+            // Calculate Induced Jobs
+            const totalLaborIncome = directLaborIncome + indirectLaborIncome;
+            const inducedJobs = Math.round(totalLaborIncome * multipliers.induced);
+            const inducedLaborIncome = (inducedJobs * avgSalary * 0.6) / 1000000; // 60% of direct salary for induced
+            
+            // Calculate totals
+            const totalJobs = directJobs + indirectJobs + inducedJobs;
+            const totalLaborIncomeFinal = directLaborIncome + indirectLaborIncome + inducedLaborIncome;
+            
+            // Update the display
+            document.getElementById('direct-jobs-count').textContent = directJobs;
+            document.getElementById('indirect-jobs-count').textContent = indirectJobs;
+            document.getElementById('induced-jobs-count').textContent = inducedJobs;
+            document.getElementById('total-jobs-created').textContent = totalJobs;
+            
+            // Update labor income
+            document.getElementById('direct-labor-income').textContent = '$' + directLaborIncome.toFixed(2) + 'M';
+            document.getElementById('indirect-labor-income').textContent = '$' + indirectLaborIncome.toFixed(2) + 'M';
+            document.getElementById('induced-labor-income').textContent = '$' + inducedLaborIncome.toFixed(2) + 'M';
+            document.getElementById('total-labor-income').textContent = '$' + totalLaborIncomeFinal.toFixed(2) + 'M';
+            
+            // Update multipliers display
+            document.getElementById('indirect-multiplier').textContent = multipliers.indirect;
+            document.getElementById('induced-multiplier').textContent = multipliers.induced;
+            
+            // Update economic benefits section
+            updateEconomicBenefits(totalJobs, totalLaborIncomeFinal);
+            
+            // Update formula display
+            document.getElementById('jobs-formula').innerHTML = `
+                <h5>Calculation Formulas:</h5>
+                <p><strong>Direct Jobs:</strong> ${directJobs} (input by user)</p>
+                <p><strong>Indirect Jobs:</strong> $${supplierSpending}M × ${multipliers.indirect} = ${indirectJobs} jobs</p>
+                <p><strong>Induced Jobs:</strong> $${totalLaborIncome.toFixed(2)}M × ${multipliers.induced} = ${inducedJobs} jobs</p>
+                <p><strong>Total Jobs:</strong> ${directJobs} + ${indirectJobs} + ${inducedJobs} = ${totalJobs} jobs</p>
+                <p><strong>Total Labor Income:</strong> $${totalLaborIncomeFinal.toFixed(2)}M</p>
+            `;
+        }
+
+        // Update Economic Benefits Section
+        function updateEconomicBenefits(totalJobs, totalLaborIncome) {
+            // Spending percentages (based on typical household spending patterns)
+            const spendingCategories = {
+                housing: { percentage: 30, label: 'Housing & Rent' },
+                food: { percentage: 20, label: 'Food & Dining' },
+                retail: { percentage: 15, label: 'Retail Purchases' },
+                services: { percentage: 25, label: 'Services' },
+                transportation: { percentage: 10, label: 'Transportation' }
+            };
+            
+            // Tax rates
+            const incomeTaxRate = 0.035; // 3.5%
+            const salesTaxRate = 0.015; // 1.5%
+            
+            // Calculate amounts
+            const incomeTax = totalLaborIncome * incomeTaxRate;
+            const salesTax = totalLaborIncome * salesTaxRate;
+            const totalTaxRevenue = incomeTax + salesTax;
+            const businessRevenue = totalLaborIncome * 0.5; // 50% stays local
+            const additionalJobs = Math.round(totalLaborIncome * 0.002); // ~2 jobs per $1M
+            
+            // Update main display values
+            document.getElementById('benefits-labor-income').textContent = '$' + totalLaborIncome.toFixed(2) + 'M';
+            document.getElementById('worker-spending').textContent = '$' + totalLaborIncome.toFixed(2) + 'M';
+            document.getElementById('tax-revenue').textContent = '$' + (totalTaxRevenue * 1000).toFixed(0) + 'K';
+            document.getElementById('business-impact').textContent = '$' + businessRevenue.toFixed(2) + 'M';
+            
+            // Update flow diagram
+            document.getElementById('flow-jobs').textContent = totalJobs + ' Jobs';
+            document.getElementById('flow-income').textContent = '$' + totalLaborIncome.toFixed(2) + 'M';
+            document.getElementById('flow-spending').textContent = '$' + totalLaborIncome.toFixed(2) + 'M';
+            document.getElementById('flow-taxes').textContent = '$' + (totalTaxRevenue * 1000).toFixed(0) + 'K';
+            
+            // Update spending breakdown
+            const spendingItems = document.querySelectorAll('.spending-item');
+            const categories = ['housing', 'food', 'retail', 'services', 'transportation'];
+            
+            categories.forEach((category, index) => {
+                if (spendingItems[index]) {
+                    const amount = totalLaborIncome * (spendingCategories[category].percentage / 100);
+                    const amountText = amount >= 1 ? '$' + amount.toFixed(2) + 'M' : '$' + (amount * 1000).toFixed(0) + 'K';
+                    
+                    const spans = spendingItems[index].querySelectorAll('span');
+                    if (spans.length >= 3) {
+                        spans[0].textContent = spendingCategories[category].label;
+                        spans[1].textContent = spendingCategories[category].percentage + '%';
+                        spans[2].textContent = amountText;
+                    }
+                }
+            });
+            
+            // Update tax breakdown
+            const taxItems = document.querySelectorAll('.benefit-category:nth-child(2) .spending-item');
+            if (taxItems.length >= 2) {
+                const incomeTaxSpans = taxItems[0].querySelectorAll('span');
+                if (incomeTaxSpans.length >= 3) {
+                    incomeTaxSpans[1].textContent = '3.5%';
+                    incomeTaxSpans[2].textContent = '$' + (incomeTax * 1000).toFixed(0) + 'K';
+                }
+                
+                const salesTaxSpans = taxItems[1].querySelectorAll('span');
+                if (salesTaxSpans.length >= 3) {
+                    salesTaxSpans[1].textContent = '1.5%';
+                    salesTaxSpans[2].textContent = '$' + (salesTax * 1000).toFixed(0) + 'K';
+                }
+            }
+            
+            // Update business impact
+            const businessItems = document.querySelectorAll('.benefit-category:nth-child(3) .spending-item');
+            if (businessItems.length >= 2) {
+                const revenueSpans = businessItems[0].querySelectorAll('span');
+                if (revenueSpans.length >= 3) {
+                    revenueSpans[2].textContent = '$' + businessRevenue.toFixed(2) + 'M';
+                }
+                
+                const jobsSpans = businessItems[1].querySelectorAll('span');
+                if (jobsSpans.length >= 3) {
+                    jobsSpans[2].textContent = (additionalJobs - 5) + '-' + (additionalJobs + 5) + ' jobs';
+                }
+            }
+            
+            // Update daily delay costs
+            updateDailyDelayCosts(totalLaborIncome, totalTaxRevenue);
+        }
+
+        // Update Daily Delay Costs
+        function updateDailyDelayCosts(totalLaborIncome, totalTaxRevenue) {
+            // Calculate daily amounts
+            const dailyWages = totalLaborIncome / 365; // Annual wages ÷ 365 days
+            const dailySpending = dailyWages; // Same as wages (workers spend what they earn)
+            const dailyTaxes = totalTaxRevenue / 365; // Annual taxes ÷ 365 days
+            
+            // Calculate timeline examples
+            const weeklyCost = dailyWages * 7;
+            const monthlyCost = dailyWages * 30;
+            const yearlyCost = totalLaborIncome;
+            
+            // Update main delay cost display
+            const dailyCostText = dailyWages >= 1 ? '$' + dailyWages.toFixed(1) + 'M' : '$' + (dailyWages * 1000).toFixed(0) + 'K';
+            document.getElementById('daily-delay-cost').textContent = dailyCostText;
+            
+            // Update delay breakdown
+            document.getElementById('daily-wages-lost').textContent = dailyCostText;
+            document.getElementById('daily-spending-lost').textContent = dailyCostText;
+            
+            const dailyTaxText = dailyTaxes >= 1 ? '$' + dailyTaxes.toFixed(1) + 'M' : '$' + (dailyTaxes * 1000).toFixed(0) + 'K';
+            document.getElementById('daily-taxes-lost').textContent = dailyTaxText;
+            
+            // Update timeline examples
+            const timelineExamples = document.querySelectorAll('.timeline-example');
+            const costs = [
+                { days: '1 Day Delay', cost: dailyCostText },
+                { days: '1 Week Delay', cost: weeklyCost >= 1 ? '$' + weeklyCost.toFixed(1) + 'M' : '$' + (weeklyCost * 1000).toFixed(0) + 'K' },
+                { days: '1 Month Delay', cost: monthlyCost >= 1 ? '$' + monthlyCost.toFixed(1) + 'M' : '$' + (monthlyCost * 1000).toFixed(0) + 'K' },
+                { days: '1 Year Delay', cost: yearlyCost >= 1 ? '$' + yearlyCost.toFixed(1) + 'M' : '$' + (yearlyCost * 1000).toFixed(0) + 'K' }
+            ];
+            
+            timelineExamples.forEach((example, index) => {
+                if (costs[index]) {
+                    const daysElement = example.querySelector('.example-days');
+                    const costElement = example.querySelector('.example-cost');
+                    
+                    if (daysElement) daysElement.textContent = costs[index].days;
+                    if (costElement) costElement.textContent = costs[index].cost + ' Lost';
+                }
+            });
+        }
+
+        // Interest Rate Management
+        const interestRateData = {
+            current: 8.0,
+            lastUpdated: 'Q4 2024',
+            quarterlyRates: {
+                'Q4 2024': 8.0,
+                'Q3 2024': 7.8,
+                'Q2 2024': 7.5,
+                'Q1 2024': 7.2
+            },
+            // Industry-specific rates (can be updated based on local market data)
+            industryRates: {
+                residential: 8.0,
+                commercial: 7.8,
+                industrial: 7.5,
+                infrastructure: 6.5
+            }
+        };
+
+        // Function to get current quarter
+        function getCurrentQuarter() {
+            const now = new Date();
+            const quarter = Math.floor((now.getMonth() + 3) / 3);
+            const year = now.getFullYear();
+            return `Q${quarter} ${year}`;
+        }
+
+        // Function to update interest rate (simulates fetching current market data)
+        function updateInterestRate() {
+            // In a real implementation, this would fetch from a financial API
+            // For now, we'll simulate with a small random variation
+            const baseRate = 8.0;
+            const variation = (Math.random() - 0.5) * 0.4; // ±0.2% variation
+            const newRate = Math.round((baseRate + variation) * 10) / 10;
+            
+            // Update the data
+            const currentQuarter = getCurrentQuarter();
+            interestRateData.current = newRate;
+            interestRateData.lastUpdated = currentQuarter;
+            interestRateData.quarterlyRates[currentQuarter] = newRate;
+            
+            // Update the display
+            document.getElementById('interest-rate').value = newRate;
+            document.getElementById('current-rate-display').textContent = newRate + '%';
+            document.getElementById('rate-update-date').textContent = currentQuarter;
+            
+            // Recalculate savings
+            calculateDeveloperSavings();
+            
+            // Show success message
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = 'Updated!';
+            button.style.background = '#27ae60';
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.background = '#3498db';
+            }, 2000);
+        }
+
+        // Function to initialize interest rate display
+        function initializeInterestRate() {
+            document.getElementById('interest-rate').value = interestRateData.current;
+            document.getElementById('current-rate-display').textContent = interestRateData.current + '%';
+            document.getElementById('rate-update-date').textContent = interestRateData.lastUpdated;
+        }
+
+        // Housing Impact Calculator Function
+        function calculateHousingImpact() {
+            const units = parseInt(document.getElementById('housing-units-count').value);
+            const unitValue = parseFloat(document.getElementById('avg-unit-value').value);
+            const permitDays = parseInt(document.getElementById('permit-processing-days').value);
+            const inspectionDelays = parseInt(document.getElementById('inspection-delays').value);
+            const constructionDuration = parseInt(document.getElementById('construction-duration').value);
+            
+            // Constants
+            const propertyTaxRate = 0.01; // 1.0% annual property tax rate
+            const marketingPeriod = 3; // 3 months for full occupancy
+            
+            // Calculate revenue metrics
+            const totalProjectValue = units * unitValue;
+            const annualPropertyTax = units * unitValue * propertyTaxRate;
+            
+            // Calculate delays (only inspection delays count as avoidable delays)
+            const totalDelayDays = inspectionDelays; // Only inspection delays are avoidable
+            const delayCostToCity = (totalDelayDays * annualPropertyTax) / 365;
+            
+            // Calculate timeline
+            const totalTimelineMonths = constructionDuration + (totalDelayDays / 30);
+            const firstOccupancyMonths = constructionDuration + (inspectionDelays / 30);
+            const fullOccupancyMonths = firstOccupancyMonths + marketingPeriod;
+            
+            // Update timeline visualization
+            document.getElementById('permit-phase-days').textContent = permitDays + ' days';
+            document.getElementById('inspection-phase-days').textContent = inspectionDelays + ' days delay';
+            document.getElementById('total-timeline').textContent = Math.round(totalTimelineMonths) + ' months';
+            
+            // Update delay impact text
+            document.getElementById('permit-delay-impact').textContent = permitDays + ' days to approve';
+            
+            if (inspectionDelays > 0) {
+                document.getElementById('inspection-delay-impact').textContent = inspectionDelays + ' days of re-inspections';
+                document.getElementById('total-delay-impact').textContent = inspectionDelays + ' days delayed';
+            } else {
+                document.getElementById('inspection-delay-impact').textContent = 'No inspection delays';
+                document.getElementById('total-delay-impact').textContent = 'No delays';
+            }
+            
+            // Update revenue cards
+            document.getElementById('annual-property-tax').textContent = '$' + (annualPropertyTax / 1000).toFixed(0) + 'K';
+            document.getElementById('delay-cost').textContent = '$' + (delayCostToCity / 1000).toFixed(1) + 'K';
+            document.getElementById('economic-impact').textContent = '$' + (totalProjectValue / 1000000).toFixed(1) + 'M';
+            
+            // Update revenue breakdowns
+            const revenueCards = document.querySelectorAll('.revenue-breakdown p');
+            revenueCards[0].textContent = units + ' units × $' + (unitValue/1000).toFixed(0) + 'K × 1.0% = $' + (annualPropertyTax/1000).toFixed(0) + 'K/year';
+            revenueCards[1].textContent = totalDelayDays + '-day delay × $' + (annualPropertyTax/1000).toFixed(0) + 'K ÷ 365 = $' + (delayCostToCity/1000).toFixed(1) + 'K lost';
+            revenueCards[2].textContent = units + ' units × $' + (unitValue/1000).toFixed(0) + 'K = $' + (totalProjectValue/1000000).toFixed(1) + 'M investment';
+            
+            // Update occupancy timeline
+            document.getElementById('construction-complete-date').textContent = Math.round(constructionDuration) + ' months';
+            document.getElementById('first-occupancy-date').textContent = Math.round(firstOccupancyMonths) + ' months';
+            document.getElementById('full-occupancy-date').textContent = Math.round(fullOccupancyMonths) + ' months';
+            
+            // Update formula display
+            document.querySelector('.housing-formula').innerHTML = `
+                <h5>Calculation Formulas:</h5>
+                <p><strong>Property Tax Revenue:</strong> ${units} units × $${(unitValue/1000).toFixed(0)}K × Tax Rate (1.0%) = $${(annualPropertyTax/1000).toFixed(0)}K/year</p>
+                <p><strong>Delay Cost:</strong> ${totalDelayDays} Total Delay Days × $${(annualPropertyTax/1000).toFixed(0)}K ÷ 365 = $${(delayCostToCity/1000).toFixed(1)}K lost</p>
+                <p><strong>Economic Impact:</strong> ${units} units × $${(unitValue/1000).toFixed(0)}K = $${(totalProjectValue/1000000).toFixed(1)}M investment</p>
+                <p><strong>Occupancy Timeline:</strong> ${constructionDuration} months construction + ${(inspectionDelays/30).toFixed(1)} months inspection delays + ${marketingPeriod} months marketing</p>
+            `;
+        }
+
+        // Developer Savings Calculator Function
+        function calculateDeveloperSavings() {
+            const projectValue = parseFloat(document.getElementById('project-value').value);
+            const interestRate = parseFloat(document.getElementById('interest-rate').value);
+            const processingDays = parseFloat(document.getElementById('processing-days').value);
+            const baselineDays = parseFloat(document.getElementById('baseline-days').value);
+
+            // Calculate daily interest cost
+            const dailyInterestCost = (projectValue * interestRate / 100) / 365;
+            
+            // Calculate days saved
+            const daysSaved = baselineDays - processingDays;
+            
+            // Calculate total savings
+            const totalSavings = dailyInterestCost * daysSaved;
+
+            // Update the display
+            const savingsAmount = document.getElementById('savings-amount');
+            const savingsBreakdown = document.getElementById('savings-breakdown');
+            const savingsFormula = document.getElementById('savings-formula');
+
+            if (daysSaved > 0) {
+                savingsAmount.textContent = '$' + totalSavings.toFixed(2);
+                savingsBreakdown.textContent = `Saves ${daysSaved.toFixed(1)} days × $${dailyInterestCost.toFixed(2)}/day`;
+                savingsFormula.innerHTML = `
+                    Daily Cost = $${projectValue.toLocaleString()} × ${interestRate}% ÷ 365 = $${dailyInterestCost.toFixed(2)}/day<br>
+                    Days Saved = ${baselineDays} (Current) - ${processingDays} (What if) = ${daysSaved.toFixed(1)} days<br>
+                    Total Savings = $${dailyInterestCost.toFixed(2)}/day × ${daysSaved.toFixed(1)} days = $${totalSavings.toFixed(2)}
+                `;
+            } else if (daysSaved < 0) {
+                const additionalCost = Math.abs(totalSavings);
+                savingsAmount.textContent = '-$' + additionalCost.toFixed(2);
+                savingsBreakdown.textContent = `Adds ${Math.abs(daysSaved).toFixed(1)} days × $${dailyInterestCost.toFixed(2)}/day`;
+                savingsFormula.innerHTML = `
+                    Daily Cost = $${projectValue.toLocaleString()} × ${interestRate}% ÷ 365 = $${dailyInterestCost.toFixed(2)}/day<br>
+                    Days Added = ${processingDays} (What if) - ${baselineDays} (Current) = ${Math.abs(daysSaved).toFixed(1)} days<br>
+                    Additional Cost = $${dailyInterestCost.toFixed(2)}/day × ${Math.abs(daysSaved).toFixed(1)} days = $${additionalCost.toFixed(2)}
+                `;
+            } else {
+                savingsAmount.textContent = '$0';
+                savingsBreakdown.textContent = 'No savings - processing time equals baseline';
+                savingsFormula.innerHTML = `
+                    Daily Cost = $${projectValue.toLocaleString()} × ${interestRate}% ÷ 365 = $${dailyInterestCost.toFixed(2)}/day<br>
+                    Days Saved = ${baselineDays} (Current) - ${processingDays} (What if) = 0 days<br>
+                    Total Savings = $${dailyInterestCost.toFixed(2)}/day × 0 days = $0
+                `;
+            }
+        }
+
+        // Initialize with current data
+        showScenario('current');
+        updateJobMultipliers(); // Initialize help text and auto-calculations
+        calculateDetailedJobs(); // Initialize detailed jobs calculator
+        calculateHousingImpact(); // Initialize housing impact calculator
+        initializeInterestRate(); // Initialize interest rate display
+        calculateDeveloperSavings(); // Initialize developer savings calculator
+        
+        // Initialize the welcome experience
+        showWelcomeStep(1);
+        
+        // Initialize the encouraging experience (will be called after welcome)
+        // initializeEncouragingExperience();
+    </script>
+</body>
+</html>
