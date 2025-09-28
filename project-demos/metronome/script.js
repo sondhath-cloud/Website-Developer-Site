@@ -1149,6 +1149,7 @@ class UIController {
         this.setupAdvancedModeControls();
         this.setupSharedControls();
         this.setupDragAndDrop();
+        this.setupFeedbackModal();
         this.loadUserPreferences();
         
         // Set up beat change callback
@@ -1359,6 +1360,21 @@ class UIController {
         const handleSpaceBar = (e) => {
             // Check if space bar is pressed
             if (e.code === 'Space' || e.keyCode === 32 || e.key === ' ') {
+                // Check if user is typing in a form field
+                const activeElement = document.activeElement;
+                const isFormField = activeElement && (
+                    activeElement.tagName === 'INPUT' ||
+                    activeElement.tagName === 'TEXTAREA' ||
+                    activeElement.contentEditable === 'true' ||
+                    activeElement.isContentEditable
+                );
+                
+                // If user is typing in a form field, don't interfere
+                if (isFormField) {
+                    console.log('Space bar pressed in form field - allowing normal typing');
+                    return true; // Allow normal space bar behavior
+                }
+                
                 // Prevent default space bar behavior (page scrolling)
                 e.preventDefault();
                 e.stopPropagation();
@@ -2064,6 +2080,136 @@ The detected tempo can be applied to your metronome by clicking the detected tem
         
         // Update button states
         this.updateMetronomeButtons();
+    }
+    
+    setupFeedbackModal() {
+        console.log('Setting up feedback modal...');
+        
+        // Check if elements exist
+        const feedbackBtn = document.getElementById('feedbackBtn');
+        const feedbackModal = document.getElementById('feedbackModal');
+        const feedbackClose = document.getElementById('feedbackClose');
+        const feedbackCancel = document.getElementById('feedbackCancel');
+        const feedbackForm = document.getElementById('feedbackForm');
+        
+        if (!feedbackBtn) {
+            console.error('Feedback button not found!');
+            return;
+        }
+        
+        if (!feedbackModal) {
+            console.error('Feedback modal not found!');
+            return;
+        }
+        
+        console.log('Feedback elements found, setting up event listeners...');
+        
+        // Feedback button
+        feedbackBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('Feedback button clicked!');
+            this.showFeedbackModal();
+        });
+        
+        // Close button
+        if (feedbackClose) {
+            feedbackClose.addEventListener('click', () => {
+                console.log('Close button clicked!');
+                this.hideFeedbackModal();
+            });
+        }
+        
+        // Cancel button
+        if (feedbackCancel) {
+            feedbackCancel.addEventListener('click', () => {
+                console.log('Cancel button clicked!');
+                this.hideFeedbackModal();
+            });
+        }
+        
+        // Close modal when clicking outside
+        feedbackModal.addEventListener('click', (e) => {
+            if (e.target.id === 'feedbackModal') {
+                console.log('Modal background clicked!');
+                this.hideFeedbackModal();
+            }
+        });
+        
+        // Handle form submission
+        if (feedbackForm) {
+            feedbackForm.addEventListener('submit', (e) => {
+                console.log('Form submitted!');
+                this.handleFeedbackSubmission(e);
+            });
+        }
+        
+        console.log('Feedback modal setup complete!');
+    }
+    
+    showFeedbackModal() {
+        console.log('Showing feedback modal...');
+        const modal = document.getElementById('feedbackModal');
+        if (modal) {
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            console.log('Modal displayed successfully');
+        } else {
+            console.error('Modal element not found!');
+        }
+    }
+    
+    hideFeedbackModal() {
+        document.getElementById('feedbackModal').style.display = 'none';
+        document.body.style.overflow = 'auto'; // Restore scrolling
+        this.resetFeedbackForm();
+    }
+    
+    resetFeedbackForm() {
+        document.getElementById('feedbackForm').reset();
+    }
+    
+    handleFeedbackSubmission(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(e.target);
+        const name = formData.get('name') || 'Anonymous';
+        const email = formData.get('email') || 'No email provided';
+        const message = formData.get('message');
+        
+        if (!message.trim()) {
+            alert('Please enter your feedback message.');
+            return;
+        }
+        
+        // Show loading state
+        const submitBtn = e.target.querySelector('.feedback-submit');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+        
+        // Submit the form
+        fetch('feedback.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            if (data.includes('success')) {
+                alert('Thank you for your feedback! We appreciate your input.');
+                this.hideFeedbackModal();
+            } else {
+                throw new Error('Server error');
+            }
+        })
+        .catch(error => {
+            console.error('Error submitting feedback:', error);
+            alert('Sorry, there was an error sending your feedback. Please try again later.');
+        })
+        .finally(() => {
+            // Restore button state
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        });
     }
     
     toggleCountIn() {

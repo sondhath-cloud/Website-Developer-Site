@@ -1,235 +1,577 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>Proposal Generator</title>
-	<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Fredoka+One&family=Nunito:wght@400;600;700&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="styles.css?v=20250818" />
-
-	<!-- README (quick start)
-	  How to run locally:
-	    - Just open this file (index.html) in your browser. No server needed. Double-click the file to open it in your browser.or right click and select your browser.
-	    - If you're offline, vendor the pdfmake files locally instead of CDN.
-
-	  
-	  How to export:
-	    - Fill out required fields, toggle optional sections, then click "Generate PDF" or "Generate DOCX".
-	    - On Chrome/Edge, you'll see a native Save dialog (if the File System Access API is available).
-	    - On Safari/Firefox, the file will download automatically.
-
-	  Save/Load form presets:
-	    - Click "Export Preset (JSON)" to save current form values as a JSON file.
-	    - Click "Import Preset (JSON)" and choose a JSON file to load preset values.
-
-	  Privacy:
-	    - All data stays in your browser. No server calls.
-
-	  Dependencies:
-	    - pdfmake via CDN:
-	      https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js
-	      https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.min.js
-	-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Tracker - Opportunity Management System</title>
+    <meta name="description" content="A comprehensive opportunity management system for tracking business development opportunities with tier-based prioritization and team collaboration features.">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="theme-vanilla">
-	<main class="page">
-		<div class="theme-switcher">
-			<label for="themeSelect">Theme:</label>
-			<select id="themeSelect" class="glass-select theme-select">
-				<option value="cyberpunk">Metal</option>
-				<option value="cartoon">Cotton Candy</option>
-				<option value="vanilla" selected>Vanilla</option>
-			</select>
-		</div>
-		<h1 class="app-title">CIC Proposal Generator</h1>
+<body>
+    <!-- Authentication removed - app is now publicly accessible -->
 
-		<div class="help-text">
-			<p>To generate a proposal in a formatted CIC template, please complete the sections below<br>
-				<br>
-				The form will fill in the appropriate sections of your template and let you download it so you can edit further. For example, selecting "Town" will populate reference to the "Town" ensuring we don't send a proposal that refers to a "County" by mistake.<br>
-				<br>
-				This form can be edited by reviewing the README.md file located in the CIC "Templates" folder.</p>
-		</div>
+    <div class="app-container" id="appContainer">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">
+                    <img src="company-logo.svg" alt="DemoCorp Logo" class="logo-image">
+                    Business Tracker
+                </h1>
+                <div class="header-actions">
+                    <div class="data-controls">
+                        <button class="btn btn-secondary" id="exportBtn" title="Export Data" aria-label="Export opportunities data to CSV">
+                            <i class="fas fa-download" aria-hidden="true"></i>
+                            Export
+                        </button>
+                        <button class="btn btn-secondary" id="importBtn" title="Import Data" aria-label="Import opportunities data from CSV">
+                            <i class="fas fa-upload" aria-hidden="true"></i>
+                            Import
+                        </button>
+                        <button class="btn btn-info" id="downloadTemplateBtn" title="Download Template" aria-label="Download CSV template for opportunities">
+                            <i class="fas fa-file-csv" aria-hidden="true"></i>
+                            Template
+                        </button>
+                        <input type="file" id="importFile" accept=".csv" style="display: none;" aria-label="Select CSV file to import">
+                    </div>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme">
+                        <i class="fas fa-moon" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <nav class="nav-tabs" role="navigation" aria-label="Main navigation">
+                    <button class="nav-tab active" data-view="dashboard" aria-current="page">
+                        <i class="fas fa-tachometer-alt" aria-hidden="true"></i>
+                        Dashboard
+                    </button>
+                    <button class="nav-tab" data-view="calendar" aria-label="View calendar">
+                        <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                        Calendar
+                    </button>
+                    <button class="nav-tab" data-view="table" aria-label="View table">
+                        <i class="fas fa-table" aria-hidden="true"></i>
+                        Table View
+                    </button>
+                    <button class="nav-tab" data-view="add" aria-label="Add new opportunity">
+                        <i class="fas fa-plus" aria-hidden="true"></i>
+                        Add Opportunity
+                    </button>
+                </nav>
+            </div>
+        </header>
 
-		<form id="proposalForm" class="card-container" novalidate>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard View -->
+            <div class="view active" id="dashboard">
+                <div class="dashboard-grid">
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <div class="stats-content">
+                            <h3>Total Opportunities</h3>
+                            <span class="stats-number" id="totalOpportunities">0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stats-content">
+                            <h3>Due This Week</h3>
+                            <span class="stats-number" id="dueThisWeek">0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stats-content">
+                            <h3>Completed</h3>
+                            <span class="stats-number" id="completedCount">0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-card">
+                        <div class="stats-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stats-content">
+                            <h3>Team Members</h3>
+                            <span class="stats-number">10</span>
+                        </div>
+                    </div>
+                </div>
 
-			<!-- Core fields -->
-			<fieldset class="fieldset">
+                <div class="dashboard-content">
+                    <div class="card-container">
+                        <h2>Upcoming Opportunities</h2>
+                        <div class="recent-opportunities" id="recentOpportunities">
+                            <!-- Upcoming opportunities will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <div class="card-container">
+                        <h2>Team Workload</h2>
+                        <div class="team-workload" id="teamWorkload">
+                            <!-- Team workload will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-				<div class="form-row required">
-					<label for="clientName">Client Name</label>
-					<input id="clientName" name="clientName" class="glass-input" required aria-required="true" />
-					<div class="error-msg" data-error-for="clientName"></div>
-				</div>
+            <!-- Calendar View -->
+            <div class="view" id="calendar">
+                <div class="calendar-header">
+                    <button class="calendar-nav" id="prevMonth">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h2 id="calendarTitle">October 2025</h2>
+                    <button class="calendar-nav" id="nextMonth">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="calendar-grid" id="calendarGrid">
+                    <!-- Calendar will be populated here -->
+                </div>
+            </div>
 
-				<div class="form-row required">
-					<label for="projectTitle">Project Title</label>
-					<input id="projectTitle" name="projectTitle" class="glass-input" required aria-required="true" />
-					<div class="error-msg" data-error-for="projectTitle"></div>
-				</div>
+            <!-- Table View -->
+            <div class="view" id="table">
+                <div class="table-controls">
+                    <div class="search-box">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                        <input type="text" id="searchInput" placeholder="Search opportunities, organizations, or PMs..." aria-label="Search opportunities">
+                        <button class="clear-search" id="clearSearch" title="Clear search" aria-label="Clear search">
+                            <i class="fas fa-times" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div class="filters">
+                        <select id="statusFilter" aria-label="Filter by status">
+                            <option value="">All Status</option>
+                            <option value="Not Started">Not Started</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Complete">Complete</option>
+                        </select>
+                        <select id="pmFilter" aria-label="Filter by project manager">
+                            <option value="">All PMs</option>
+                            <option value="Sarah Johnson">Sarah Johnson</option>
+                            <option value="Michael Chen">Michael Chen</option>
+                            <option value="Emily Rodriguez">Emily Rodriguez</option>
+                            <option value="David Kim">David Kim</option>
+                            <option value="Lisa Thompson">Lisa Thompson</option>
+                            <option value="Robert Wilson">Robert Wilson</option>
+                            <option value="Jennifer Martinez">Jennifer Martinez</option>
+                            <option value="Alex Turner">Alex Turner</option>
+                            <option value="Maria Garcia">Maria Garcia</option>
+                            <option value="James Anderson">James Anderson</option>
+                        </select>
+                        <select id="tierFilter" aria-label="Filter by tier">
+                            <option value="">All Tiers</option>
+                            <option value="Tier 1: Go">Tier 1: Go</option>
+                            <option value="Tier 2: Go (with some conditions)">Tier 2: Go (with some conditions)</option>
+                            <option value="Tier 3: Needs additional deliberation">Tier 3: Needs additional deliberation</option>
+                            <option value="Tier 5: No-Go">Tier 5: No-Go</option>
+                        </select>
+                        <select id="industryFilter" aria-label="Filter by industry">
+                            <option value="">All Industries</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Financial Services">Financial Services</option>
+                            <option value="Manufacturing">Manufacturing</option>
+                            <option value="Retail">Retail</option>
+                            <option value="Education">Education</option>
+                            <option value="Energy">Energy</option>
+                            <option value="Transportation">Transportation</option>
+                            <option value="Real Estate">Real Estate</option>
+                            <option value="NonProfit">NonProfit</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="bulk-actions">
+                        <button class="btn btn-secondary" id="selectAllBtn" aria-label="Select all opportunities">
+                            <i class="fas fa-check-square" aria-hidden="true"></i>
+                            Select All
+                        </button>
+                        <button class="btn btn-danger" id="bulkDeleteBtn" disabled aria-label="Delete selected opportunities">
+                            <i class="fas fa-trash" aria-hidden="true"></i>
+                            Delete Selected
+                        </button>
+                        <button class="btn btn-primary" id="bulkStatusBtn" disabled aria-label="Update status of selected opportunities">
+                            <i class="fas fa-edit" aria-hidden="true"></i>
+                            Update Status
+                        </button>
+                    </div>
+                </div>
+                <div class="modern-table-container">
+                    <table class="modern-table" id="opportunitiesTable" role="table" aria-label="Opportunities table">
+                        <thead>
+                            <tr>
+                                <th scope="col">
+                                    <input type="checkbox" id="selectAllCheckbox" title="Select all opportunities" aria-label="Select all opportunities">
+                                </th>
+                                <th scope="col" class="sortable" data-sort="name">
+                                    Opportunity <i class="fas fa-sort"></i>
+                                </th>
+                                <th scope="col" class="sortable" data-sort="organization">
+                                    Organization <i class="fas fa-sort"></i>
+                                </th>
+                                <th scope="col" class="sortable" data-sort="type">
+                                    Type <i class="fas fa-sort"></i>
+                                </th>
+                                <th scope="col" class="sortable" data-sort="dueDate">
+                                    Due Date <i class="fas fa-sort"></i>
+                                </th>
+                                <th scope="col" class="sortable" data-sort="tier">
+                                    Tier <i class="fas fa-sort"></i>
+                                </th>
+                                <th scope="col" class="sortable" data-sort="pm">
+                                    PM <i class="fas fa-sort"></i>
+                                </th>
+                            <th scope="col" class="sortable" data-sort="status">
+                                Proposal Status <i class="fas fa-sort"></i>
+                            </th>
+                            <th scope="col" class="sortable" data-sort="proposalStatus">
+                                Stage <i class="fas fa-sort"></i>
+                            </th>
+                            <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- Table rows will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-				<div class="form-row">
-					<label for="fee">Published Budget (optional)</label>
-					<input id="fee" name="fee" class="glass-input" placeholder="$10,000 (if published)" />
-					<div class="error-msg" data-error-for="fee"></div>
-				</div>
+            <!-- Add Opportunity Wizard -->
+            <div class="view" id="add">
+                <div class="wizard-container">
+                    <div class="wizard-header">
+                        <h2>Add New Opportunity</h2>
+                        <div class="wizard-steps">
+                            <div class="step active" data-step="1">
+                                <span class="step-number">1</span>
+                                <span class="step-label">Basic Info</span>
+                            </div>
+                            <div class="step" data-step="2">
+                                <span class="step-number">2</span>
+                                <span class="step-label">Details</span>
+                            </div>
+                            <div class="step" data-step="3">
+                                <span class="step-number">3</span>
+                                <span class="step-label">Decision</span>
+                            </div>
+                            <div class="step" data-step="4">
+                                <span class="step-number">4</span>
+                                <span class="step-label">Documents</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <form class="wizard-form" id="opportunityForm">
+                        <!-- Step 1: Basic Information -->
+                        <div class="wizard-step active" data-step="1">
+                            <div class="form-group">
+                                <label for="opportunityName">Opportunity Name *</label>
+                                <input type="text" id="opportunityName" class="glass-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="organizationName">Organization Name *</label>
+                                <input type="text" id="organizationName" class="glass-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="state">State *</label>
+                                <select id="state" class="glass-select" required>
+                                    <option value="">Select State</option>
+                                    <option value="AL">Alabama</option>
+                                    <option value="AK">Alaska</option>
+                                    <option value="AZ">Arizona</option>
+                                    <option value="AR">Arkansas</option>
+                                    <option value="CA">California</option>
+                                    <option value="CO">Colorado</option>
+                                    <option value="CT">Connecticut</option>
+                                    <option value="DE">Delaware</option>
+                                    <option value="FL">Florida</option>
+                                    <option value="GA">Georgia</option>
+                                    <option value="HI">Hawaii</option>
+                                    <option value="ID">Idaho</option>
+                                    <option value="IL">Illinois</option>
+                                    <option value="IN">Indiana</option>
+                                    <option value="IA">Iowa</option>
+                                    <option value="KS">Kansas</option>
+                                    <option value="KY">Kentucky</option>
+                                    <option value="LA">Louisiana</option>
+                                    <option value="ME">Maine</option>
+                                    <option value="MD">Maryland</option>
+                                    <option value="MA">Massachusetts</option>
+                                    <option value="MI">Michigan</option>
+                                    <option value="MN">Minnesota</option>
+                                    <option value="MS">Mississippi</option>
+                                    <option value="MO">Missouri</option>
+                                    <option value="MT">Montana</option>
+                                    <option value="NE">Nebraska</option>
+                                    <option value="NV">Nevada</option>
+                                    <option value="NH">New Hampshire</option>
+                                    <option value="NJ">New Jersey</option>
+                                    <option value="NM">New Mexico</option>
+                                    <option value="NY">New York</option>
+                                    <option value="NC">North Carolina</option>
+                                    <option value="ND">North Dakota</option>
+                                    <option value="OH">Ohio</option>
+                                    <option value="OK">Oklahoma</option>
+                                    <option value="OR">Oregon</option>
+                                    <option value="PA">Pennsylvania</option>
+                                    <option value="RI">Rhode Island</option>
+                                    <option value="SC">South Carolina</option>
+                                    <option value="SD">South Dakota</option>
+                                    <option value="TN">Tennessee</option>
+                                    <option value="TX">Texas</option>
+                                    <option value="UT">Utah</option>
+                                    <option value="VT">Vermont</option>
+                                    <option value="VA">Virginia</option>
+                                    <option value="WA">Washington</option>
+                                    <option value="WV">West Virginia</option>
+                                    <option value="WI">Wisconsin</option>
+                                    <option value="WY">Wyoming</option>
+                                    <option value="DC">Washington DC</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="industry">Industry *</label>
+                                <select id="industry" class="glass-select" required>
+                                    <option value="">Select Industry</option>
+                                    <option value="Technology">Technology</option>
+                                    <option value="Healthcare">Healthcare</option>
+                                    <option value="Financial Services">Financial Services</option>
+                                    <option value="Manufacturing">Manufacturing</option>
+                                    <option value="Retail">Retail</option>
+                                    <option value="Education">Education</option>
+                                    <option value="Energy">Energy</option>
+                                    <option value="Transportation">Transportation</option>
+                                    <option value="Real Estate">Real Estate</option>
+                                    <option value="NonProfit">NonProfit</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
 
-				<!-- New required contact and meta fields -->
-				<div class="form-row required">
-					<label for="contactName">Contact Name</label>
-					<input id="contactName" name="contactName" class="glass-input" required aria-required="true" />
-					<div class="error-msg" data-error-for="contactName"></div>
-				</div>
+                        <!-- Step 2: Opportunity Details -->
+                        <div class="wizard-step" data-step="2">
+                            <div class="form-group">
+                                <label for="opportunityType">Type of Opportunity *</label>
+                                <select id="opportunityType" class="glass-select" required>
+                                    <option value="">Select Type</option>
+                                    <option value="Strategic Planning">Strategic Planning</option>
+                                    <option value="ERP System Selection">ERP System Selection</option>
+                                    <option value="ERP Implementation">ERP Implementation</option>
+                                    <option value="Org Development">Org Development</option>
+                                    <option value="Org Assessment">Org Assessment</option>
+                                    <option value="UBICS System Selection">UBICS System Selection</option>
+                                    <option value="UBCIS Implementation">UBCIS Implementation</option>
+                                    <option value="EAM System Selection">EAM System Selection</option>
+                                    <option value="EAM Implementation">EAM Implementation</option>
+                                    <option value="CRM Implementation">CRM Implementation</option>
+                                    <option value="Change Management">Change Management</option>
+                                    <option value="Grant Management or Writing">Grant Management or Writing</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="dueDate">Due Date *</label>
+                                <input type="date" id="dueDate" class="glass-input" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="submittalType">Submittal Type</label>
+                                <select id="submittalType" class="glass-select">
+                                    <option value="">Select Type</option>
+                                    <option value="Email">Email</option>
+                                    <option value="Portal">Portal</option>
+                                    <option value="Mail">Mail</option>
+                                </select>
+                            </div>
+                        </div>
 
-				<div class="form-row">
-					<label for="contactAddress">Contact Address</label>
-					<textarea id="contactAddress" name="contactAddress" rows="3" class="glass-input" placeholder="Street, City, State ZIP"></textarea>
-					<div class="error-msg" data-error-for="contactAddress"></div>
-				</div>
+                        <!-- Step 3: Decision Making -->
+                        <div class="wizard-step" data-step="3">
+                            <div class="form-group">
+                                <label for="tier">Go/No-Go Tier *</label>
+                                <div class="tier-options">
+                                    <label class="tier-option">
+                                        <input type="radio" name="tier" value="Tier 1: Go" required>
+                                        <span class="tier-badge tier-1">Tier 1: Go</span>
+                                        <span class="tier-description">High priority, proceed immediately</span>
+                                    </label>
+                                    <label class="tier-option">
+                                        <input type="radio" name="tier" value="Tier 2: Go (with some conditions)" required>
+                                        <span class="tier-badge tier-2">Tier 2: Go (with some conditions)</span>
+                                        <span class="tier-description">Proceed with specific conditions</span>
+                                    </label>
+                                    <label class="tier-option">
+                                        <input type="radio" name="tier" value="Tier 3: Needs additional deliberation" required>
+                                        <span class="tier-badge tier-3">Tier 3: Needs additional deliberation</span>
+                                        <span class="tier-description">Requires team discussion</span>
+                                    </label>
+                                    <label class="tier-option">
+                                        <input type="radio" name="tier" value="Tier 5: No-Go" required>
+                                        <span class="tier-badge tier-5">Tier 5: No-Go</span>
+                                        <span class="tier-description">Not pursuing this opportunity</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="pm">Project Manager *</label>
+                                <select id="pm" class="glass-select" required>
+                                    <option value="">Select PM</option>
+                                    <option value="Sarah Johnson">Sarah Johnson</option>
+                                    <option value="Michael Chen">Michael Chen</option>
+                                    <option value="Emily Rodriguez">Emily Rodriguez</option>
+                                    <option value="David Kim">David Kim</option>
+                                    <option value="Lisa Thompson">Lisa Thompson</option>
+                                    <option value="Robert Wilson">Robert Wilson</option>
+                                    <option value="Jennifer Martinez">Jennifer Martinez</option>
+                                    <option value="Alex Turner">Alex Turner</option>
+                                    <option value="Maria Garcia">Maria Garcia</option>
+                                    <option value="James Anderson">James Anderson</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <input type="text" id="pmOther" class="glass-input" placeholder="Enter Project Manager name" style="display: none; margin-top: 0.5rem;">
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Proposal Status *</label>
+                                <select id="status" class="glass-select" required>
+                                    <option value="">Select Proposal Status</option>
+                                    <option value="Not Started" selected>Not Started</option>
+                                    <option value="In Progress">In Progress</option>
+                                    <option value="Complete">Complete</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="proposalStatus">Stage</label>
+                                <select id="proposalStatus" class="glass-select">
+                                    <option value="">Select Stage</option>
+                                    <option value="Submitted">Submitted</option>
+                                    <option value="Interview">Interview</option>
+                                    <option value="Won">Won</option>
+                                    <option value="Lost">Lost</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="notes">Notes</label>
+                                <textarea id="notes" class="glass-input" rows="3" placeholder="Additional notes or conditions..."></textarea>
+                            </div>
+                        </div>
 
-				<div class="form-row">
-					<label for="contactEmail">Contact Email</label>
-					<input id="contactEmail" name="contactEmail" type="email" class="glass-input" />
-					<div class="error-msg" data-error-for="contactEmail"></div>
-				</div>
+                        <!-- Step 4: Documentation -->
+                        <div class="wizard-step" data-step="4">
+                            <div class="form-group">
+                                <label for="link">RFP Link</label>
+                                <input type="url" id="link" class="glass-input" placeholder="https://...">
+                            </div>
+                            <div class="form-group">
+                                <label for="additionalLinks">Additional Links/Information</label>
+                                <textarea id="additionalLinks" class="glass-input" rows="3" placeholder="Additional links or information..."></textarea>
+                            </div>
+                        </div>
 
-				<div class="form-row">
-					<label for="dateDue">Date Due</label>
-					<input id="dateDue" name="dateDue" type="date" class="glass-input" />
-					<div class="error-msg" data-error-for="dateDue"></div>
-				</div>
+                        <div class="wizard-actions">
+                            <div class="wizard-left-actions">
+                                <button type="button" class="btn btn-secondary" id="prevStep" disabled>Previous</button>
+                                <button type="button" class="btn btn-primary" id="nextStep">Next</button>
+                                <button type="submit" class="btn btn-success" id="submitForm" style="display: none;">Save Opportunity</button>
+                            </div>
+                            <div class="wizard-right-actions">
+                                <button type="button" class="btn btn-danger" id="cancelForm">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
 
-				<div class="form-row">
-					<label for="isPaper">Paper?</label>
-					<input id="isPaper" type="checkbox" />
-					<div class="error-msg" data-error-for="isPaper"></div>
-				</div>
+    <!-- Modal for editing opportunities -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Opportunity</h3>
+                <button class="modal-close" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Edit form will be populated here -->
+            </div>
+        </div>
+    </div>
 
-				<div class="form-row">
-					<label>Jurisdiction</label>
-					<div class="checkbox-row"><input id="isCity" type="checkbox" /> <label for="isCity">City</label> <button type="button" class="btn-danger btn-small" onclick="removeJurisdiction('City', this)">Remove</button></div>
-					<div class="checkbox-row"><input id="isCounty" type="checkbox" /> <label for="isCounty">County</label> <button type="button" class="btn-danger btn-small" onclick="removeJurisdiction('County', this)">Remove</button></div>
-					<div class="checkbox-row"><input id="isTown" type="checkbox" /> <label for="isTown">Town</label> <button type="button" class="btn-danger btn-small" onclick="removeJurisdiction('Town', this)">Remove</button></div>
-					<div class="checkbox-row"><input id="isVillage" type="checkbox" /> <label for="isVillage">Village</label> <button type="button" class="btn-danger btn-small" onclick="removeJurisdiction('Village', this)">Remove</button></div>
-					<div class="hint">Select only one</div>
-					<div class="error-msg" data-error-for="jurisdiction"></div>
-					<div class="form-row">
-						<input id="newJurisdiction" type="text" class="glass-input" placeholder="Add new jurisdiction (e.g., Township, Borough)" />
-						<button type="button" class="btn-primary" onclick="addJurisdiction()">Type a new jurisdiction to add then click here.</button>
-					</div>
-				</div>
+        <!-- Modal for RFP details -->
+        <div class="modal" id="rfpModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>RFP Details</h3>
+                    <button class="modal-close" id="closeRFPModal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body" id="rfpModalBody">
+                    <!-- RFP details will be populated here -->
+                </div>
+            </div>
+        </div>
 
-				<div class="form-row">
-					<label>Project Manager</label>
-					<div id="projectManagerList">
-						<!-- Dynamic project managers will be loaded here -->
-					</div>
-					<div class="form-row">
-						<input id="newProjectManager" type="text" class="glass-input" placeholder="Add new project manager" />
-						<button type="button" class="btn-primary" onclick="addProjectManager()">Type a new project manager to add then click here.</button>
-					</div>
-				</div>
+        <!-- Modal for SharePoint Upload Reminder -->
+        <div class="modal" id="sharepointReminderModal">
+            <div class="modal-content sharepoint-reminder-modal">
+                <div class="modal-header">
+                    <h3><i class="fas fa-cloud-upload-alt"></i> Upload RFP to Document Management</h3>
+                    <button class="modal-close" id="closeSharePointReminderModal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="sharepoint-reminder-content">
+                        <div class="reminder-icon">
+                            <i class="fas fa-file-upload"></i>
+                        </div>
+                        <div class="reminder-text">
+                            <h4>Don't forget to upload the RFP!</h4>
+                            <p>Please upload the RFP document to the document management system with a clear filename that includes the client name.</p>
+                            
+                            <div class="filename-suggestion">
+                                <strong>Suggested filename format:</strong>
+                                <div class="filename-example">
+                                    <code id="suggestedFilename">ClientName_RFP_YYYY-MM-DD.pdf</code>
+                                    <button class="btn btn-sm btn-secondary" onclick="nbdTracker.copyFilename()">
+                                        <i class="fas fa-copy"></i> Copy
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="sharepoint-link-section">
+                                <p><strong>Upload to Document Management:</strong></p>
+                                <a href="https://docs.democorp.com/shared/projects/rfps" 
+                                   target="_blank" 
+                                   class="btn btn-primary sharepoint-link">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    Open Document Folder
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="closeSharePointReminderModalBtn">
+                        <i class="fas fa-check"></i>
+                        Got it, I'll upload the RFP
+                    </button>
+                </div>
+            </div>
+        </div>
 
-				<div class="form-row">
-					<label>Approach (select one)</label>
-					<div class="checkbox-row"><input id="apSel" name="approachOne" type="radio" /> <label for="apSel">System Selection</label> <button type="button" class="btn-danger btn-small" onclick="removeApproach('System Selection', this)">Remove</button></div>
-					<div class="checkbox-row"><input id="apImpl" name="approachOne" type="radio" /> <label for="apImpl">System Implementation</label> <button type="button" class="btn-danger btn-small" onclick="removeApproach('System Implementation', this)">Remove</button></div>
-					<div class="checkbox-row"><input id="apStrat" name="approachOne" type="radio" /> <label for="apStrat">Strategic Plan</label> <button type="button" class="btn-danger btn-small" onclick="removeApproach('Strategic Plan', this)">Remove</button></div>
-					<div class="checkbox-row"><input id="apOrg" name="approachOne" type="radio" /> <label for="apOrg">Organizational Assessment</label> <button type="button" class="btn-danger btn-small" onclick="removeApproach('Organizational Assessment', this)">Remove</button></div>
-					<div class="checkbox-row"><input id="apChange" name="approachOne" type="radio" /> <label for="apChange">Change Management</label> <button type="button" class="btn-danger btn-small" onclick="removeApproach('Change Management', this)">Remove</button></div>
-					<div class="error-msg" data-error-for="approach"></div>
-
-				</div>
-
-				<div class="spacer-16"></div>
-				<div class="form-row">
-					<label for="includeCost">Include Cost Section?</label>
-					<input id="includeCost" type="checkbox" />
-					<div class="error-msg" data-error-for="includeCost"></div>
-				</div>
-
-			</fieldset>
-
-			<!-- Optional sections (hidden per new spec) -->
-			<fieldset class="fieldset" hidden>
-				<legend>Optional Sections</legend>
-
-				<div class="checkbox-row">
-					<input id="optExecSummary" type="checkbox" />
-					<label for="optExecSummary">Executive Summary</label>
-				</div>
-				<div class="form-row optional" id="execSummaryWrap" hidden>
-					<label for="execSummary">Executive Summary Content</label>
-					<textarea id="execSummary" rows="5" class="glass-input"></textarea>
-					<div class="error-msg" data-error-for="execSummary"></div>
-				</div>
-
-				<div class="checkbox-row">
-					<input id="optRisks" type="checkbox" />
-					<label for="optRisks">Project Risks & Mitigations</label>
-				</div>
-				<div class="form-row optional" id="risksWrap" hidden>
-					<label for="risks">Risks & Mitigations Content</label>
-					<textarea id="risks" rows="5" class="glass-input" placeholder="Use bullets or short paragraphs"></textarea>
-					<div class="error-msg" data-error-for="risks"></div>
-				</div>
-
-				<div class="checkbox-row">
-					<input id="optReferences" type="checkbox" />
-					<label for="optReferences">References / Case Studies</label>
-				</div>
-				<div class="form-row optional" id="referencesWrap" hidden>
-					<label for="references">References / Case Studies Content</label>
-					<textarea id="references" rows="5" class="glass-input"></textarea>
-					<div class="error-msg" data-error-for="references"></div>
-				</div>
-
-				<div class="checkbox-row">
-					<input id="optTerms" type="checkbox" />
-					<label for="optTerms">Terms & Conditions</label>
-				</div>
-				<div class="form-row optional" id="termsWrap" hidden>
-					<label for="terms">Terms & Conditions Content</label>
-					<textarea id="terms" rows="5" class="glass-input"></textarea>
-					<div class="error-msg" data-error-for="terms"></div>
-				</div>
-			</fieldset>
-
-			<!-- References (hidden per new spec) -->
-			<fieldset class="fieldset" hidden>
-				<legend>References</legend>
-				<div class="form-row">
-					<label for="references">References</label>
-					<textarea id="references" rows="5" class="glass-input" placeholder="Reference details or case studies"></textarea>
-					<div class="error-msg" data-error-for="references"></div>
-				</div>
-			</fieldset>
-
-			<!-- Dynamic Form Elements -->
-
-
-			<!-- Actions -->
-			<div class="actions">
-				<button type="button" id="generateDocxTplBtn" class="btn-primary">Generate DOCX (Template)</button>
-				<button type="reset" class="btn-secondary">Clear</button>
-			</div>
-		</form>
-
-	</main>
-
-	<!-- pdfmake (CDN) -->
-	<script src="https://unpkg.com/pdfmake@0.2.7/build/pdfmake.min.js"></script>
-	<script src="https://unpkg.com/pdfmake@0.2.7/build/vfs_fonts.js"></script>
-	<!-- Template engine: PizZip and docxtemplater (CDN) -->
-	<script src="https://unpkg.com/pizzip@3.1.3/dist/pizzip.min.js"></script>
-	<script src="https://unpkg.com/docxtemplater@3.39.1/build/docxtemplater.js"></script>
-	<script src="https://unpkg.com/docx@7.1.0/build/index.min.js"></script>
-	<script>
-		// Force cache refresh by adding timestamp
-		document.write('<script src="app.js?v=' + Date.now() + '"><\/script>');
-	</script>
+    <script src="script.js"></script>
 </body>
 </html>

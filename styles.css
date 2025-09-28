@@ -343,18 +343,18 @@ body {
 
 .card-2 {
     top: 35%;
-    right: 12%;
+    right: 30%;
     animation-delay: 2s;
 }
 
 .card-3 {
-    bottom: 25%;
-    right: 5%;
+    bottom: 5%;
+    left: 35%;
     animation-delay: 1s;
 }
 
 .card-4 {
-    bottom: 40%;
+    bottom: 20%;
     left: 3%;
     animation-delay: 3s;
 }
@@ -458,10 +458,14 @@ section {
 .about-content-centered {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     max-width: 800px;
     margin: 0 auto;
-    text-align: center;
+    text-align: left;
+}
+
+.about-content-centered .stats-grid {
+    align-self: center;
 }
 
 .about-card {
@@ -1710,10 +1714,11 @@ section {
 
 .card-content {
     position: absolute;
-    bottom: 0;
+    top: 50%;
     left: 0;
     right: 0;
-    background: linear-gradient(transparent, rgba(0,0,0,0.9));
+    transform: translateY(-50%);
+    background: linear-gradient(transparent, rgba(0,0,0,0.5), transparent);
     padding: 20px;
     z-index: 10;
 }
@@ -1747,6 +1752,7 @@ section {
     flex-wrap: wrap;
     gap: 6px;
     margin-bottom: 12px;
+    justify-content: center;
 }
 
 .pill {
@@ -1881,6 +1887,7 @@ section {
 .bg-7 { background: linear-gradient(135deg, rgba(255,154,158,0.3) 0%, rgba(254,207,239,0.3) 100%); }
 .bg-8 { background: linear-gradient(135deg, rgba(255,236,210,0.3) 0%, rgba(252,182,159,0.3) 100%); }
 .bg-9 { background: linear-gradient(135deg, rgba(138,43,226,0.3) 0%, rgba(75,0,130,0.3) 100%); }
+.bg-10 { background: linear-gradient(135deg, rgba(0,212,255,0.3) 0%, rgba(139,92,246,0.3) 100%); }
 
 /* Responsive Design for 3D Carousel */
 @media (max-width: 768px) {
