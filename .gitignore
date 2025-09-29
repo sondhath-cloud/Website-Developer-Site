@@ -58,9 +58,10 @@ temp/
 *.swo
 *~
 
-# Build outputs
+# Build outputs and deployment files
 dist/
 build/
+website-deployment.zip
 
 # Python cache
 __pycache__/
