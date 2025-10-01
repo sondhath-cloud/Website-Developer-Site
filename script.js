@@ -1067,9 +1067,99 @@ void main() {
 
 
 // Export functions for potential external use
+// Theme Toggle Functionality
+function initThemeToggle() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = themeToggle.querySelector('.theme-icon');
+    const body = document.body;
+    
+    // Check for saved theme preference or default to light
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    body.setAttribute('data-theme', currentTheme);
+    updateThemeIcon(currentTheme);
+    
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcon(newTheme);
+        
+        // Show constellation message ONLY when switching FROM light TO dark mode
+        if (currentTheme === 'light' && newTheme === 'dark') {
+            showConstellationMessage();
+        }
+    });
+}
+
+function updateThemeIcon(theme) {
+    const themeIcon = document.querySelector('.theme-icon');
+    themeIcon.textContent = theme === 'dark' ? '🌙' : '☀️';
+}
+
+function showConstellationMessage() {
+    // Check if message has already been shown to avoid spam
+    if (localStorage.getItem('constellation-message-shown')) {
+        return;
+    }
+    
+    // Create and show the constellation message
+    const message = document.createElement('div');
+    message.className = 'constellation-message';
+    message.innerHTML = `
+        <div class="constellation-content">
+            <p>In dark mode there is a constellation effect at the top of this page thanks to <a href="https://thibautfoussard.com/" target="_blank" rel="noopener noreferrer">Thibaut Foussard</a>! <a href="#home" class="scroll-to-top">↑ Scroll to top to see it</a></p>
+            <button class="constellation-close" onclick="this.parentElement.parentElement.remove()">×</button>
+        </div>
+    `;
+    
+    document.body.appendChild(message);
+    
+    // Add click handler for scroll to top link
+    const scrollToTopLink = message.querySelector('.scroll-to-top');
+    scrollToTopLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('home').scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+        });
+    });
+    
+    // Mark as shown
+    localStorage.setItem('constellation-message-shown', 'true');
+    
+    // Auto-remove after 8 seconds
+    setTimeout(() => {
+        if (message.parentElement) {
+            message.remove();
+        }
+    }, 8000);
+}
+
+// Function to reset constellation message (for testing)
+function resetConstellationMessage() {
+    localStorage.removeItem('constellation-message-shown');
+    console.log('Constellation message reset - you can now test it again');
+}
+
+// Function to force light mode (for testing)
+function forceLightMode() {
+    localStorage.removeItem('theme');
+    document.body.setAttribute('data-theme', 'light');
+    updateThemeIcon('light');
+    console.log('Forced to light mode');
+}
+
+// Initialize theme toggle when DOM is loaded
+document.addEventListener('DOMContentLoaded', initThemeToggle);
+
 window.PortfolioWebsite = {
     showNotification,
     initScrollAnimations,
     initPortfolioViewToggle,
-    initSpaceTimeAnomaly
+    initSpaceTimeAnomaly,
+    initThemeToggle,
+    resetConstellationMessage,
+    forceLightMode
 };
