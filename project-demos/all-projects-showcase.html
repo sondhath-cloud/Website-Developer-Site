@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Demos Showcase - Sondra Healy Hathaway</title>
+  <link rel="stylesheet" href="carousel-component/carousel-with-tech-stack.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(135deg, #14b8a6 0%, #0d9488 50%, #0f766e 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    
+    .showcase-header {
+      text-align: center;
+      padding: 3rem 2rem 2rem;
+      color: white;
+    }
+    
+    .showcase-header h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+    
+    .showcase-header .description {
+      font-size: 1.1rem;
+      opacity: 0.95;
+      max-width: 900px;
+      margin: 0 auto;
+      line-height: 1.8;
+      font-weight: 400;
+    }
+    
+    .carousel-section {
+      padding: 2rem 2rem 3rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 650px;
+    }
+    
+    #projectsCarousel {
+      width: 100%;
+      max-width: 1600px;
+      height: 650px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    
+    .instructions {
+      text-align: center;
+      color: white;
+      padding: 0 2rem 2rem;
+      opacity: 0.9;
+      font-size: 1rem;
+    }
+    
+    .instructions p {
+      margin-bottom: 0.5rem;
+    }
+    
+    .keyboard-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      margin-top: 1rem;
+      backdrop-filter: blur(10px);
+    }
+    
+    .key {
+      background: white;
+      color: #333;
+      padding: 0.3rem 0.6rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    @media (max-width: 768px) {
+      .showcase-header h1 {
+        font-size: 2rem;
+      }
+      
+      .showcase-header .description {
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+      
+      #projectsCarousel {
+        height: 500px;
+      }
+      
+      .keyboard-hint {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <header class="showcase-header">
+    <h1>Look what I coded, ma!</h1>
+    <p class="description">
+      I develop software as a creative outlet and passion project. These applications represent my journey in 
+      building digital tools that support organizational development initiatives, streamline workflows, and 
+      solve real-world problems. Each project reflects my commitment to user-centered design, clean code, 
+      and creating technology that makes a meaningful difference.
+    </p>
+  </header>
+
+  <section class="carousel-section">
+    <div id="projectsCarousel" class="carousel-container"></div>
+  </section>
+
+  <div class="instructions">
+    <p>Click the arrows to navigate between projects</p>
+    <div class="keyboard-hint">
+      <span>Use</span>
+      <span class="key">←</span>
+      <span>and</span>
+      <span class="key">→</span>
+      <span>arrow keys</span>
+    </div>
+  </div>
+
+  <script src="carousel-component/carousel-with-tech-stack.js"></script>
+  <script>
+    // Comprehensive project data with tech stacks
+    const projects = [
+      {
+        image: 'metronome/demopicmetronome.png',
+        title: 'Musical Metronome',
+        description: 'A sophisticated metronome application featuring precise tempo control, customizable audio samples, microphone input for rhythm detection, and visual feedback. Perfect for musicians practicing timing and rhythm.',
+        techStack: ['HTML', 'CSS', 'JavaScript', 'Web Audio', 'API', 'Responsive'],
+        buttonText: 'Launch Demo',
+        buttonAction: 'window.open("metronome/index.html", "_blank")'
+      },
+      {
+        image: 'persona-cards/demopicstakeholder.png',
+        title: 'Persona Cards',
+        description: 'Dynamic stakeholder impact identification tool with interactive avatar cards. Features progress tracking, data visualization, and Supabase database integration for managing stakeholder information and analysis.',
+        techStack: ['HTML', 'CSS', 'JavaScript', 'Supabase', 'API', 'Database', 'Responsive'],
+        buttonText: 'Launch Demo',
+        buttonAction: 'window.open("persona-cards/index.html", "_blank")'
+      },
+      {
+        image: 'community-survey/democommsurvey.png',
+        title: 'Community Survey',
+        description: 'Advanced survey platform using Bradley-Terry pairwise comparison analysis. Collects community priorities through strategic comparisons, generates statistical insights, and exports data to CSV for further analysis.',
+        techStack: ['HTML', 'CSS', 'JavaScript', 'PHP', 'CSV', 'Responsive'],
+        buttonText: 'Launch Demo',
+        buttonAction: 'window.open("community-survey/index.html", "_blank")'
+      },
+      {
+        image: 'band-site/demopicband.png',
+        title: 'Band Website',
+        description: 'Complete band website featuring music player integration, tour date management, photo gallery, and fan contact system. Bold design with smooth animations and responsive layout for optimal fan engagement.',
+        techStack: ['HTML', 'CSS', 'JavaScript', 'PHP', 'Responsive'],
+        buttonText: 'Launch Demo',
+        buttonAction: 'window.open("band-site/index.html", "_blank")'
+      }
+    ];
+    
+    // Initialize the carousel with projects
+    const carousel = createCarousel('projectsCarousel', projects, {
+      autoPlay: false,
+      autoPlayInterval: 6000
+    });
+    
+    console.log(`Portfolio showcase initialized with ${projects.length} projects`);
+  </script>
+  
+</body>
+</html>
+
+
+

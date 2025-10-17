@@ -4,14 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sondra Hathaway - Organizational Development and Transformation</title>
+    <title>Sondra Hathaway - Organizational Development Strategist</title>
     <meta name="description"
-        content="Professional organizational developer specializing in creating HR programs from the ground-up, supporting people through change, and getting results with innovative digital solutions.">
+        content="Organizational development strategist specializing in creating getting results with innovative digital solutions.">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:700" rel="stylesheet">
+    <!-- Stripe JavaScript SDK -->
+    <script src="https://js.stripe.com/v3/"></script>
 
 </head>
 
@@ -24,23 +27,26 @@
             </div>
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="#home" class="nav-link">Home</a>
+                    <a href="index.html" class="nav-link active">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#about" class="nav-link">About</a>
+                    <a href="demos/" class="nav-link">Project Samples</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#portfolio-carousel" class="nav-link">Portfolio</a>
+                    <a href="hosting.html" class="nav-link">Hosting</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#contact" class="nav-link">Contact</a>
+                    <a href="websites.html" class="nav-link">Websites</a>
                 </li>
                 <li class="nav-item">
-                    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark/light mode">
-                        <span class="theme-icon">🌙</span>
-                    </button>
+                    <a href="apps.html" class="nav-link">Apps</a>
                 </li>
-            </ul>
+                <li class="nav-item">
+                    <a href="consulting.html" class="nav-link">Consulting</a>
+                </li>
+                <li class="nav-item">
+                    <a href="contact.html" class="nav-link">Contact</a>
+                </li>
             <div class="hamburger">
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -49,311 +55,22 @@
         </div>
     </nav>
 
+    <!-- Full-screen Interactive Constellation Background -->
+    <div class="constellation-background">
+        <canvas id="stars-canvas"></canvas>
+    </div>
+
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="hero-background">
-            <!-- Interactive stars background -->
-            <canvas id="stars-canvas"></canvas>
-        </div>
         <div class="hero-content">
             <div class="hero-text">
-                <h1 class="hero-title">
-                    <span class="title-line">Trust</span>
-                    <span class="title-line highlight">Empathy</span>
-                    <span class="title-line">Innovation</span>
-                    <span class="title-line highlight">Initiative</span>
-                    <span class="title-line">Optimism</span>
-                </h1>
-                <p class="hero-subtitle">
-                </p>
-                <p class="hero-description">
-
-                </p>
-                <div class="hero-buttons">
-                    <a href="https://sondrahathaway.com/resume" class="btn btn-primary" target="_blank">View My Resume</a>
-                    <a href="#contact" class="btn btn-secondary">Get In Touch</a>
-                </div>
-            </div>
-            <div class="hero-visual">
+                <h1 class="hero-title">Organizational<br>
+                Development<br>
+                Consulting and Digital Tools</h1>
             </div>
         </div>
         <div class="scroll-indicator">
             <div class="scroll-arrow"></div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">About Sondra Hathaway</h2>
-                <p class="section-subtitle"></p>
-            </div>
-            <div class="about-content-centered">
-                <div class="about-card">
-                    <p>
-                        My career spans both public and private sectors, where I've focused for two decades on transforming organizational potential into reality.
-                        I have:<br>
-                        <ul class="indented-list">
-                            <li>Partnered with leaders through 30+ major reorganizations, cultural transformations, and optimization projects.</li>
-                            <li>Created change playbooks used by more than a dozen organizations to scale learning and sustain change efforts.</li>
-                            <li>Developed dozens of applications and websites to support people through change and achieve results.
-                            <li>Led organization-wide succession planning using 9-Box methodology during $9.45B company acquisition.</li>
-                            <li>Deployed and analyzed employee engagement surveys across multiple organizations, translating results into executive-level recommendations.</li>
-                            <li>Established and scaled Change Champion networks in 14 organizations, engaging 300+ Champions across private and public sector agencies.</li>
-                            <li>Conducted change readiness assessments and impact analyses, reducing rollout risks by 40%.</li>
-                            <li>Reduced help desk tickets by 55% in first 90 days post-launch by enlisting, enabling, and empowering Champions as first-line support.</li>
-                            <li>Led implementation of multiple enterprise and learning management systems including Workday, Oracle, SAP, TargetSolutions, SumTotal, and Cornerstone.</li>
-                        </ul> 
-                      
-                    </p>
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-number">150+</div>
-                        <div class="stat-label">Projects Completed</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">20+</div>
-                        <div class="stat-label">Years Experience</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">100%</div>
-                        <div class="stat-label">Dedicated</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- 3D Portfolio Carousel Section -->
-    <section id="portfolio-carousel" class="portfolio-carousel">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Interactive Portfolio Showcase</h2>
-                <p class="section-subtitle">Below are some of the digital tools I created to help transform
-                    organizations (and some just for fun).</p>
-            </div>
-            <div class="carousel-wrapper">
-                <div id="wrapper">
-                    <div id="image">
-                        <div class="image i1">
-                            <div class="card-bg bg-1"></div>
-                            <div class="card-content">
-                                <div class="card-title">Community Priority Survey</div>
-                                <div class="card-description">Data collection and analysis system for community
-                                    engagement with Bradley-Terry scoring</div>
-                                <div class="card-pills">
-                                    <span class="pill">JavaScript</span>
-                                    <span class="pill">PHP</span>
-                                    <span class="pill">Data Analysis</span>
-                                </div>
-                                <div class="card-links">
-                                    <a href="project-demos/community-survey/index.html" class="card-link"
-                                        target="_blank">Live Demo</a>
-                                    <a href="#" class="card-link secondary">GitHub</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="image i2">
-                            <div class="card-bg bg-2"></div>
-                            <div class="card-content">
-                                <div class="card-title">Development Impact Calculator</div>
-                                <div class="card-description">Comprehensive business impact assessment tool with
-                                    progress tracking</div>
-                                <div class="card-pills">
-                                    <span class="pill">JavaScript</span>
-                                    <span class="pill">Data Visualization</span>
-                                    <span class="pill">Business Analytics</span>
-                                </div>
-                                <div class="card-links">
-                                    <a href="project-demos/impact-calculator/index.html" class="card-link"
-                                        target="_blank">Live Demo</a>
-                                    <a href="#" class="card-link secondary">GitHub</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="image i3">
-                            <div class="card-bg bg-3"></div>
-                            <div class="card-content">
-                                <div class="card-title">Professional Metronome</div>
-                                <div class="card-description">Advanced metronome with voice commands, multiple sounds,
-                                    and complex time signatures</div>
-                                <div class="card-pills">
-                                    <span class="pill">Web Audio API</span>
-                                    <span class="pill">JavaScript</span>
-                                    <span class="pill">Voice Recognition</span>
-                                </div>
-                                <div class="card-links">
-                                    <a href="project-demos/metronome/index.html" class="card-link" target="_blank">Live
-                                        Demo</a>
-                                    <a href="#" class="card-link secondary">GitHub</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="image i4">
-                            <div class="card-bg bg-4"></div>
-                            <div class="card-content">
-                                <div class="card-title">Stakeholder Impact Tool</div>
-                                <div class="card-description">Interactive stakeholder identification system with
-                                    Supabase integration</div>
-                                <div class="card-pills">
-                                    <span class="pill">Supabase</span>
-                                    <span class="pill">JavaScript</span>
-                                    <span class="pill">Data Analysis</span>
-                                </div>
-                                <div class="card-links">
-                                    <a href="project-demos/persona-cards/index.html" class="card-link"
-                                        target="_blank">Live Demo</a>
-                                    <a href="#" class="card-link secondary">GitHub</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="image i5">
-                            <div class="card-bg bg-5"></div>
-                            <div class="card-content">
-                                <div class="card-title">Blameshifters Band Website</div>
-                                <div class="card-description">Professional rock band website with music showcase,
-                                    performance gallery, and booking system</div>
-                                <div class="card-pills">
-                                    <span class="pill">HTML5</span>
-                                    <span class="pill">CSS3</span>
-                                    <span class="pill">JavaScript</span>
-                                </div>
-                                <div class="card-links">
-                                    <a href="project-demos/band-site/index.html" class="card-link" target="_blank">Live
-                                        Demo</a>
-                                    <a href="#" class="card-link secondary">GitHub</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="image i6">
-                            <div class="card-bg bg-6"></div>
-                            <div class="card-content">
-                                <div class="card-title">NBD Tracker</div>
-                                <div class="card-description">Comprehensive opportunity management system with
-                                    tier-based prioritization, calendar view, and team collaboration features</div>
-                                <div class="card-pills">
-                                    <span class="pill">JavaScript</span>
-                                    <span class="pill">Business Analytics</span>
-                                    <span class="pill">Data Management</span>
-                                </div>
-                                <div class="card-links">
-                                    <a href="project-demos/proposal-generator/index.html" class="card-link"
-                                        target="_blank">Live Demo</a>
-                                    <a href="#" class="card-link secondary">GitHub</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="image i7">
-                            <div class="card-bg bg-7"></div>
-                            <div class="card-content">
-                                <div class="card-title">ResultsMode App</div>
-                                <div class="card-description">Comprehensive organizational management system with team
-                                    directory, stakeholder analysis, and planning tools</div>
-                                <div class="card-pills">
-                                    <span class="pill">JavaScript</span>
-                                    <span class="pill">PHP</span>
-                                    <span class="pill">MySQL</span>
-                                </div>
-                                <div class="card-links">
-                                    <a href="project-demos/resultsmode/index.html" class="card-link"
-                                        target="_blank">Live Demo</a>
-                                    <a href="#" class="card-link secondary">GitHub</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="image i8">
-                            <div class="card-bg bg-8"></div>
-                            <div class="card-content">
-                                <div class="card-title">Arielle Pivonka Art Website</div>
-                                <div class="card-description">Professional artist portfolio with commission system and
-                                    contact forms</div>
-                                <div class="card-pills">
-                                    <span class="pill">PHP</span>
-                                    <span class="pill">MySQL</span>
-                                    <span class="pill">E-commerce</span>
-                                </div>
-                                <div class="card-links">
-                                    <a href="project-demos/arielle-art/index.html" class="card-link"
-                                        target="_blank">Live Demo</a>
-                                    <a href="#" class="card-link secondary">GitHub</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">Get In Touch</h2>
-                <p class="section-subtitle">Ready to do something amazing together?</p>
-            </div>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-card">
-                        <h3>Contact Information</h3>
-                        <div class="contact-item">
-                            <div class="contact-details">
-                                <span class="contact-label">Email</span>
-                                <span class="contact-value">sondra@sondrahathaway.com</span>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-details">
-                                <span class="contact-label">Phone</span>
-                                <span class="contact-value">(602) 380-7231</span>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-details">
-                                <span class="contact-label">Location</span>
-                                <span class="contact-value">Dallas, TX</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="contact-form-container">
-                    <form class="contact-form" id="contact-form">
-                        <input type="hidden" name="csrf_token" id="csrf_token">
-                        <div class="form-group">
-                            <input type="text" name="name" class="glass-input" placeholder="Your Name" required>
-                            <div class="error-message" id="error-name"></div>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" name="email" class="glass-input" placeholder="Your Email" required>
-                            <div class="error-message" id="error-email"></div>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="subject" class="glass-input" placeholder="Subject" required>
-                            <div class="error-message" id="error-subject"></div>
-                        </div>
-                        <div class="form-group">
-                            <select name="project_type" class="glass-select" required>
-                                <option value="">Select Project Type</option>
-                                <option value="orgdev">Organizational Development Consulting</option>
-                                <option value="orgdev">Website Design</option>
-                                <option value="digital">Digital Adoption</option>
-                                <option value="webapp">Web/Mobile App Development</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <textarea name="message" class="glass-textarea" placeholder="Tell me about your project..." rows="5" required></textarea>
-                            <div class="error-message" id="error-message"></div>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-full">Send Message</button>
-                        <div class="form-status" id="form-status"></div>
-                    </form>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -362,7 +79,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-text">
-                    <p>&copy; 2024 Sondra Hathaway. All rights reserved.</p>
+                    <p>&copy; 2025 Sondra Hathaway. All rights reserved.</p>
                 </div>
                 <div class="social-links">
                 <a href="https://www.linkedin.com/in/sondrahathaway/" target="_blank" rel="noopener noreferrer"
@@ -374,7 +91,38 @@
         </div>
     </footer>
 
+
     <script src="script.js"></script>
+    
+    <!-- Payment Success/Cancel Handler -->
+    <script>
+        // Check for payment success/cancel parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const paymentStatus = urlParams.get('payment');
+        const sessionId = urlParams.get('session_id');
+        
+        if (paymentStatus === 'success') {
+            // Show success message
+            showNotification('🎉 Payment successful! Your subscription is now active.', 'success');
+            
+            // Scroll to subscription section
+            setTimeout(() => {
+                document.getElementById('subscription').scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }, 1000);
+            
+            // Clean up URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        } else if (paymentStatus === 'cancelled') {
+            // Show cancel message
+            showNotification('Payment was cancelled. No charges were made.', 'error');
+            
+            // Clean up URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    </script>
 </body>
 
 </html>

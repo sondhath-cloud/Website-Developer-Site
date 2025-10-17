@@ -5,14 +5,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize all functionality
     initNavigation();
     initScrollAnimations();
-    initPortfolioViewToggle();
-    initSkillBars();
     initContactForm();
     initSmoothScrolling();
     initParallaxEffects();
     initTypingEffect();
     initInteractiveStars();
-    initSpaceTimeAnomaly();
+    initSubscriptionForm();
 });
 
 // Navigation functionality
@@ -93,63 +91,7 @@ function initScrollAnimations() {
     });
 }
 
-// Portfolio view toggle functionality
-function initPortfolioViewToggle() {
-    const viewToggles = document.querySelectorAll('.view-toggle');
-    const portfolioGrid = document.getElementById('portfolio-grid');
-    const portfolioTable = document.getElementById('portfolio-table');
 
-    viewToggles.forEach(toggle => {
-        toggle.addEventListener('click', function() {
-            const view = this.getAttribute('data-view');
-            
-            // Update active button
-            viewToggles.forEach(t => t.classList.remove('active'));
-            this.classList.add('active');
-
-            // Toggle views with smooth transition
-            if (view === 'grid') {
-                portfolioTable.style.display = 'none';
-                portfolioGrid.style.display = 'grid';
-                portfolioGrid.style.opacity = '0';
-                setTimeout(() => {
-                    portfolioGrid.style.opacity = '1';
-                }, 100);
-            } else {
-                portfolioGrid.style.display = 'none';
-                portfolioTable.style.display = 'block';
-                portfolioTable.style.opacity = '0';
-                setTimeout(() => {
-                    portfolioTable.style.opacity = '1';
-                }, 100);
-            }
-        });
-    });
-}
-
-// Animated skill bars
-function initSkillBars() {
-    const skillBars = document.querySelectorAll('.skill-progress');
-    
-    const skillObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const skillBar = entry.target;
-                const width = skillBar.getAttribute('data-width');
-                
-                setTimeout(() => {
-                    skillBar.style.width = width;
-                }, 200);
-                
-                skillObserver.unobserve(skillBar);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    skillBars.forEach(bar => {
-        skillObserver.observe(bar);
-    });
-}
 
 // Contact form functionality
 function initContactForm() {
@@ -408,76 +350,8 @@ function initCursorEffects() {
 // Initialize cursor effects (optional - can be enabled)
 // initCursorEffects();
 
-// Portfolio item hover effects
-function initPortfolioHoverEffects() {
-    const portfolioItems = document.querySelectorAll('.portfolio-item');
-    
-    portfolioItems.forEach(item => {
-        item.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-10px) scale(1.02)';
-        });
-        
-        item.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-    });
-}
 
-// Initialize portfolio hover effects
-initPortfolioHoverEffects();
 
-// Button ripple effect
-function initRippleEffect() {
-    const buttons = document.querySelectorAll('.btn');
-    
-    buttons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            const ripple = document.createElement('span');
-            const rect = this.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            const x = e.clientX - rect.left - size / 2;
-            const y = e.clientY - rect.top - size / 2;
-            
-            ripple.style.width = ripple.style.height = size + 'px';
-            ripple.style.left = x + 'px';
-            ripple.style.top = y + 'px';
-            ripple.classList.add('ripple');
-            
-            this.appendChild(ripple);
-            
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
-        });
-    });
-}
-
-// Initialize ripple effect
-initRippleEffect();
-
-// Add ripple CSS
-const rippleCSS = `
-.ripple {
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transform: scale(0);
-    animation: ripple-animation 0.6s linear;
-    pointer-events: none;
-}
-
-@keyframes ripple-animation {
-    to {
-        transform: scale(4);
-        opacity: 0;
-    }
-}
-`;
-
-// Inject ripple CSS
-const style = document.createElement('style');
-style.textContent = rippleCSS;
-document.head.appendChild(style);
 
 // Performance optimization: Throttle scroll events
 function throttle(func, wait) {
@@ -517,44 +391,6 @@ window.addEventListener('error', function(e) {
     console.warn('Animation error:', e.message);
 });
 
-// Accessibility improvements
-function initAccessibility() {
-    // Skip to main content link
-    const skipLink = document.createElement('a');
-    skipLink.href = '#main-content';
-    skipLink.textContent = 'Skip to main content';
-    skipLink.className = 'skip-link';
-    skipLink.style.cssText = `
-        position: absolute;
-        top: -40px;
-        left: 6px;
-        background: #000;
-        color: #fff;
-        padding: 8px;
-        text-decoration: none;
-        z-index: 10000;
-        transition: top 0.3s;
-    `;
-    
-    skipLink.addEventListener('focus', function() {
-        this.style.top = '6px';
-    });
-    
-    skipLink.addEventListener('blur', function() {
-        this.style.top = '-40px';
-    });
-    
-    document.body.insertBefore(skipLink, document.body.firstChild);
-    
-    // Add main content ID
-    const mainContent = document.querySelector('main') || document.querySelector('.hero');
-    if (mainContent) {
-        mainContent.id = 'main-content';
-    }
-}
-
-// Initialize accessibility features
-initAccessibility();
 
 // Console welcome message
 console.log(`
@@ -570,10 +406,14 @@ Built with:
 Created with ❤️ for modern web development
 `);
 
-// Interactive Stars Background for Hero Section
+// Interactive Stars Background for Entire Website
 function initInteractiveStars() {
     const canvas = document.getElementById('stars-canvas');
-    if (!canvas) return;
+    if (!canvas) {
+        console.log('Stars canvas not found');
+        return;
+    }
+    console.log('Initializing constellation for entire website...');
     
     const ctx = canvas.getContext('2d');
     let WIDTH, HEIGHT;
@@ -582,7 +422,7 @@ function initInteractiveStars() {
     let mouseX, mouseY;
     let stars = [];
     let dots = [];
-    const initStarsPopulation = 50; // Reduced from 80 to 50 stars
+    const initStarsPopulation = 100; // Increased for full website coverage
     const dotsMinDist = 8; // Increased from 2 to 8 for wider spread
     
     // Star constructor
@@ -680,17 +520,16 @@ function initInteractiveStars() {
     }
 
     function setCanvasSize() {
-        const heroSection = document.querySelector('.hero');
-        if (!heroSection) return;
-        
-        const rect = heroSection.getBoundingClientRect();
-        WIDTH = rect.width;
-        HEIGHT = rect.height;
+        // Set canvas to cover entire viewport
+        WIDTH = window.innerWidth;
+        HEIGHT = window.innerHeight;
         
         canvas.width = WIDTH;
         canvas.height = HEIGHT;
         canvas.style.width = WIDTH + 'px';
         canvas.style.height = HEIGHT + 'px';
+        
+        console.log(`Canvas resized to: ${WIDTH}x${HEIGHT}`);
     }
 
     function init() {
@@ -743,11 +582,11 @@ function initInteractiveStars() {
         dots[dots.length - 1].link();
     }
 
-    // Mouse event handlers
+    // Mouse event handlers for full-screen canvas
     window.addEventListener('mousemove', function(e) {
         mouseMoving = true;
-        mouseX = e.clientX - canvas.getBoundingClientRect().left;
-        mouseY = e.clientY - canvas.getBoundingClientRect().top;
+        mouseX = e.clientX;
+        mouseY = e.clientY;
         clearTimeout(mouseMoveChecker);
         mouseMoveChecker = setTimeout(function() {
             mouseMoving = false;
@@ -1066,100 +905,178 @@ void main() {
 }
 
 
-// Export functions for potential external use
-// Theme Toggle Functionality
-function initThemeToggle() {
-    const themeToggle = document.getElementById('theme-toggle');
-    const themeIcon = themeToggle.querySelector('.theme-icon');
-    const body = document.body;
-    
-    // Check for saved theme preference or default to light
-    const currentTheme = localStorage.getItem('theme') || 'light';
-    body.setAttribute('data-theme', currentTheme);
-    updateThemeIcon(currentTheme);
-    
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = body.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
-        body.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        updateThemeIcon(newTheme);
-        
-        // Show constellation message ONLY when switching FROM light TO dark mode
-        if (currentTheme === 'light' && newTheme === 'dark') {
-            showConstellationMessage();
-        }
-    });
-}
 
-function updateThemeIcon(theme) {
-    const themeIcon = document.querySelector('.theme-icon');
-    themeIcon.textContent = theme === 'dark' ? '🌙' : '☀️';
-}
-
-function showConstellationMessage() {
-    // Check if message has already been shown to avoid spam
-    if (localStorage.getItem('constellation-message-shown')) {
-        return;
-    }
+// Subscription form functionality
+function initSubscriptionForm() {
+    const pricingButtons = document.querySelectorAll('[data-plan]');
+    const subscriptionFormContainer = document.getElementById('subscription-form-container');
+    const subscriptionForm = document.getElementById('subscription-form');
+    const planTypeInput = document.getElementById('plan-type-input');
+    const selectedPlanDisplay = document.getElementById('selected-plan-display');
     
-    // Create and show the constellation message
-    const message = document.createElement('div');
-    message.className = 'constellation-message';
-    message.innerHTML = `
-        <div class="constellation-content">
-            <p>In dark mode there is a constellation effect at the top of this page thanks to <a href="https://thibautfoussard.com/" target="_blank" rel="noopener noreferrer">Thibaut Foussard</a>! <a href="#home" class="scroll-to-top">↑ Scroll to top to see it</a></p>
-            <button class="constellation-close" onclick="this.parentElement.parentElement.remove()">×</button>
-        </div>
-    `;
-    
-    document.body.appendChild(message);
-    
-    // Add click handler for scroll to top link
-    const scrollToTopLink = message.querySelector('.scroll-to-top');
-    scrollToTopLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        document.getElementById('home').scrollIntoView({ 
-            behavior: 'smooth',
-            block: 'start'
+    // Handle pricing button clicks
+    pricingButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const planType = this.getAttribute('data-plan');
+            const planName = planType === 'monthly' ? 'Monthly Plan ($29/month)' : 'Yearly Plan ($299/year)';
+            
+            // Set the plan type
+            planTypeInput.value = planType;
+            selectedPlanDisplay.textContent = `Selected: ${planName}`;
+            
+            // Show the subscription form
+            subscriptionFormContainer.style.display = 'block';
+            
+            // Scroll to the form
+            subscriptionFormContainer.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'center'
+            });
         });
     });
     
-    // Mark as shown
-    localStorage.setItem('constellation-message-shown', 'true');
-    
-    // Auto-remove after 8 seconds
-    setTimeout(() => {
-        if (message.parentElement) {
-            message.remove();
+    // Handle subscription form submission
+    if (subscriptionForm) {
+        subscriptionForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Clear previous errors and status
+            clearSubscriptionErrors();
+            clearSubscriptionStatus();
+            
+            // Get form data
+            const formData = new FormData(this);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const planType = formData.get('plan_type');
+            
+            // Validate form
+            if (!name || !email || !planType) {
+                showSubscriptionStatus('Please fill in all required fields.', 'error');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = this.querySelector('#subscribe-btn');
+            const btnText = submitBtn.querySelector('.btn-text');
+            const btnLoading = submitBtn.querySelector('.btn-loading');
+            
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'inline';
+            submitBtn.disabled = true;
+            
+            // Step 1: Create customer
+            createCustomer(name, email)
+                .then(customerData => {
+                    if (customerData.success) {
+                        // Step 2: Create subscription checkout session
+                        return createSubscription(customerData.customer_id, planType);
+                    } else {
+                        throw new Error(customerData.message);
+                    }
+                })
+                .then(subscriptionData => {
+                    if (subscriptionData.success) {
+                        // Redirect to Stripe checkout
+                        window.location.href = subscriptionData.checkout_url;
+                    } else {
+                        throw new Error(subscriptionData.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Subscription error:', error);
+                    showSubscriptionStatus('Sorry, there was an error processing your subscription. Please try again.', 'error');
+                })
+                .finally(() => {
+                    // Reset button
+                    btnText.style.display = 'inline';
+                    btnLoading.style.display = 'none';
+                    submitBtn.disabled = false;
+                });
+        });
+    }
+}
+
+// Create customer in Stripe
+function createCustomer(name, email) {
+    return fetch('api/create-customer.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            name: name,
+            email: email
+        })
+    })
+    .then(response => response.json())
+    .catch(error => {
+        console.error('Customer creation error:', error);
+        return { success: false, message: 'Failed to create customer' };
+    });
+}
+
+// Create subscription checkout session
+function createSubscription(customerId, planType) {
+    return fetch('api/create-subscription.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            customer_id: customerId,
+            plan_type: planType
+        })
+    })
+    .then(response => response.json())
+    .catch(error => {
+        console.error('Subscription creation error:', error);
+        return { success: false, message: 'Failed to create subscription' };
+    });
+}
+
+// Show subscription form errors
+function showSubscriptionErrors(errors) {
+    Object.keys(errors).forEach(field => {
+        const errorElement = document.getElementById(`error-${field}-sub`);
+        if (errorElement) {
+            errorElement.textContent = errors[field];
+            errorElement.classList.add('show');
         }
-    }, 8000);
+    });
 }
 
-// Function to reset constellation message (for testing)
-function resetConstellationMessage() {
-    localStorage.removeItem('constellation-message-shown');
-    console.log('Constellation message reset - you can now test it again');
+// Clear subscription form errors
+function clearSubscriptionErrors() {
+    const errorElements = document.querySelectorAll('#subscription-form .error-message');
+    errorElements.forEach(element => {
+        element.textContent = '';
+        element.classList.remove('show');
+    });
 }
 
-// Function to force light mode (for testing)
-function forceLightMode() {
-    localStorage.removeItem('theme');
-    document.body.setAttribute('data-theme', 'light');
-    updateThemeIcon('light');
-    console.log('Forced to light mode');
+// Show subscription form status message
+function showSubscriptionStatus(message, type) {
+    const statusElement = document.getElementById('subscription-status');
+    if (statusElement) {
+        statusElement.textContent = message;
+        statusElement.className = `form-status ${type} show`;
+    }
 }
 
-// Initialize theme toggle when DOM is loaded
-document.addEventListener('DOMContentLoaded', initThemeToggle);
+// Clear subscription form status
+function clearSubscriptionStatus() {
+    const statusElement = document.getElementById('subscription-status');
+    if (statusElement) {
+        statusElement.textContent = '';
+        statusElement.className = 'form-status';
+    }
+}
+
+// Export functions for potential external use
 
 window.PortfolioWebsite = {
     showNotification,
     initScrollAnimations,
-    initPortfolioViewToggle,
-    initSpaceTimeAnomaly,
-    initThemeToggle,
-    resetConstellationMessage,
-    forceLightMode
+    initSubscriptionForm
 };

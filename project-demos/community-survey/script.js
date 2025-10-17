@@ -320,7 +320,7 @@ function renderCustomPrioritiesList() {
         return;
     }
 
-    let html = '<h3 style="margin-bottom: 15px; color: #2c3e50;">Your Custom Priorities:</h3>';
+    let html = '<h3 style="margin-bottom: 15px; color: #e5e7eb;">Your Custom Priorities:</h3>';
     
     customPriorities.forEach((priority, index) => {
         html += `
@@ -628,7 +628,7 @@ function addIndividualInterpretationGuide(results) {
         
         const guideDiv = document.createElement('div');
         guideDiv.style.cssText = `
-            background: rgba(255,255,255,0.15);
+            background: rgba(17, 24, 39, 0.6);
             padding: 15px;
             border-radius: 8px;
             margin-top: 20px;

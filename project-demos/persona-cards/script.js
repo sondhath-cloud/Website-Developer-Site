@@ -1280,7 +1280,7 @@ class StakeholderTool {
         roleFilter.innerHTML = '<option value="all">All Roles</option>';
         
         // Add predefined roles
-        const predefinedRoles = ['CISO', 'Engineer', 'Hunter', 'Investigator', 'Manager', 'Analyst', 'Developer', 'Admin', 'Architect', 'Forensics', 'IR', 'Support'];
+        const predefinedRoles = ['Owner', 'Supervisor', 'Customer', 'HR', 'Manager', 'Finance', 'IT', 'Admin', 'Marketing', 'Sales', 'Operations', 'Support'];
         predefinedRoles.forEach(role => {
             const option = document.createElement('option');
             option.value = role;

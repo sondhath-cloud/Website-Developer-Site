@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Carousel Component - Example</title>
+  <link rel="stylesheet" href="carousel.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+    }
+    
+    .demo-section {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    #carouselDemo {
+      width: 100%;
+      max-width: 1200px;
+      height: 600px;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="demo-section">
+    <!-- Carousel Container -->
+    <div id="carouselDemo" class="carousel-container"></div>
+  </div>
+
+  <script src="carousel.js"></script>
+  <script>
+    // Example 1: Create carousel from data
+    const carouselItems = [
+      {
+        image: 'https://cdn.mos.cms.futurecdn.net/dP3N4qnEZ4tCTCLq59iysd.jpg',
+        title: 'Lossless Youths',
+        description: 'Explore the beauty of untouched landscapes and pristine environments. This stunning visual captures the essence of nature in its purest form.',
+        buttonText: 'Read More',
+        buttonAction: 'alert("Learn more about Lossless Youths")'
+      },
+      {
+        image: 'https://i.redd.it/tc0aqpv92pn21.jpg',
+        title: 'Estrange Bond',
+        description: 'A mysterious connection between worlds. Discover the story behind this captivating scene that bridges reality and imagination.',
+        buttonText: 'Read More',
+        buttonAction: 'alert("Learn more about Estrange Bond")'
+      },
+      {
+        image: 'https://wharferj.files.wordpress.com/2015/11/bio_north.jpg',
+        title: 'The Gate Keeper',
+        description: 'Standing watch over realms unknown. A sentinel that guards the passage between the known and the mysterious.',
+        buttonText: 'Read More',
+        buttonAction: 'alert("Learn more about The Gate Keeper")'
+      },
+      {
+        image: 'https://images7.alphacoders.com/878/878663.jpg',
+        title: 'Last Trace Of Us',
+        description: 'What remains when everything else fades away. A poignant reminder of moments that shaped our journey.',
+        buttonText: 'Read More',
+        buttonAction: 'alert("Learn more about Last Trace Of Us")'
+      },
+      {
+        image: 'https://theawesomer.com/photos/2017/07/simon_stalenhag_the_electric_state_6.jpg',
+        title: 'Urban Decay',
+        description: 'The beauty found in abandoned spaces. Where nature reclaims what was once built by human hands.',
+        buttonText: 'Read More',
+        buttonAction: 'alert("Learn more about Urban Decay")'
+      },
+      {
+        image: 'https://da.se/app/uploads/2015/09/simon-december1994.jpg',
+        title: 'The Migration',
+        description: 'A journey across time and space. Follow the path of those who ventured into the unknown seeking new horizons.',
+        buttonText: 'Read More',
+        buttonAction: 'alert("Learn more about The Migration")'
+      }
+    ];
+    
+    // Initialize carousel with auto-play
+    const myCarousel = createCarousel('carouselDemo', carouselItems, {
+      autoPlay: false, // Set to true to enable auto-play
+      autoPlayInterval: 5000
+    });
+  </script>
+  
+</body>
+</html>
+
+
+

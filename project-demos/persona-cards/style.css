@@ -7,7 +7,7 @@
 
 body {
     font-family: "Google Sans", sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #FFD700 0%, #FFED4E 100%);
     min-height: 100vh;
     color: #333;
 }
@@ -23,14 +23,14 @@ body {
 
 .header h1 {
     font-size: 2.5rem;
-    color: white;
+    color: black;
     margin-bottom: 0.5rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.3);
 }
 
 .header p {
     font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.9);
+    color: black;
     margin-bottom: 1.5rem;
 }
 
@@ -57,7 +57,7 @@ body {
 }
 
 .progress-text {
-    color: white;
+    color: black;
     font-weight: 500;
 }
 
@@ -92,11 +92,11 @@ body {
 }
 
 .personas-section h2 {
-    color: white;
+    color: black;
     text-align: center;
     margin-bottom: 1.5rem;
     font-size: 1.5rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.3);
 }
 
 /* Completed Stakeholders Section */
@@ -106,11 +106,11 @@ body {
 }
 
 .completed-stakeholders h2 {
-    color: white;
+    color: black;
     text-align: center;
     margin-bottom: 1.5rem;
     font-size: 1.5rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.3);
 }
 
 /* Search and Filter Controls */
@@ -224,7 +224,7 @@ body {
 .no-results {
     text-align: center;
     padding: 3rem 1rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: black;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 12px;
     backdrop-filter: blur(10px);
@@ -270,7 +270,7 @@ body {
 }
 
 .add-custom-group-text {
-    color: rgba(255, 255, 255, 0.8);
+    color: black;
     font-size: 0.9rem;
     margin: 0;
 }
@@ -673,7 +673,7 @@ body {
 }
 
 .data-table-section h2 {
-    color: white;
+    color: black;
     text-align: center;
     margin-bottom: 2rem;
     font-size: 2rem;
@@ -1665,7 +1665,7 @@ $colors: $bg-green, $bg-yellow, $bg-purp, $bg-grey;
 
 .results-section h2 {
     text-align: center;
-    color: white;
+    color: black;
     margin-bottom: 2rem;
     font-size: 2rem;
 }

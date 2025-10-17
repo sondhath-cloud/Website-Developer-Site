@@ -74,3 +74,6 @@ __pycache__/
 *.exe
 *.app
 *.dmg
+stripe-php-master/
+stripe-php.tar.gz
+stripe-php.zip
