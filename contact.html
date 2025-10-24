@@ -3,54 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - Sondra Hathaway</title>
+    <title>Contact - peculiette</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="components/self-reflection/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <!-- Blend Mode Component Dependencies -->
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.1/TweenMax.min.js'></script>
+    <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/409445/animateAnything.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js'></script>
 </head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-brand">
-                <a href="index.html" class="brand-link">Sondra Hathaway</a>
+<body class="blend-mode-component">
+    <!-- Blend Mode Sticky Navigation -->
+    <header>
+        <div class='sticky-nav difference d-flex justify-content-between'>
+            <div class='logo'>
+                <a href="index.html" style="text-decoration: none; color: inherit;">
+                    <span style="color: #efefef; font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.5em;">peculiette</span>
+                </a>
             </div>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="index.html" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="demos/" class="nav-link">Project Samples</a>
-                </li>
-                <li class="nav-item">
-                    <a href="hosting.html" class="nav-link">Hosting</a>
-                </li>
-                <li class="nav-item">
-                    <a href="websites.html" class="nav-link">Websites</a>
-                </li>
-                <li class="nav-item">
-                    <a href="apps.html" class="nav-link">Apps</a>
-                </li>
-                <li class="nav-item">
-                    <a href="consulting.html" class="nav-link">Consulting</a>
-                </li>
-                <li class="nav-item">
-                    <a href="contact.html" class="nav-link active">Contact</a>
-                </li>
-            </ul>
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+            <div class='menu box' id='nav-btn'>
+                <svg id="i1" class="icon" viewBox="20 30 60 40">
+                <path id="top-line-1"     d="M30,37 L70,37 Z"></path>
+                <path id="middle-line-1" 	d="M30,50 L70,50 Z"></path>
+                <path id="bottom-line-1" 	d="M30,63 L70,63 Z"></path>
+                </svg>
             </div>
         </div>
-    </nav>
+        <div id='takeover-nav'>
+            <div class='container-fluid'>
+                <div class='row'>
+                    <div class='nav-col nav-contact col-12 col-md-7 bg-black d-flex align-items-center justify-content-center position-relative py-5 px-3 order-1 order-md-0'>
+                        <div class='position-absolute w-100 h-100 bg-topographic'></div>
+                        <div class='content position-relative'>
+                            <h2 class='nav-title white mb-5'>
+                                build your digital success with us<span class="d-inline green">&period;</span>
+                            </h2>
+                            <ul class='contact-items white list-unstyled mb-5'>
+                                <li class='pb-4'>
+                                    <a class='text-decoration-none' href='mailto:sondra@peculiette.com'>sondra@peculiette.com</a>
+                                </li>
+                                <li class='pb-4'>
+                                    <a class='text-decoration-none' href='https://www.linkedin.com/in/sondrahathaway/' target='_blank'>LinkedIn Profile</a>
+                                </li>
+                                <li>
+                                    <a class='text-decoration-none' href='https://github.com/peculiette' target='_blank'>GitHub Portfolio</a>
+                                </li>
+                            </ul>
+                            <div class='social'>
+                                <a class='text-decoration-none green' href='https://www.linkedin.com/in/sondrahathaway/' target='_blank'>linkedin</a>
+                                <span class='mx-2 white'>
+                                    |
+                                </span>
+                                <a class='text-decoration-none green' href='https://github.com/peculiette' target='_blank'>github</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='nav-col nav-menu col-12 col-md-5 bg-green d-flex align-items-center pt-5 pb-3 pb-md-5 px-3 px-md-5 order-0 order-md-1'>
+                        <ul class='nav-items list-unstyled'>
+                            <li class='pb-3'>
+                                <a class='text-decoration-none' href='website-request.html'>website</a>
+                            </li>
+                            <li class='pb-3'>
+                                <a class='text-decoration-none' href='hosting.html'>hosting</a>
+                            </li>
+                            <li>
+                                <a class='text-decoration-none' href='contact.html'>contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Self-Reflection Background -->
+    <div class="reflection-background">
+        <canvas id="reflection-canvas"></canvas>
+    </div>
 
     <!-- Full-screen Interactive Constellation Background -->
-    <div class="constellation-background">
+    <div class="constellation-background" style="display: none;">
         <canvas id="stars-canvas"></canvas>
     </div>
+
+    <!-- Video Hero Section -->
+    <section class='hero d-flex align-items-center justify-content-center'>
+        <div class='video-wrap'>
+            <video autoplay="" playsinline="" muted="" id="video-bg">
+            <source src="https://assets.codepen.io/319606/tactus-waves-hero-sm.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class='position-absolute w-100 gradient-overlay'></div>
+        <div class='content position-relative text-center mb-5'>
+            <h1 class='hero-title blend'>
+                Let's Create Something
+                <br>
+                Amazing Together
+            </h1>
+        </div>
+    </section>
 
     <!-- Contact Section -->
     <section id="contact" class="subscription">
@@ -96,19 +152,486 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-text">
-                    <p>&copy; 2025 Sondra Hathaway. All rights reserved.</p>
+                    <p>&copy; 2025 peculiette. All rights reserved.</p>
                 </div>
                 <div class="social-links">
                     <a href="https://www.linkedin.com/in/sondrahathaway/" target="_blank" rel="noopener noreferrer"
                         class="social-link">LinkedIn</a>
-                    <a href="https://github.com/sondhath-cloud" target="_blank" rel="noopener noreferrer"
+                    <a href="https://github.com/peculiette" target="_blank" rel="noopener noreferrer"
                         class="social-link">GitHub</a>
                 </div>
             </div>
         </div>
     </footer>
 
+    <!-- Self-Reflection Shader -->
+    <script type="x-shader/x-fragment">#version 300 es
+/*********
+* made by Matthias Hurrle (@atzedent)
+* Textures made by Emil Persson, aka Humus.
+* http://www.humus.name
+* licensed under a Creative Commons Attribution 3.0 Unported License.
+* http://creativecommons.org/licenses/by/3.0/
+*/
+precision highp float;
+out vec4 O;
+uniform float time;
+uniform vec2 resolution;
+uniform vec2 touch;
+uniform int pointerCount;
+uniform sampler2D wood;
+uniform samplerCube cubeMap;
+#define P pointerCount
+#define mouse (touch/R)
+#define FC gl_FragCoord.xy
+#define R resolution
+#define T time
+#define N normalize
+#define S smoothstep
+#define MN min(R.x,R.y)
+#define rot(a) mat2(cos((a)-vec4(0,11,33,0)))
+struct Material {
+	float dist;
+	vec3 col;
+	float rough;
+	int id;
+	bool hit;
+};
+float smin(float a, float b, float k) {
+	float h=clamp(.5+.5*(b-a)/k,.0,1.);
+	return mix(b,a,h)-k*h*(1.-h);
+}
+Material matmin(Material a, Material b) {
+	if (a.dist<b.dist) return a;
+	return b;
+}
+float egg(vec3 p, vec3 s) {
+	s.xz+=-p.y*.085;
+	s=abs(s);
+	return (length(p/s)-1.)*min(min(s.x,s.y),s.z);
+}
+float box(vec3 p, vec3 s) {
+	p=abs(p)-s;
+	return length(max(p,.0))+min(.0,max(max(p.x,p.y),p.z));
+}
+float popstick(vec3 p, vec3 s) {
+	p.y-=clamp(p.y,-s.y/2.,s.y/2.);
+	float d=length(p.xy)-s.x;
+	vec2 c=vec2(d,abs(p.z)-s.z);
+	return length(max(c,.0))+min(.0,max(c.x,c.y));
+}
+float grip(vec3 p) {
+	p.y+=2.65;
+	p.yz*=rot(-.7);
+	p.z+=.2-.8*sin(p.y*1.-2.7);
+	return popstick(p,vec3(.15-.05*sin(p.y*1.4+.5),3,.01))-.02;
+}
+Material table(vec3 p) {
+	float k=20.;
+	p.y+=smin(sin(p.x*k),cos(p.z*k),-.1)*.004;
+	float d=box(p+vec3(0,1,0),vec3(4,.5,4)-.1)-.1;
+	p.x+=1.;
+	p.z-=1.;
+	return Material(d,texture(wood,p.xz/9.).rgb,.8,0,false);
+}
+Material spoon(vec3 p) {
+	p.y-=.19;
+	p.z-=2.5;
+	p.yz*=rot(-1.265);
+	p.xy*=rot(.2);
+	float d=egg(p,vec3(.6,1,.6));
+	d=abs(d)-.01;
+	d=smin(d,-(p.z-.2),-.025);
+	d=smin(d,grip(p),.05);
+	d*=.8;
+	return Material(d,vec3(.8,.9,1),.25,1,false);
+}
+Material map(vec3 p) {
+	Material a=spoon(p), b=table(p);
+	a=matmin(a,b);
+	return a;
+}
+vec3 norm(vec3 p) {
+	float h=1e-3; vec2 k=vec2(-1,1);
+	return N(
+		k.xyy*map(p+k.xyy*h).dist+
+		k.yxy*map(p+k.yxy*h).dist+
+		k.yyx*map(p+k.yyx*h).dist+
+		k.xxx*map(p+k.xxx*h).dist
+	);
+}
+Material march(inout vec3 p, vec3 rd) {
+	Material mat;
+	for (float i; i++<400.;) {
+		mat=map(p);
+		if (abs(mat.dist)<1e-3) {
+			mat.hit=true;
+			break;
+		}
+		if (mat.dist>300.) break;
+		p+=rd*mat.dist;
+	}
+	return mat;
+}
+float shadow(vec3 p, vec3 lp, out vec3 mat) {
+	if (p.y>2.) return 1.;
+	float shd=1., maxd=length(lp-p);
+	vec3 l=N(lp-p);
+	for (float i=1e-2; i<maxd;) {
+		Material d=map(p+l*i);
+		if (abs(d.dist)<1e-2) {
+			shd=.0;
+			mat=d.col;
+			break;
+		}
+		shd=min(shd,64.*d.dist/i);
+		i+=d.dist;
+	}
+	return shd;
+}
+float calcAO(vec3 p, vec3 n) {
+	float occ=.0, sca=1.;
+	for (float i=.0; i<5.; i++) {
+		float
+		h=.01+i*.09,
+		d=map(p+h*n).dist;
+		occ+=(h-d)*sca;
+		sca*=.55;
+		if (occ>.35) break;
+	}
+	return clamp(1.-3.*occ,.0,1.)*(.5+.5*n.y);
+}
+vec3 render(inout vec3 p, vec3 rd, out Material mat, bool refl) {
+	vec3 col=vec3(0);
+	mat=march(p,rd);
+	if (mat.hit) {
+		vec3 n=norm(p), lp=vec3(1,3,-2), l=N(lp-p), hal=N(lp)-n, smat;
+		float dif=clamp(dot(l,n),.0,1.), fres=clamp(1.+dot(rd,n),.0,1.),
+		spec=pow(clamp(dot(hal,rd),.0,1.),2.), spe=pow(clamp(dot(reflect(rd,n),l),.0,1.),32.),
+		shd=shadow(p+5e-2*n,lp,smat), ao=calcAO(p,n), ld=distance(lp,p);
+		col+=.1*mat.col+dif*mat.col;
+		col=mix(mix(col*.25,smat*.2,1./(1.+ld*.5+ld*ld*5e-1)),col,max(shd,.6*sqrt(ao)));
+		col+=spec+spe*(1.-mat.rough)*shd;
+		if (!refl) {
+			vec3 c=mix(col,4.*texture(cubeMap,reflect(rd,n)).rgb,(1.-mat.rough));
+			c=pow(c,vec3(.4545));
+			col+=c*float(mat.id);
+		}
+	} else {
+		if (!refl) {
+			vec3 c=texture(cubeMap,rd).rgb;
+			c=pow(c,vec3(.4545));
+			col+=c*2.;
+		}
+	}
+	return col;
+}
+void cam(inout vec3 p) {
+	float t=T;
+	if (P>0) {
+		p.yz*=rot(-sin(mouse.y*6.3+3.14)*.7+.7);
+		p.xz*=rot(6.3-mouse.x*12.6);
+	} else {
+		p.yz*=rot(.78-.7*(cos(t*.5)*.5+.5));
+		p.xz*=rot(-.56+.1*t);
+		p.xy*=rot(-.1*sin(t));
+	}
+}
+void main() {
+	vec2 uv=(FC-.5*R)/MN;
+	vec3 col=vec3(0),
+	p=vec3(0,0,-4),
+	rd=N(vec3(uv,1));
+	cam(p); cam(rd);
+	Material mat,dmat;
+	col+=render(p,rd,mat,false);
+	vec3 n=norm(p);
+	float fres=pow(clamp(1.+dot(rd,n),.0,5.),5.);
+	p+=5e-2*n;
+	rd=reflect(rd,n);
+	vec3 c=render(p,rd,dmat,true);
+	col=mix(col,c*(1.-mat.rough),(1.-mat.rough));
+	O=vec4(col,1);
+}</script>
+
+    <script src="components/self-reflection/script.js"></script>
     <script src="script.js"></script>
+    
+    <!-- Custom Cursor -->
+    <div class='custom-cursor'></div>
+    
+    <!-- Blend Mode Component JavaScript -->
+    <script>
+        $( "#nav-btn" ).on( "click", function() {
+          $('#takeover-nav').toggleClass("shown");
+          $('.sticky-nav').toggleClass("difference");
+        });
+
+        ///Initiation Variables
+        var icon_1 = document.getElementById("nav-btn");
+        var topLine_1 = document.getElementById("top-line-1");
+        var middleLine_1 = document.getElementById("middle-line-1");
+        var bottomLine_1 = document.getElementById("bottom-line-1");
+        var state_1 = "menu";  // can be "menu" or "arrow"
+        var topLineY_1;
+        var middleLineY_1;
+        var bottomLineY_1;
+        var topLeftY_1;
+        var topRightY_1;
+        var bottomLeftY_1;
+        var bottomRightY_1;
+        var topLeftX_1;
+        var topRightX_1;
+        var bottomLeftX_1;
+        var bottomRightX_1;
+
+        ///Animation Variables
+        var segmentDuration_1 = 15;
+        var menuDisappearDurationInFrames_1 = segmentDuration_1;
+        var arrowAppearDurationInFrames_1 = segmentDuration_1;
+        var arrowDisappearDurationInFrames_1 = segmentDuration_1;
+        var menuAppearDurationInFrames_1 = segmentDuration_1;
+        var menuDisappearComplete_1 = false;
+        var arrowAppearComplete_1 = false;
+        var arrowDisappearComplete_1 = false;
+        var menuAppearComplete_1 = false;
+        var currentFrame_1 = 1;
+
+        ///Menu Disappear 
+        function menuDisappearAnimation_1() {
+            currentFrame_1++;
+            if ( currentFrame_1 <= menuDisappearDurationInFrames_1 ) {
+                window.requestAnimationFrame( ()=> { 
+                    //top line
+                    topLineY_1 = AJS.easeInBack( 37, 50, menuDisappearDurationInFrames_1, currentFrame_1 );
+                    topLine_1.setAttribute( "d", "M30,"+topLineY_1+" L70,"+topLineY_1 );
+                    //bottom line
+                    bottomLineY_1 = AJS.easeInBack( 63, 50, menuDisappearDurationInFrames_1, currentFrame_1 );
+                    bottomLine_1.setAttribute( "d", "M30,"+bottomLineY_1+" L70,"+bottomLineY_1 );
+                    //recursion
+                    menuDisappearAnimation_1();
+                });
+            } else {
+                middleLine_1.style.opacity = "0";
+                currentFrame_1 = 1;
+                menuDisappearComplete_1 = true;
+                openMenuAnimation_1();
+            }
+        }
+
+        ///Cross Appear
+        function arrowAppearAnimation_1() {
+            currentFrame_1++;
+            if ( currentFrame_1 <= arrowAppearDurationInFrames_1 ) {
+                window.requestAnimationFrame( ()=> { 
+                    //top line
+                    topLeftX_1 = AJS.easeOutBack( 30, 35, arrowAppearDurationInFrames_1, currentFrame_1 );
+                    topLeftY_1 = AJS.easeOutBack( 50, 35, arrowAppearDurationInFrames_1, currentFrame_1 );
+                    bottomRightX_1 = AJS.easeOutBack( 70, 65, arrowAppearDurationInFrames_1, currentFrame_1 );
+                    bottomRightY_1 = AJS.easeOutBack( 50, 65, arrowAppearDurationInFrames_1, currentFrame_1 );
+                    topLine_1.setAttribute( "d", "M" + topLeftX_1 + "," + topLeftY_1 + " L" + bottomRightX_1 + "," + bottomRightY_1 );
+                    //bottom line
+                    bottomLeftX_1 = AJS.easeOutBack( 30, 35, arrowAppearDurationInFrames_1, currentFrame_1 );
+                    bottomLeftY_1 = AJS.easeOutBack( 50, 65, arrowAppearDurationInFrames_1, currentFrame_1 );
+                    topRightX_1 = AJS.easeOutBack( 70, 65, arrowAppearDurationInFrames_1, currentFrame_1 );
+                    topRightY_1 = AJS.easeOutBack( 50, 35, arrowAppearDurationInFrames_1, currentFrame_1 );
+                    bottomLine_1.setAttribute( "d", "M" + bottomLeftX_1 + "," + bottomLeftY_1 + " L" + topRightX_1 + "," + topRightY_1 );
+                    //recursion
+                    arrowAppearAnimation_1();
+                });
+            } else {
+                currentFrame_1 = 1;
+                arrowAppearComplete_1 = true;
+                openMenuAnimation_1();
+            }
+        }
+
+        ///Combined Open Menu Animation
+        function openMenuAnimation_1() {
+            if ( !menuDisappearComplete_1 ) { 
+                menuDisappearAnimation_1();
+            } else if ( !arrowAppearComplete_1) {
+                arrowAppearAnimation_1();
+            }
+        }
+
+        ///Cross Disappear
+        function arrowDisappearAnimation_1() {
+            currentFrame_1++;
+            if ( currentFrame_1 <= arrowDisappearDurationInFrames_1 ) {
+                window.requestAnimationFrame( ()=> {
+                    //top line
+                    topLeftX_1 = AJS.easeInBack( 35, 30, arrowDisappearDurationInFrames_1, currentFrame_1 );
+                    topLeftY_1 = AJS.easeInBack( 35, 50, arrowDisappearDurationInFrames_1, currentFrame_1 );
+                    bottomRightX_1 = AJS.easeInBack( 65, 70, arrowDisappearDurationInFrames_1, currentFrame_1 );
+                    bottomRightY_1 = AJS.easeInBack( 65, 50, arrowDisappearDurationInFrames_1, currentFrame_1 );
+                    topLine_1.setAttribute( "d", "M" + topLeftX_1 + "," + topLeftY_1 + " L" + bottomRightX_1 + "," + bottomRightY_1 );
+                    //bottom line
+                    bottomLeftX_1 = AJS.easeInBack( 35, 30, arrowDisappearDurationInFrames_1, currentFrame_1 );
+                    bottomLeftY_1 = AJS.easeInBack( 65, 50, arrowDisappearDurationInFrames_1, currentFrame_1 );
+                    topRightX_1 = AJS.easeInBack( 65, 70, arrowDisappearDurationInFrames_1, currentFrame_1 );
+                    topRightY_1 = AJS.easeInBack( 35, 50, arrowDisappearDurationInFrames_1, currentFrame_1 );
+                    bottomLine_1.setAttribute( "d", "M" + bottomLeftX_1 + "," + bottomLeftY_1 + " L" + topRightX_1 + "," + topRightY_1 );
+                    //recursion
+                    arrowDisappearAnimation_1();
+                });
+            } else {
+                middleLine_1.style.opacity = "1";
+                currentFrame_1 = 1;
+                arrowDisappearComplete_1 = true;
+                closeMenuAnimation_1();
+            }
+        }
+
+        ///Menu Appear
+        function menuAppearAnimation_1() {
+            currentFrame_1++;
+            if ( currentFrame_1 <= menuAppearDurationInFrames_1 ) {
+                window.requestAnimationFrame( ()=> {
+                    //top line
+                    topLineY_1 = AJS.easeOutBack( 50, 37, menuDisappearDurationInFrames_1, currentFrame_1 );
+                    topLine_1.setAttribute( "d", "M30,"+topLineY_1+" L70,"+topLineY_1 );
+                    //bottom line
+                    bottomLineY_1 = AJS.easeOutBack( 50, 63, menuDisappearDurationInFrames_1, currentFrame_1 );
+                    bottomLine_1.setAttribute( "d", "M30,"+bottomLineY_1+" L70,"+bottomLineY_1 );
+                    //recursion
+                    menuAppearAnimation_1();
+                });
+            } else {
+                currentFrame_1 = 1;
+                menuAppearComplete_1 = true;
+                closeMenuAnimation_1();
+            }
+        }
+
+        ///Close Menu Animation
+        function closeMenuAnimation_1() {
+            if ( !arrowDisappearComplete_1 ) {
+                arrowDisappearAnimation_1();
+            } else if ( !menuAppearComplete_1 ) {
+                menuAppearAnimation_1();
+            }
+        }
+
+        ///Events
+        icon_1.addEventListener( "click", ()=> { 
+          if ( state_1 === "menu" ) {
+            openMenuAnimation_1();
+            state_1 = "arrow";
+            arrowDisappearComplete_1 = false;
+            menuAppearComplete_1 = false;
+          } else if ( state_1 === "arrow" ) {
+            closeMenuAnimation_1();
+            state_1 = "menu";
+            menuDisappearComplete_1 = false;
+            arrowAppearComplete_1 = false;
+          }
+        });
+
+        // Video fade effect
+        document.addEventListener("DOMContentLoaded", function(event) {
+            const video = document.getElementById('video-bg');
+            if (video) {
+                // Start fade when video is 70% complete
+                video.addEventListener('timeupdate', function() {
+                    const duration = video.duration;
+                    const currentTime = video.currentTime;
+                    const progress = currentTime / duration;
+                    
+                    // Start fade at 70% completion
+                    if (progress >= 0.7 && !video.classList.contains('fade-out')) {
+                        video.classList.add('fade-out');
+                    }
+                });
+                
+                video.addEventListener('ended', function() {
+                    // Ensure video is hidden after it ends
+                    setTimeout(() => {
+                        video.style.display = 'none';
+                    }, 8000); // Match the slower CSS animation duration
+                });
+            }
+        });
+
+        // Cursor
+        document.addEventListener("DOMContentLoaded", function(event) {
+          var cursor = document.querySelector(".custom-cursor");
+          var links = document.querySelectorAll("a, button, #nav-btn, input.btn");
+
+          var initCursor = false;
+
+          for (var i = 0; i < links.length; i++) {
+            var selfLink = links[i];
+
+            selfLink.addEventListener("mouseover", function() {
+              cursor.classList.add("custom-cursor--link");
+            });
+            selfLink.addEventListener("mouseout", function() {
+              cursor.classList.remove("custom-cursor--link");
+            });
+          }
+
+          window.onmousemove = function(e) {
+            var mouseX = e.clientX;
+            var mouseY = e.clientY;
+
+            if (!initCursor) {
+              TweenLite.to(cursor, 0.5, {
+                opacity: 1
+              });
+              initCursor = true;
+            }
+
+            TweenLite.to(cursor, 0, {
+              top: mouseY + "px",
+              left: mouseX + "px"
+            });
+          };
+          
+          window.ontouchmove = function(e) {
+            var mouseX = e.touches[0].clientX;
+            var mouseY = e.touches[0].clientY;
+            if (!initCursor) {
+              TweenLite.to(cursor, 0.3, {
+                opacity: 1
+              });
+              initCursor = true;
+            }
+
+            TweenLite.to(cursor, 0, {
+              top: mouseY + "px",
+              left: mouseX + "px"
+            });
+          };
+
+          window.onmouseout = function(e) {
+            TweenLite.to(cursor, 0.3, {
+              opacity: 0
+            });
+            initCursor = false;
+          };
+
+          window.ontouchstart = function(e) {
+            TweenLite.to(cursor, 0.3, {
+              opacity: 1
+            });
+          };
+          
+          window.ontouchend = function(e) {
+            setTimeout( function() {
+              TweenLite.to(cursor, 0.3, {
+                opacity: 0
+              });
+            }, 200);   
+          };
+        });
+    </script>
+    
+    <!-- Main Script -->
+    <script src="script.js"></script>
+    
+    <!-- Custom Cursor for Blend Mode Navigation -->
+    <div class='custom-cursor'></div>
 </body>
 </html>
 

@@ -77,3 +77,4 @@ __pycache__/
 stripe-php-master/
 stripe-php.tar.gz
 stripe-php.zip
+api/config.php

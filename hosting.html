@@ -1,104 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="hosting-page">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hosting - Sondra Hathaway</title>
+    <title>Hosting - peculiette</title>
     <meta name="description"
-        content="Professional hosting and website development services with Sondra Hathaway.">
+        content="Professional hosting and website development services with peculiette.">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
         rel="stylesheet">
+    <!-- Blend Mode Component Dependencies -->
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css'>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.1/TweenMax.min.js'></script>
+    <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/409445/animateAnything.js'></script>
+    <!-- jQuery for Blend Mode Navigation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
     <!-- Stripe JavaScript SDK -->
     <script src="https://js.stripe.com/v3/"></script>
 </head>
 
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
+    <!-- Blend Mode Sticky Navigation -->
+    <header>
+        <div class='sticky-nav difference d-flex justify-content-between'>
+            <div class='logo'>
                 <a href="index.html" style="text-decoration: none; color: inherit;">
-                    <span class="logo-text">Sondra Hathaway</span>
+                    <span style="color: #efefef; font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.5em;">peculiette</span>
                 </a>
             </div>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="index.html" class="nav-link">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a href="demos/" class="nav-link">Project Samples</a>
-                </li>
-                <li class="nav-item">
-                    <a href="hosting.html" class="nav-link active">Hosting</a>
-                </li>
-                <li class="nav-item">
-                    <a href="websites.html" class="nav-link">Websites</a>
-                </li>
-                <li class="nav-item">
-                    <a href="apps.html" class="nav-link">Apps</a>
-                </li>
-                <li class="nav-item">
-                    <a href="consulting.html" class="nav-link">Consulting</a>
-                </li>
-                <li class="nav-item">
-                    <a href="contact.html" class="nav-link">Contact</a>
-                </li>
-            </ul>
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+            <div class='menu box' id='nav-btn'>
+                <svg id="i1" class="icon" viewBox="20 30 60 40">
+                <path id="top-line-1"     d="M30,37 L70,37 Z"></path>
+                <path id="middle-line-1" 	d="M30,50 L70,50 Z"></path>
+                <path id="bottom-line-1" 	d="M30,63 L70,63 Z"></path>
+                </svg>
             </div>
         </div>
-    </nav>
+        <div id='takeover-nav'>
+            <div class='container-fluid'>
+                <div class='row'>
+                    <div class='nav-col nav-contact col-12 col-md-7 bg-black d-flex align-items-center justify-content-center position-relative py-5 px-3 order-1 order-md-0'>
+                        <div class='position-absolute w-100 h-100 bg-topographic'></div>
+                        <div class='content position-relative'>
+                            <h2 class='nav-title white mb-5'>
+                                build your digital success with us<span class="d-inline green">&period;</span>
+                            </h2>
+                            <ul class='contact-items white list-unstyled mb-5'>
+                                <li class='pb-4'>
+                                    <a class='text-decoration-none' href='mailto:sondra@peculiette.com'>sondra@peculiette.com</a>
+                                </li>
+                                <li class='pb-4'>
+                                    <a class='text-decoration-none' href='https://www.linkedin.com/in/sondrahathaway/' target='_blank'>LinkedIn Profile</a>
+                                </li>
+                                <li>
+                                    <a class='text-decoration-none' href='https://github.com/peculiette' target='_blank'>GitHub Portfolio</a>
+                                </li>
+                            </ul>
+                            <div class='social'>
+                                <a class='text-decoration-none green' href='https://www.linkedin.com/in/sondrahathaway/' target='_blank'>linkedin</a>
+                                <span class='mx-2 white'>
+                                    |
+                                </span>
+                                <a class='text-decoration-none green' href='https://github.com/peculiette' target='_blank'>github</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='nav-col nav-menu col-12 col-md-5 bg-green d-flex align-items-center pt-5 pb-3 pb-md-5 px-3 px-md-5 order-0 order-md-1'>
+                        <ul class='nav-items list-unstyled'>
+                            <li class='pb-3'>
+                                <a class='text-decoration-none' href='website-request.html'>website</a>
+                            </li>
+                            <li class='pb-3'>
+                                <a class='text-decoration-none' href='hosting.html'>hosting</a>
+                            </li>
+                            <li>
+                                <a class='text-decoration-none' href='contact.html'>contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 
-    <!-- Full-screen Interactive Constellation Background -->
-    <div class="constellation-background">
-        <canvas id="stars-canvas"></canvas>
+    <!-- Video Background -->
+    <div class="video-background">
+        <video id="clouds-video" autoplay muted playsinline>
+            <source src="clouds-flying.webm" type="video/webm">
+            Your browser does not support the video tag.
+        </video>
+        <div class="video-overlay"></div>
     </div>
 
     <!-- Hosting Section -->
     <section id="hosting" class="subscription">
         <div class="container">
             <div class="subscription-content">
-                <!-- Hero Section -->
-                <div class="intro-content">
-                    <h1 class="page-title">Website Development and Hosting Services</h1>
-                    <p class="page-subtitle">Professional web solutions that match agency quality at freelancer pricing</p>
-                </div>
-
-                <!-- Hosting Plans Section -->
-                <div class="section-header">
-                    <h2 class="section-title">Managed Hosting Plans</h2>
-                    <p class="section-subtitle">Keep your website running smoothly with worry-free hosting</p>
-                </div>
-
                 <!-- Hosting Options -->
                 <div class="hosting-options">
-                    <div class="hosting-option">
-                        <h3>Self-Hosting</h3>
-                        <p>Take your files and host wherever you prefer. We'll deliver everything organized and ready to upload with your chosen provider.</p>
-                        <div class="hosting-features">
-                            <ul>
-                                <li>✓ Complete file package</li>
-                                <li>✓ Installation guide</li>
-                                <li>✓ Configuration documentation</li>
-                                <li>✓ Email support during setup</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
                     <div class="hosting-option featured-hosting">
-                        <div class="hosting-badge">Recommended</div>
-                        <h3>Managed Hosting</h3>
-                        <p>Focus on your business while we ensure your website stays secure, fast, and running smoothly.</p>
-                        
+                        <h1 class="page-title">Affordable Website Hosting</h1>
+                        <p class="page-subtitle">Reliable hosting and support for your sites.</p>
                         <div class="whats-included">
-                            <h4>What's Included</h4>
                             <div class="services-list">
                                 <ul>
                                     <li>✓ Website hosting and maintenance</li>
@@ -167,36 +175,6 @@
                     </div>
                 </div>
 
-                <!-- Contact Form -->
-                <div class="cta-section">
-                    <h2 class="section-title">Get In Touch</h2>
-                    <p class="section-subtitle">Ready to discuss your hosting needs?</p>
-                </div>
-
-                <div class="contact-content">
-                    <div class="contact-form-container white-contact-form">
-                        <form class="contact-form" id="contact-form">
-                            <div class="form-group">
-                                <input type="text" name="name" class="glass-input" placeholder="NAME" required>
-                                <div class="error-message" id="error-name"></div>
-                            </div>
-                            <div class="form-group">
-                                <input type="email" name="email" class="glass-input" placeholder="EMAIL" required>
-                                <div class="error-message" id="error-email"></div>
-                            </div>
-                            <div class="form-group">
-                                <input type="tel" name="phone" class="glass-input" placeholder="PHONE">
-                                <div class="error-message" id="error-phone"></div>
-                            </div>
-                            <div class="form-group">
-                                <textarea name="message" class="glass-textarea" placeholder="MESSAGE" rows="5" required></textarea>
-                                <div class="error-message" id="error-message"></div>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-full">Send Message</button>
-                            <div class="form-status" id="form-status"></div>
-                        </form>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -206,12 +184,12 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-text">
-                    <p>&copy; 2025 Sondra Hathaway. All rights reserved.</p>
+                    <p>&copy; 2025 peculiette. All rights reserved.</p>
                 </div>
                 <div class="social-links">
                 <a href="https://www.linkedin.com/in/sondrahathaway/" target="_blank" rel="noopener noreferrer"
                     class="social-link">LinkedIn</a>
-                    <a href="https://github.com/sondhath-cloud" target="_blank" rel="noopener noreferrer"
+                    <a href="https://github.com/peculiette" target="_blank" rel="noopener noreferrer"
                     class="social-link">GitHub</a>
                 </div>
             </div>
@@ -219,6 +197,9 @@
     </footer>
 
     <script src="script.js"></script>
+    
+    <!-- Custom Cursor for Blend Mode Navigation -->
+    <div class='custom-cursor'></div>
     
     <!-- Payment Success/Cancel Handler -->
     <script>

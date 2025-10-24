@@ -61,7 +61,7 @@ Absolutely! Let me provide you with a comprehensive summary of all the current f
 ## **📊 Data Management & Import**
 
 ### **CSV Import System**
-- **Departments CSV**: Upload organizational structure with "Department/Agency" header
+- **Departments CSV**: Upload digital tool design and development structure with "Department/Agency" header
 - **Safe Upload**: Prevents duplicate uploads and data overwrites
 - **Real-time Updates**: Table refreshes automatically after successful uploads
 - **Error Handling**: Comprehensive validation and user feedback
@@ -157,7 +157,7 @@ Absolutely! Let me provide you with a comprehensive summary of all the current f
 3. **UI Rendering** → Permission-appropriate interface displayed
 4. **Data Upload** → CSV import for departments (if admin/team member)
 5. **Team Management** → Add team members with appropriate roles
-6. **Data Management** → View, edit, and manage organizational data
+6. **Data Management** → View, edit, and manage digital tool design and development data
 
 ### **Admin Workflow**
 1. **System Setup** → Upload departments CSV
